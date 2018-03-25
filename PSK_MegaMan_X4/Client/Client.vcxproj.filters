@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="00.MainGame">
+      <UniqueIdentifier>{9aa1904a-fe0b-49c4-aeaa-d8eca20b377a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject">
+      <UniqueIdentifier>{409bc739-4d46-4f1d-991e-172a0ca7d7ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Player">
+      <UniqueIdentifier>{9c7dde00-2c92-4b5e-be85-e57de662cf5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster">
+      <UniqueIdentifier>{7f2db4db-4ac3-4222-b08f-d3d4baffb937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect">
+      <UniqueIdentifier>{0e1aec0c-f651-44d6-9c3b-a8323d3ee09b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene">
+      <UniqueIdentifier>{1ddbf010-6852-473c-ab16-bf279bb015d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI">
+      <UniqueIdentifier>{b95501c4-64e8-47a1-bce9-1b09cda0a503}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager">
+      <UniqueIdentifier>{f5ebd8f4-5a64-45a7-a651-2505e5b52e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Header">
+      <UniqueIdentifier>{0f214180-06c6-439d-95d7-b0c3ab1e5c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Defaults">
+      <UniqueIdentifier>{95dea1e7-5a9d-4faa-a0bc-2101bb3797c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Defaults\리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="97.Manager\00.GameManager">
+      <UniqueIdentifier>{78a6f10c-688c-45c9-9daa-31679fdd0775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\01.KeyManager">
+      <UniqueIdentifier>{800d9a72-5238-47eb-89bd-48fe8b3600f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\02.SceneManager">
+      <UniqueIdentifier>{4af86c0c-f419-4c7c-9bee-2add7dbed2ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\03.BmpManager">
+      <UniqueIdentifier>{21fe0126-6f31-4b95-ba7d-73b801eb6bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\04.SoundManager">
+      <UniqueIdentifier>{2f80b7ad-3e88-4e55-a4f6-72e133bffc5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\99.Singleton">
+      <UniqueIdentifier>{aea24912-cc33-4caf-ae9f-5845bc14069d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h">
+      <Filter>99.Defaults</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>99.Defaults</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Defaults</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\GameManager.h">
+      <Filter>97.Manager\00.GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\GameObject.h">
+      <Filter>01.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\KeyManager.h">
+      <Filter>97.Manager\01.KeyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\MainGame.h">
+      <Filter>00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\SoundManager.h">
+      <Filter>97.Manager\04.SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Singleton.h">
+      <Filter>97.Manager\99.Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\SceneManager.h">
+      <Filter>97.Manager\02.SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\BmpManager.h">
+      <Filter>97.Manager\03.BmpManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Define.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Enum.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Extern.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Function.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Struct.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Typedef.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Defaults</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\GameManager.cpp">
+      <Filter>97.Manager\00.GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\GameObject.cpp">
+      <Filter>01.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\KeyManager.cpp">
+      <Filter>97.Manager\01.KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\MainGame.cpp">
+      <Filter>00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SoundManager.cpp">
+      <Filter>97.Manager\04.SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SceneManager.cpp">
+      <Filter>97.Manager\02.SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\BmpManager.cpp">
+      <Filter>97.Manager\03.BmpManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Client.rc">
+      <Filter>99.Defaults\리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>99.Defaults\리소스 파일</Filter>
+    </Image>
+    <Image Include="Client.ico">
+      <Filter>99.Defaults\리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
