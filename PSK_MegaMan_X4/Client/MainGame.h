@@ -18,6 +18,9 @@ public:
 	void Render();
 	void Release();
 
+public:
+	void ResetMainDC();
+
 private:
 	HDC m_hDC;
 }; 

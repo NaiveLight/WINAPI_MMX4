@@ -17,8 +17,8 @@ protected:
 	bool m_bIsLeft;			// 왼쪽을 바라보는가 오른쪽을 바라보는가
 
 	int m_iAttack;			// 공격력
-
 	float m_fSpeed;			// 속도
+	int m_iDrawID;
 
 public:
 	CGameObject();
@@ -34,7 +34,7 @@ public:
 
 public:
 	void UpdateRect();
-	void UpdateRect(float fX, float fY);
+	//void UpdateRect(float fX, float fY);
 	void FrameMove();
 	void DrawObject(HDC hDC, const TCHAR* szName);
 	void DrawHitBox(HDC hDC);
@@ -53,9 +53,13 @@ public:
 
 public:
 	//Setter
-	void SetPos(float& fX, float& fY)	{}
-	void SetHitBox(int& iCX, int& iCY)	{}
-	void SetActive() {}
-	void SetTarget(CGameObject* pTarget) { m_pTarget = pTarget; }
+	void SetPos(float& fX, float& fY)		{ m_tInfo.fX = fX; m_tInfo.fY = fY; }
+	void SetHitBox(int& iCX, int& iCY)		{ m_iHitBoxCX = iCX; m_iHitBoxCY = iCY; }
+	void SetActive(bool bIsActive)			{ m_bIsActive = bIsActive; }
+	void SetTarget(CGameObject* pTarget)	{ m_pTarget = pTarget; }
+	void SetFrameKey(TCHAR* pFrameKey)		{ m_pFrameKey = pFrameKey; }
+	void SetDrawID(int iDrawID)				{ m_iDrawID = iDrawID; }
+	void IncreaseDrawID() { m_iDrawID++;}
+	void DecreaseDrawID() { m_iDrawID--; }
 };
 

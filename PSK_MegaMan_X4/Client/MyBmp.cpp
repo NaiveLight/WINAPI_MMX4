@@ -27,8 +27,8 @@ void CMyBmp::LoadBmp(const TCHAR * pFilePath)
 	BITMAP tempBmp = {};
 	GetObject(m_hBitmap, sizeof(tempBmp), &tempBmp);
 
-	lSizeX = tempBmp.bmWidth;
-	lSizeY = tempBmp.bmHeight;
+	iSizeX = tempBmp.bmWidth;
+	iSizeY = tempBmp.bmHeight;
 }
 
 void CMyBmp::Release()

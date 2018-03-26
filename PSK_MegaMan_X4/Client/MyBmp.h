@@ -11,8 +11,8 @@ private:
 	HBITMAP m_hBitmap;
 	HBITMAP m_hOld;
 
-	LONG lSizeX;
-	LONG lSizeY;
+	int iSizeX;
+	int iSizeY;
 
 public:
 	CMyBmp();
@@ -21,8 +21,8 @@ public:
 public:
 	// Getter
 	HDC GetMemDC() { return m_hMemDC; }
-	LONG GetBmpCX() { return lSizeX; }
-	LONG GetBmpCY() { return lSizeY; }
+	int GetBmpCX() { return iSizeX; }
+	int GetBmpCY() { return iSizeY; }
 	
 public:
 	void LoadBmp(const TCHAR* pFilePath);

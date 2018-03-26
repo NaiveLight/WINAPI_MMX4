@@ -26,5 +26,37 @@ private:
 public:
 	CGameManager();
 	virtual ~CGameManager();
+
+public:
+	void Update();
+	void LateUpdate();
+	void Render(HDC hDC);
+	void Release();
+
+public:
+	//Getter
+	CGameObject* GetPlayer() { return m_ObjectList[OBJ_PLAYER].back(); }
+	OBJLIST& GetObjList(OBJECT_ID eID) { return m_ObjectList[eID]; }
+	RECT& GetScreen() { return m_tScreenRect; }
+
+	float GetScrollX() { return m_fScrollX; }
+	float GetScrollY() { return m_fScrollY; }
+	float GetMaxScrollX() { return m_fMaxScrollX; }
+	float GetMaxScrollY() { return m_fMaxScrollY; }
+
+public:
+	//Setter
+	void SetScrollX(float fX) { m_fScrollX = fX; }
+	void SetScrollY(float fY) { m_fScrollY = fY; }
+	void SetMaxScrollX(float fX) { m_fMaxScrollX = fX; }
+	void SetMaxScrollY(float fY) { m_fMaxScrollY = fY; }
+	void SetPause(bool bIsPaused) { m_bIsPaused = bIsPaused; }
+
+public:
+	void AddObject(CGameObject* pObj, OBJECT_ID eID);
+	void ReleaseObj(OBJECT_ID eID);
+
+public:
+	void SetCameraShaking(bool bIsShaking);
 };
 

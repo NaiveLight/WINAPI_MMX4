@@ -3,6 +3,10 @@
 
 
 CGameObject::CGameObject()
+	:m_tInfo({}), m_tTexRect({}), m_tHitBoxRect({}), m_iHitBoxCX(0), m_iHitBoxCY(0),
+	m_tFrame({}), m_pFrameKey(nullptr), m_pTarget(nullptr),
+	m_bIsInit(false), m_bIsActive(false), m_bIsLeft(false), 
+	m_iAttack(0), m_fSpeed(0.f), m_iDrawID(0)
 {
 }
 
@@ -36,10 +40,10 @@ void CGameObject::UpdateRect()
 	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2);
 }
 
-// 오브젝트의 위치에 따른 Rect 크기 변경
-void CGameObject::UpdateRect(float fX, float fY)
-{
-}
+//// 오브젝트의 위치에 따른 Rect 크기 변경
+//void CGameObject::UpdateRect(float fX, float fY)
+//{
+//}
 
 // 1프레임 마다 애니메이션 갱신
 void CGameObject::FrameMove()

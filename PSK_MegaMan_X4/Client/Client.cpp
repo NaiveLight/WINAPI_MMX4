@@ -14,11 +14,16 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
 HWND g_hWnd;
 DWORD g_iFrame;
+LONG g_lWINCX;
+LONG g_lWINCY;
+int g_iBufCX;
+int g_iBufCY;
 
 // 이 코드 모듈에 들어 있는 함수의 정방향 선언입니다.
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
+void SetBufSize(int& iBufCX, int& iBufCY);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -34,6 +39,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
+
+	g_lWINCX = 1240;
+	g_lWINCY = 960;
 
     // 응용 프로그램 초기화를 수행합니다.
     if (!InitInstance (hInstance, nCmdShow))
@@ -55,6 +63,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	while (msg.message != WM_QUIT)
 	{
+		RECT rcWnd = {};
+		GetClientRect(g_hWnd, &rcWnd);
+
+		if (rcWnd.right - rcWnd.left != g_lWINCX ||
+			rcWnd.bottom - rcWnd.top != g_lWINCY)
+		{
+			g_lWINCX = rcWnd.right - rcWnd.left;
+			g_lWINCY = rcWnd.bottom - rcWnd.top;
+
+			SetWindowPos(g_hWnd, g_hWnd, rcWnd.left, rcWnd.top, g_lWINCX, g_lWINCY, SWP_DRAWFRAME);
+		}
+
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -105,7 +125,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   RECT rc = { 0, 0, WINCX, WINCY };
+   //RECT rc = { 0, 0, WINCX, WINCY };
+   RECT rc = { 0, 0, g_lWINCX, g_lWINCY};
 
    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
 
@@ -119,8 +140,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    g_hWnd = hWnd;
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+   ShowWindow(g_hWnd, nCmdShow);
+   UpdateWindow(g_hWnd);
 
    return TRUE;
 }
@@ -129,6 +150,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_ESCAPE:
+			DestroyWindow(g_hWnd);
+			break;
+		}
+		break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -136,4 +165,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
+}
+
+void SetBufSize(int & iBufCX, int & iBufCY)
+{
 }

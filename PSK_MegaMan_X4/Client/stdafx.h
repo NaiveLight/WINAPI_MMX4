@@ -34,6 +34,7 @@ using namespace std;
 #include "Struct.h"
 #include "Typedef.h"
 
+#include "AbstractFactory.h"
 #include "Singleton.h"
 #include "GameManager.h"
 #include "KeyManager.h"

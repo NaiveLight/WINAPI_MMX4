@@ -71,6 +71,12 @@
     <Filter Include="05.Scene\03.Lobby">
       <UniqueIdentifier>{5719baa1-b38f-46cc-bb10-fab51d8e6e8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06.UI\00.MenuText">
+      <UniqueIdentifier>{236ed5c4-de6a-4297-b92b-7129859191bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.MenuUnder">
+      <UniqueIdentifier>{77a5b53b-f0c2-47ad-b334-a07b8a8669b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -134,6 +140,21 @@
     <ClInclude Include="KeyManager.h">
       <Filter>97.Manager\01.KeyManager</Filter>
     </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>97.Manager\99.Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMenu.h">
+      <Filter>05.Scene\01.Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Loading.h">
+      <Filter>05.Scene\99.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuText.h">
+      <Filter>06.UI\00.MenuText</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuUnder.h">
+      <Filter>06.UI\01.MenuUnder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -169,6 +190,18 @@
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>97.Manager\01.KeyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMenu.cpp">
+      <Filter>05.Scene\01.Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Loading.cpp">
+      <Filter>05.Scene\99.Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuText.cpp">
+      <Filter>06.UI\00.MenuText</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuUnder.cpp">
+      <Filter>06.UI\01.MenuUnder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
