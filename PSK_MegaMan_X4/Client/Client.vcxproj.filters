@@ -113,6 +113,9 @@
     <ClInclude Include="MyBmp.h">
       <Filter>97.Manager\03.BmpManager\00.MyBmp</Filter>
     </ClInclude>
+    <ClInclude Include="BmpManager.h">
+      <Filter>97.Manager\03.BmpManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -139,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="MyBmp.cpp">
       <Filter>97.Manager\03.BmpManager\00.MyBmp</Filter>
+    </ClCompile>
+    <ClCompile Include="BmpManager.cpp">
+      <Filter>97.Manager\03.BmpManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

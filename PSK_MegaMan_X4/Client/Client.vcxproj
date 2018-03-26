@@ -88,6 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\3개월차API시연회\MMX4\PSK_MegaMan_X4\Client;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -156,6 +157,7 @@
     <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Struct.h" />
     <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Typedef.h" />
     <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="BmpManager.h" />
     <ClInclude Include="MyBmp.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -169,6 +171,7 @@
     <ClCompile Include="..\..\..\PSK_MegamanX4\Client\MainGame.cpp" />
     <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SceneManager.cpp" />
     <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SoundManager.cpp" />
+    <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="MyBmp.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
