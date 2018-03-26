@@ -53,6 +53,9 @@
     <Filter Include="97.Manager\99.Singleton">
       <UniqueIdentifier>{aea24912-cc33-4caf-ae9f-5845bc14069d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97.Manager\03.BmpManager\00.MyBmp">
+      <UniqueIdentifier>{2fcdfdfc-9d9b-447c-bbcf-f7f5cd554e88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -86,9 +89,6 @@
     <ClInclude Include="..\..\..\PSK_MegamanX4\Client\SceneManager.h">
       <Filter>97.Manager\02.SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\BmpManager.h">
-      <Filter>97.Manager\03.BmpManager</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Define.h">
       <Filter>98.Header</Filter>
     </ClInclude>
@@ -106,6 +106,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Typedef.h">
       <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractFactory.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBmp.h">
+      <Filter>97.Manager\03.BmpManager\00.MyBmp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,8 +137,8 @@
     <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SceneManager.cpp">
       <Filter>97.Manager\02.SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\BmpManager.cpp">
-      <Filter>97.Manager\03.BmpManager</Filter>
+    <ClCompile Include="MyBmp.cpp">
+      <Filter>97.Manager\03.BmpManager\00.MyBmp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
