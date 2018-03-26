@@ -56,6 +56,21 @@
     <Filter Include="97.Manager\03.BmpManager\00.MyBmp">
       <UniqueIdentifier>{2fcdfdfc-9d9b-447c-bbcf-f7f5cd554e88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Scene\00.Title">
+      <UniqueIdentifier>{4341845a-c7b4-4213-83c4-09b7b093a863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\99.Loading">
+      <UniqueIdentifier>{f3b14746-8111-4a12-a59a-be54b643e786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\01.Menu">
+      <UniqueIdentifier>{67026d55-1e4b-49a8-b7f2-0c1ed91288b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\02.PlayerSelect">
+      <UniqueIdentifier>{87f911ef-962e-43e0-87b3-90e1ef8ba1c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\03.Lobby">
+      <UniqueIdentifier>{5719baa1-b38f-46cc-bb10-fab51d8e6e8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -68,45 +83,6 @@
       <Filter>99.Defaults</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\GameManager.h">
-      <Filter>97.Manager\00.GameManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\GameObject.h">
-      <Filter>01.GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\KeyManager.h">
-      <Filter>97.Manager\01.KeyManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\MainGame.h">
-      <Filter>00.MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\SoundManager.h">
-      <Filter>97.Manager\04.SoundManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Singleton.h">
-      <Filter>97.Manager\99.Singleton</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\SceneManager.h">
-      <Filter>97.Manager\02.SceneManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Define.h">
-      <Filter>98.Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Enum.h">
-      <Filter>98.Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Extern.h">
-      <Filter>98.Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Function.h">
-      <Filter>98.Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Struct.h">
-      <Filter>98.Header</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Typedef.h">
-      <Filter>98.Header</Filter>
-    </ClInclude>
     <ClInclude Include="AbstractFactory.h">
       <Filter>98.Header</Filter>
     </ClInclude>
@@ -116,35 +92,83 @@
     <ClInclude Include="BmpManager.h">
       <Filter>97.Manager\03.BmpManager</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Title.h">
+      <Filter>05.Scene\00.Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Extern.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>97.Manager\00.GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>01.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>00.MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>97.Manager\02.SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedef.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>97.Manager\04.SoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>97.Manager\01.KeyManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>99.Defaults</Filter>
     </ClCompile>
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\GameManager.cpp">
-      <Filter>97.Manager\00.GameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\GameObject.cpp">
-      <Filter>01.GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\KeyManager.cpp">
-      <Filter>97.Manager\01.KeyManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\MainGame.cpp">
-      <Filter>00.MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SoundManager.cpp">
-      <Filter>97.Manager\04.SoundManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SceneManager.cpp">
-      <Filter>97.Manager\02.SceneManager</Filter>
-    </ClCompile>
     <ClCompile Include="MyBmp.cpp">
       <Filter>97.Manager\03.BmpManager\00.MyBmp</Filter>
     </ClCompile>
     <ClCompile Include="BmpManager.cpp">
       <Filter>97.Manager\03.BmpManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Title.cpp">
+      <Filter>05.Scene\00.Title</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>97.Manager\00.GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>01.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>00.MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>97.Manager\02.SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>97.Manager\04.SoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>97.Manager\01.KeyManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

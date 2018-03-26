@@ -3,8 +3,8 @@
 // 모든 DEFINE은 여기에서 관리
 
 // 윈도우 사이즈
-#define WINCX 800
-#define WINCY 600
+#define WINCX 1280
+#define WINCY 960
 
 // 타일 사이즈
 #define TILECX 64

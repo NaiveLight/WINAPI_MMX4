@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Client.h"
+#include "MainGame.h"
 
 #define MAX_LOADSTRING 100
 
@@ -48,6 +49,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	DWORD dwOldTime = GetTickCount();
 	g_iFrame = 0;
 
+	CMainGame mainGame;
+	mainGame.Init();
+	mainGame.LateInit();
+
 	while (msg.message != WM_QUIT)
 	{
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -62,8 +67,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		{
 			if (dwOldTime + 10 < GetTickCount())
 			{
-				dwOldTime = GetTickCount();
+				mainGame.Update();
+				mainGame.LateUpdate();
+				mainGame.Render();
 
+				dwOldTime = GetTickCount();
 				++g_iFrame;
 			}
 		}
@@ -97,13 +105,19 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
+   RECT rc = { 0, 0, WINCX, WINCY };
+
+   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, false);
+
    HWND hWnd = CreateWindowW(szWindowClass, L"MMX4", WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
       return FALSE;
    }
+
+   g_hWnd = hWnd;
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

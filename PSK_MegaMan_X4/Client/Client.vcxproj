@@ -88,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\3개월차API시연회\MMX4\PSK_MegaMan_X4\Client;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -143,43 +143,46 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Define.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Enum.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Extern.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Function.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\GameManager.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\GameObject.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\KeyManager.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\MainGame.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\SceneManager.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Singleton.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\SoundManager.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Struct.h" />
-    <ClInclude Include="..\..\..\PSK_MegamanX4\Client\Typedef.h" />
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="BmpManager.h" />
+    <ClInclude Include="Define.h" />
+    <ClInclude Include="Enum.h" />
+    <ClInclude Include="Extern.h" />
+    <ClInclude Include="Function.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="MainGame.h" />
     <ClInclude Include="MyBmp.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Title.h" />
+    <ClInclude Include="Typedef.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\GameManager.cpp" />
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\GameObject.cpp" />
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\KeyManager.cpp" />
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\MainGame.cpp" />
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SceneManager.cpp" />
-    <ClCompile Include="..\..\..\PSK_MegamanX4\Client\SoundManager.cpp" />
     <ClCompile Include="BmpManager.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="MyBmp.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
