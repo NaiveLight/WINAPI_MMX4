@@ -1,14 +1,11 @@
 #pragma once
 #include "Scene.h"
-class CMyMenu :
+class CLobby :
 	public CScene
 {
-private:
-
-
 public:
-	CMyMenu();
-	virtual ~CMyMenu();
+	CLobby();
+	virtual ~CLobby();
 
 	// CScene을(를) 통해 상속됨
 	virtual void Init() override;

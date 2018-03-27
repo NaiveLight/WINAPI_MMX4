@@ -3,12 +3,20 @@
 
 
 CScene::CScene()
+	:m_bIsInit(false)
 {
 }
 
 
 CScene::~CScene()
 {
+}
+
+void CScene::LateInit()
+{
+	if (!m_bIsInit)
+		this->LateInit();
+	m_bIsInit = true;
 }
 
 void CScene::DrawBackground(HDC hDC, const TCHAR* szName)

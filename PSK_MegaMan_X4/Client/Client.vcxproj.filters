@@ -71,11 +71,29 @@
     <Filter Include="05.Scene\03.Lobby">
       <UniqueIdentifier>{5719baa1-b38f-46cc-bb10-fab51d8e6e8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06.UI\00.MenuText">
+    <Filter Include="06.UI\00.Text">
+      <UniqueIdentifier>{62c30054-9382-484f-9974-c2b547c2a965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\00.Text\00.MenuText">
       <UniqueIdentifier>{236ed5c4-de6a-4297-b92b-7129859191bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06.UI\01.MenuUnder">
+    <Filter Include="06.UI\00.Text\01.MenuUnder">
       <UniqueIdentifier>{77a5b53b-f0c2-47ad-b334-a07b8a8669b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\00.Text\02.PSText">
+      <UniqueIdentifier>{5e40fcd8-566d-4ac1-a3f6-cf706208d0e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.IMAGE">
+      <UniqueIdentifier>{aacfd598-19de-48e3-a568-b9d7b14a60e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.IMAGE\00.PS_X">
+      <UniqueIdentifier>{327cd3de-c9c0-423c-96a6-b9bac35e6b75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.IMAGE\01.PS_ZERO">
+      <UniqueIdentifier>{53303d81-26a8-4ef5-9d1b-07fb2e9302ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.IMAGE\02.PS_Cursor">
+      <UniqueIdentifier>{a88627c7-397e-4013-b871-ab5ea0d6d921}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -150,10 +168,28 @@
       <Filter>05.Scene\99.Loading</Filter>
     </ClInclude>
     <ClInclude Include="MenuText.h">
-      <Filter>06.UI\00.MenuText</Filter>
+      <Filter>06.UI\00.Text\00.MenuText</Filter>
     </ClInclude>
     <ClInclude Include="MenuUnder.h">
-      <Filter>06.UI\01.MenuUnder</Filter>
+      <Filter>06.UI\00.Text\01.MenuUnder</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSelect.h">
+      <Filter>05.Scene\02.PlayerSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="PSText.h">
+      <Filter>06.UI\00.Text\02.PSText</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_X.h">
+      <Filter>06.UI\01.IMAGE\00.PS_X</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Zero.h">
+      <Filter>06.UI\01.IMAGE\01.PS_ZERO</Filter>
+    </ClInclude>
+    <ClInclude Include="PS_Cursor.h">
+      <Filter>06.UI\01.IMAGE\02.PS_Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>05.Scene\03.Lobby</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -198,10 +234,28 @@
       <Filter>05.Scene\99.Loading</Filter>
     </ClCompile>
     <ClCompile Include="MenuText.cpp">
-      <Filter>06.UI\00.MenuText</Filter>
+      <Filter>06.UI\00.Text\00.MenuText</Filter>
     </ClCompile>
     <ClCompile Include="MenuUnder.cpp">
-      <Filter>06.UI\01.MenuUnder</Filter>
+      <Filter>06.UI\00.Text\01.MenuUnder</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSelect.cpp">
+      <Filter>05.Scene\02.PlayerSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="PSText.cpp">
+      <Filter>06.UI\00.Text\02.PSText</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_X.cpp">
+      <Filter>06.UI\01.IMAGE\00.PS_X</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_Zero.cpp">
+      <Filter>06.UI\01.IMAGE\01.PS_ZERO</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_Cursor.cpp">
+      <Filter>06.UI\01.IMAGE\02.PS_Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>05.Scene\03.Lobby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

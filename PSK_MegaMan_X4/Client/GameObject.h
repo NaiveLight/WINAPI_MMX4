@@ -44,6 +44,7 @@ public:
 	const INFO& GetInfo()			{ return m_tInfo; }
 	const RECT& GetTexRect()		{ return m_tTexRect; }
 	const RECT& GetHitBoxRect()		{ return m_tHitBoxRect; }
+	const TCHAR* GetFrameKey() { return m_pFrameKey; }
 	const bool& GetIsActive()		{ return m_bIsActive; }
 	const bool& GetIsLeft()			{ return m_bIsLeft; }
 	const int& GetHitBoxCX()		{ return m_iHitBoxCX; }
@@ -56,9 +57,11 @@ public:
 	void SetPos(float& fX, float& fY)		{ m_tInfo.fX = fX; m_tInfo.fY = fY; }
 	void SetHitBox(int& iCX, int& iCY)		{ m_iHitBoxCX = iCX; m_iHitBoxCY = iCY; }
 	void SetActive(bool bIsActive)			{ m_bIsActive = bIsActive; }
+	void SetIsLeft(bool bIsLeft)			{ m_bIsLeft = bIsLeft; }
 	void SetTarget(CGameObject* pTarget)	{ m_pTarget = pTarget; }
 	void SetFrameKey(TCHAR* pFrameKey)		{ m_pFrameKey = pFrameKey; }
 	void SetDrawID(int iDrawID)				{ m_iDrawID = iDrawID; }
+
 	void IncreaseDrawID() { m_iDrawID++;}
 	void DecreaseDrawID() { m_iDrawID--; }
 };

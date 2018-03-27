@@ -19,6 +19,7 @@ public:
 	~CSceneManager();
 
 public:
+	void LateInit();
 	void Update();
 	void LateUpdate();
 	void Render(HDC hDC);

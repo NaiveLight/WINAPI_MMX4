@@ -16,30 +16,20 @@ void CGameManager::Update()
 {
 	for (int i = 0; i < OBJ_END; ++i)
 	{
-		if (m_bIsPaused)
+		auto iter_begin = m_ObjectList[i].begin();
+		auto iter_end = m_ObjectList[i].end();
+
+		for (; iter_begin != iter_end;)
 		{
+			int iEvent = (*iter_begin)->Update();
 
-		}
-
-		for (auto iter = m_ObjectList[i].begin(); iter != m_ObjectList[i].end();)
-		{
-			OBJECT_STATE eEvent = (*iter)->Update();
-
-			switch (eEvent)
+			if (DESTROY == iEvent)
 			{
-			case PLAY:
-				++iter;
-				break;
-
-			case WAIT:
-				++iter;
-				break;
-
-			case DESTROY:
-				SafeDelete<CGameObject*>(*iter);
-				iter = m_ObjectList[i].erase(iter);
-				break;
+				SafeDelete(*iter_begin);
+				iter_begin = m_ObjectList[i].erase(iter_begin);
 			}
+			else
+				++iter_begin;
 		}
 	}
 }
@@ -50,14 +40,18 @@ void CGameManager::LateUpdate()
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{
-		if (m_bIsPaused)
-		{
+		if (m_ObjectList[i].empty())
+			continue;
 
-		}
+		auto iter_begin = m_ObjectList[i].begin();
+		auto iter_end = m_ObjectList[i].end();
 
-		for (auto& pObj : m_ObjectList[i])
+		for (; iter_begin != iter_end; ++iter_begin)
 		{
-			pObj->LateUpdate();
+			(*iter_begin)->LateUpdate();
+
+			if (m_ObjectList[i].empty())
+				break;
 		}
 	}
 }
@@ -66,10 +60,11 @@ void CGameManager::Render(HDC hDC)
 {
 	for (int i = 0; i < OBJ_END; ++i)
 	{
-		for (auto& pObj : m_ObjectList[i])
-		{
-			pObj->Render(hDC);
-		}
+		auto iter_begin = m_ObjectList[i].begin();
+		auto iter_end = m_ObjectList[i].end();
+
+		for (; iter_begin != iter_end; ++iter_begin)
+			(*iter_begin)->Render(hDC);
 	}
 }
 
@@ -80,6 +75,20 @@ void CGameManager::Release()
 		std::for_each(m_ObjectList[i].begin(), m_ObjectList[i].end(), SafeDelete<CGameObject*>);
 		m_ObjectList[i].clear();
 	}
+}
+
+CGameObject * CGameManager::GetTargetByFrameKey(const TCHAR * pFrameKey, OBJECT_ID eID)
+{
+	auto iter = find_if(m_ObjectList[eID].begin(), m_ObjectList[eID].end(),
+		[&pFrameKey](auto& pObj)
+	{
+		return !lstrcmp(pFrameKey, pObj->GetFrameKey());
+	});
+
+	if (iter == m_ObjectList[eID].end())
+		return nullptr;
+	else
+		return *iter;
 }
 
 void CGameManager::AddObject(CGameObject * pObj, OBJECT_ID eID)

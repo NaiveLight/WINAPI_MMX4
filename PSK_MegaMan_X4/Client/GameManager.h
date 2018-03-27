@@ -36,6 +36,7 @@ public:
 public:
 	//Getter
 	CGameObject* GetPlayer() { return m_ObjectList[OBJ_PLAYER].back(); }
+	CGameObject* GetTargetByFrameKey(const TCHAR* pFrameKey, OBJECT_ID eID);
 	OBJLIST& GetObjList(OBJECT_ID eID) { return m_ObjectList[eID]; }
 	RECT& GetScreen() { return m_tScreenRect; }
 

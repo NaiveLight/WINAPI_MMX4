@@ -1,0 +1,44 @@
+#include "stdafx.h"
+#include "PS_Zero.h"
+
+
+CPS_Zero::CPS_Zero()
+{
+}
+
+
+CPS_Zero::~CPS_Zero()
+{
+	Release();
+}
+
+void CPS_Zero::Init()
+{
+	m_tInfo.fCX = 800.f;
+	m_tInfo.fCY = 800.f;
+	m_fSpeed = -50.f;
+}
+
+OBJECT_STATE CPS_Zero::Update()
+{
+	m_tInfo.fX += m_fSpeed;
+	return PLAY;
+}
+
+void CPS_Zero::LateUpdate()
+{
+	CGameObject::UpdateRect();
+	if (m_tInfo.fX <= BUFCX - m_tInfo.fCX/2 + 20.f)
+		m_fSpeed = 0.f;
+}
+
+void CPS_Zero::Render(HDC hDC)
+{
+	CMyBmp* pBmp = BmpManager->FindImage(m_pFrameKey);
+	GdiTransparentBlt(hDC, (int)m_tTexRect.left, (int)m_tTexRect.top, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
+		pBmp->GetMemDC(), 0, 0, pBmp->GetBmpCX(), pBmp->GetBmpCY(), RGB(255, 0, 255));
+}
+
+void CPS_Zero::Release()
+{
+}

@@ -15,10 +15,13 @@ CMyMenu::~CMyMenu()
 
 void CMyMenu::Init()
 {
-	BmpManager->AddBitMap(L"../MyResource/BG/BG_TITLE_LOGO.bmp", L"TITLE_LOGO");
+	BmpManager->AddBitMap(L"../MyResource/BG/BG_TITLE_LOGO.bmp", L"BG_TITLE_LOGO");
 	BmpManager->AddBitMap(L"../MyResource/MENU/MENU.bmp", L"MENU");
 	BmpManager->AddBitMap(L"../MyResource/TITLE/TITLE_UNDER.bmp", L"MENU_UNDER");
+}
 
+void CMyMenu::LateInit()
+{
 	CGameObject* pMenuText = CAbstractFactory<CMenuText>::CreateObj((float)BUFCX / 2.f, (float)BUFCY / 9.f * 5.5f);
 	dynamic_cast<CMenuText*>(pMenuText)->SetFrameKey(L"MENU");
 	GameManager->AddObject(pMenuText, OBJ_UI);
@@ -30,6 +33,7 @@ void CMyMenu::Init()
 
 void CMyMenu::Update()
 {
+	CScene::LateInit();
 	GameManager->Update();
 }
 
@@ -40,7 +44,7 @@ void CMyMenu::LateUpdate()
 
 void CMyMenu::Render(HDC hDC)
 {
-	DrawBackground(hDC, L"TITLE_LOGO");
+	DrawBackground(hDC, L"BG_TITLE_LOGO");
 	GameManager->Render(hDC);
 }
 

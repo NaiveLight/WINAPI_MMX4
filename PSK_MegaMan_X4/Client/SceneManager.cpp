@@ -2,6 +2,8 @@
 #include "SceneManager.h"
 #include "Title.h"
 #include "MyMenu.h"
+#include "PlayerSelect.h"
+#include "Lobby.h"
 
 CSceneManager::CSceneManager()
 	:m_pCurScene(nullptr), m_eCurScene(SCENE_END), m_ePrevScene(SCENE_END), m_bIsFade(false), m_btAlpha(0)
@@ -12,6 +14,10 @@ CSceneManager::CSceneManager()
 CSceneManager::~CSceneManager()
 {
 	Release();
+}
+
+void CSceneManager::LateInit()
+{
 }
 
 void CSceneManager::Update()
@@ -49,6 +55,8 @@ void CSceneManager::ChangeScene(SCENEID eSceneID)
 
 	if (m_eCurScene != m_ePrevScene)
 	{
+		SafeDelete<CScene*>(m_pCurScene);
+
 		switch (m_eCurScene)
 		{
 		case TITLE:
@@ -59,20 +67,23 @@ void CSceneManager::ChangeScene(SCENEID eSceneID)
 			break;
 
 		case PLAYERSELECT:
+			m_pCurScene = new CPlayerSelect;
 			break;
 
 		case LOBBY:
+			m_pCurScene = new CLobby;
 			break;
 
 		case STAGE:
 			break;
 		}
 
+		m_pCurScene->Init();
 		m_ePrevScene = m_eCurScene;
 	}
-
-	m_pCurScene->Init();
 }
+
+
 
 void CSceneManager::RestartScene()
 {

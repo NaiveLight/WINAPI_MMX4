@@ -30,7 +30,7 @@ public:
 		CGameObject* pObj = new T;
 		pObj->Init();
 		pObj->SetPos(fX, fY);
-		pObj->SetIsFlip(bIsFlip)
+		pObj->SetIsLeft(bIsFlip)
 
 		return pObj;
 	}

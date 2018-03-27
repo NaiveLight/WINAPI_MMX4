@@ -61,6 +61,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	mainGame.Init();
 	mainGame.LateInit();
 
+	// FPS 계산해보기!
+	int iFPS = 0;
+	TCHAR szFPS[32] = L"";
+
+	DWORD dwFpsTime = GetTickCount();
+
 	while (msg.message != WM_QUIT)
 	{
 		RECT rcWnd = {};
@@ -93,6 +99,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 				dwOldTime = GetTickCount();
 				++g_iFrame;
+				++iFPS;
+			}
+
+
+			// FPS 출력
+			if (dwFpsTime + 1000 < GetTickCount())
+			{
+				swprintf_s(szFPS, L"FPS: %d", iFPS);
+
+				// SetWindowText: 윈도우의 타이틀바에 문자열을 출력하는 함수
+				SetWindowText(g_hWnd, szFPS);
+
+				iFPS = 0;
+				dwFpsTime = GetTickCount();
 			}
 		}
 	}
