@@ -95,6 +95,57 @@
     <Filter Include="06.UI\01.IMAGE\02.PS_Cursor">
       <UniqueIdentifier>{a88627c7-397e-4013-b871-ab5ea0d6d921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.Scene\04.Stage1_1">
+      <UniqueIdentifier>{2460f7bd-bfaa-45fb-8001-29200c2e454a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\05.Stage1_2">
+      <UniqueIdentifier>{18aad8f3-1132-416f-92c8-d0d8d6de572d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.IMAGE\04.LB_X">
+      <UniqueIdentifier>{6bc867c3-241d-470a-9c21-c77b2483b6e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\01.IMAGE\03.PS_SmallX">
+      <UniqueIdentifier>{884a4f77-4aaf-450b-9c19-26f61b4da2f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\00.Text\03.LBText">
+      <UniqueIdentifier>{9a3a2029-747a-4f55-80e0-2f7efbf22c25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\05.TileManager">
+      <UniqueIdentifier>{74e7e4b2-1e5c-4188-931c-49dbd0319258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\00.MapObj">
+      <UniqueIdentifier>{834b3af4-1487-49d8-8a67-4b49caba6f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\00.Normal">
+      <UniqueIdentifier>{4dadd94d-69c0-4205-b0d9-bb2cceef4d82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\00.Normal\00.SpikeMarl">
+      <UniqueIdentifier>{9f35aa2c-c196-4a2f-9eb7-8d09a66e1cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\00.Normal\01.KnotBeret1">
+      <UniqueIdentifier>{d3015e61-459d-4096-8e5a-28388381d89c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\00.Normal\02.KnotBeret2">
+      <UniqueIdentifier>{920dd29e-b9a7-46d4-bcdd-8da0d139a754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\00.Normal\03.MadBull">
+      <UniqueIdentifier>{ec0a1940-422d-4ae8-87ff-e8df11a586bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\01.Boss">
+      <UniqueIdentifier>{a2270554-32ab-4c16-a4b0-be4f6c4b6e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\06.Collision">
+      <UniqueIdentifier>{c4733146-44d6-4631-b06e-438b7749c4c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\01.Actor">
+      <UniqueIdentifier>{076ceba6-28b6-4ba3-8490-f7037fa6c592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\01.Actor\01.Door">
+      <UniqueIdentifier>{0adbd85b-9d00-46ba-9f9b-c0721d038e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.GameObject\01.Actor\02.BossDoor">
+      <UniqueIdentifier>{a7671ad7-3b4a-4a74-9de2-c2a95ea35e09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -191,6 +242,33 @@
     <ClInclude Include="Lobby.h">
       <Filter>05.Scene\03.Lobby</Filter>
     </ClInclude>
+    <ClInclude Include="PS_SmallX.h">
+      <Filter>06.UI\01.IMAGE\03.PS_SmallX</Filter>
+    </ClInclude>
+    <ClInclude Include="LB_X.h">
+      <Filter>06.UI\01.IMAGE\04.LB_X</Filter>
+    </ClInclude>
+    <ClInclude Include="LBText.h">
+      <Filter>06.UI\00.Text\03.LBText</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_1.h">
+      <Filter>05.Scene\04.Stage1_1</Filter>
+    </ClInclude>
+    <ClInclude Include="TileManager.h">
+      <Filter>97.Manager\05.TileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObj.h">
+      <Filter>01.GameObject\00.MapObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>02.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>97.Manager\06.Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>01.GameObject\01.Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -256,6 +334,33 @@
     </ClCompile>
     <ClCompile Include="Lobby.cpp">
       <Filter>05.Scene\03.Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="PS_SmallX.cpp">
+      <Filter>06.UI\01.IMAGE\03.PS_SmallX</Filter>
+    </ClCompile>
+    <ClCompile Include="LB_X.cpp">
+      <Filter>06.UI\01.IMAGE\04.LB_X</Filter>
+    </ClCompile>
+    <ClCompile Include="LBText.cpp">
+      <Filter>06.UI\00.Text\03.LBText</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_1.cpp">
+      <Filter>05.Scene\04.Stage1_1</Filter>
+    </ClCompile>
+    <ClCompile Include="TileManager.cpp">
+      <Filter>97.Manager\05.TileManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObj.cpp">
+      <Filter>01.GameObject\00.MapObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>02.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>97.Manager\06.Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>01.GameObject\01.Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

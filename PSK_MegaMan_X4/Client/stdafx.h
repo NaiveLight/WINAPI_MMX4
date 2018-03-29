@@ -11,6 +11,9 @@
 // Windows 헤더 파일:
 #include <windows.h>
 
+//#include <iostream>
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+
 // C 런타임 헤더 파일입니다.
 #include <stdlib.h>
 #include <malloc.h>
@@ -25,6 +28,8 @@
 #include <functional>
 
 using namespace std;
+
+#include <vld.h>
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 #include "Define.h"
@@ -41,3 +46,4 @@ using namespace std;
 #include "SceneManager.h"
 #include "BmpManager.h"
 #include "SoundManager.h"
+#include "Collision.h"

@@ -14,5 +14,10 @@ public:
 	virtual void LateUpdate() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
+
+private:
+	CGameObject* m_pLobbyX;
+	CGameObject* m_pLBText;
+	bool m_bScrollStop;
 };
 

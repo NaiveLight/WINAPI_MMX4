@@ -14,9 +14,9 @@ CPS_Zero::~CPS_Zero()
 
 void CPS_Zero::Init()
 {
-	m_tInfo.fCX = 800.f;
-	m_tInfo.fCY = 800.f;
-	m_fSpeed = -50.f;
+	m_tInfo.fCX = 200.f;
+	m_tInfo.fCY = 200.f;
+	m_fSpeed = -10.f;
 }
 
 OBJECT_STATE CPS_Zero::Update()
@@ -28,7 +28,7 @@ OBJECT_STATE CPS_Zero::Update()
 void CPS_Zero::LateUpdate()
 {
 	CGameObject::UpdateRect();
-	if (m_tInfo.fX <= BUFCX - m_tInfo.fCX/2 + 20.f)
+	if (m_tInfo.fX <= BUFCX - m_tInfo.fCX/2)
 		m_fSpeed = 0.f;
 }
 

@@ -13,9 +13,9 @@ CPSText::~CPSText()
 
 void CPSText::Init()
 {
-	m_tInfo.fCX = 500.f;
-	m_tInfo.fCY = 50.f;
-	m_fSpeed = 10.0f;
+	m_tInfo.fCX = 200.f;
+	m_tInfo.fCY = 30.f;
+	m_fSpeed = 2.0f;
 }
 
 OBJECT_STATE CPSText::Update()
@@ -42,16 +42,14 @@ void CPSText::LateUpdate()
 	}
 	else
 	{
-		if (m_tTexRect.left >= BUFCX + 250)
+		if (m_tInfo.fX >= BUFCX + 350)
 			m_tInfo.fX = m_fOriginX;
 	}
 }
 
 void CPSText::Render(HDC hDC)
 {
-	CMyBmp* pBmp = BmpManager->FindImage(m_pFrameKey);
-	GdiTransparentBlt(hDC, (int)m_tTexRect.left, (int)m_tTexRect.top, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
-		pBmp->GetMemDC(), 0, 0, pBmp->GetBmpCX(), pBmp->GetBmpCY(), RGB(255, 0, 255));
+	DrawObject(hDC, m_pFrameKey);
 }
 
 void CPSText::Release()

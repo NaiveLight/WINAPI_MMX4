@@ -6,7 +6,7 @@ CGameObject::CGameObject()
 	:m_tInfo({}), m_tTexRect({}), m_tHitBoxRect({}), m_iHitBoxCX(0), m_iHitBoxCY(0),
 	m_tFrame({}), m_pFrameKey(nullptr), m_pTarget(nullptr),
 	m_bIsInit(false), m_bIsActive(false), m_bIsLeft(false), 
-	m_iAttack(0), m_fSpeed(0.f), m_iDrawID(0)
+	m_iFrameCnt(1), m_iSceneCnt(1),  m_fSpeed(0.f)
 {
 }
 
@@ -61,20 +61,43 @@ void CGameObject::FrameMove()
 }
 
 // 프레임 키에 해당하는 이미지 그리기
-void CGameObject::DrawObject(HDC hDC, const TCHAR * szName)
+void CGameObject::DrawObject(HDC hDC, const TCHAR * pFrameKey)
 {
-	//int iScrollX;
-	//int iScrollY;
+	CMyBmp* pBmp = BmpManager->FindImage(pFrameKey);
 
-	//HDC hMemDC;
+	int iSizeX = pBmp->GetBmpCX() / (m_iFrameCnt);
+	int iSizeY = pBmp->GetBmpCY() / (m_iSceneCnt);
 
-	//int iSizeX;
-	//int iSizeY;
-
-	//GdiTransparentBlt(hDC, m_tTexRect.left + iScrollX, m_tTexRect.top + iScrollY, iSizeX, iSizeY, hMemDC,
-	//					m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
+	GdiTransparentBlt(hDC, m_tTexRect.left, m_tTexRect.top, (int)m_tInfo.fCX, (int)m_tInfo.fCY, pBmp->GetMemDC(),
+		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
-void CGameObject::DrawHitBox(HDC hDC)
+
+void CGameObject::DrawObjectScroll(HDC hDC, const TCHAR * pFrameKey)
 {
+	int iScrollX = (int) GameManager->GetScrollX();
+	int iScrollY = (int) GameManager->GetScrollY();
+
+	CMyBmp* pBmp = BmpManager->FindImage(pFrameKey);
+
+	int iSizeX = pBmp->GetBmpCX() / (m_iFrameCnt);
+	int iSizeY = pBmp->GetBmpCY() / (m_iSceneCnt);
+
+	GdiTransparentBlt(hDC, m_tTexRect.left - iScrollX, m_tTexRect.top - iScrollY, (int)m_tInfo.fCX, (int)m_tInfo.fCY, pBmp->GetMemDC(),
+						m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
 }
+
+void CGameObject::DrawObjectMaxScroll(HDC hDC, const TCHAR * pFrameKey)
+{
+	int iScrollX = (int)GameManager->GetMaxScrollX();
+	int iScrollY = (int)GameManager->GetMaxScrollY();
+
+	CMyBmp* pBmp = BmpManager->FindImage(pFrameKey);
+
+	int iSizeX = pBmp->GetBmpCX() / (m_iFrameCnt);
+	int iSizeY = pBmp->GetBmpCY() / (m_iSceneCnt);
+
+	GdiTransparentBlt(hDC, m_tTexRect.left + iScrollX, m_tTexRect.top - iScrollY, (int)m_tInfo.fCX, (int)m_tInfo.fCY, pBmp->GetMemDC(),
+		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
+}
+

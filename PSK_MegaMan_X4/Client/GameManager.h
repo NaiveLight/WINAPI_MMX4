@@ -12,6 +12,8 @@ private:
 	// ½ºÅ©·Ñ
 	float m_fScrollX;
 	float m_fScrollY;
+	float m_fMinScrollX;
+	float m_fMinScrollY;
 	float m_fMaxScrollX;
 	float m_fMaxScrollY;
 	
@@ -47,8 +49,8 @@ public:
 
 public:
 	//Setter
-	void SetScrollX(float fX) { m_fScrollX = fX; }
-	void SetScrollY(float fY) { m_fScrollY = fY; }
+	void SetScrollX(float fX);
+	void SetScrollY(float fY); 
 	void SetMaxScrollX(float fX) { m_fMaxScrollX = fX; }
 	void SetMaxScrollY(float fY) { m_fMaxScrollY = fY; }
 	void SetPause(bool bIsPaused) { m_bIsPaused = bIsPaused; }
@@ -56,6 +58,10 @@ public:
 public:
 	void AddObject(CGameObject* pObj, OBJECT_ID eID);
 	void ReleaseObj(OBJECT_ID eID);
+	void ResetScroll()
+	{
+		m_fScrollX = m_fScrollY = m_fMaxScrollX = m_fMaxScrollY = 0;
+	}
 
 public:
 	void SetCameraShaking(bool bIsShaking);

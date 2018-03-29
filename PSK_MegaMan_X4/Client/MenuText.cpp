@@ -14,8 +14,8 @@ CMenuText::~CMenuText()
 
 void CMenuText::Init()
 {
-	m_tInfo.fCX = 300.f;
-	m_tInfo.fCY = 150.f;
+	m_tInfo.fCX = 100.f;
+	m_tInfo.fCY =  50.f;
 }
 
 OBJECT_STATE CMenuText::Update()
@@ -29,12 +29,12 @@ void CMenuText::LateUpdate()
 
 	if (KeyManager->KeyDown(VK_UP))
 	{
-		m_iDrawID--;
+		m_tFrame.iStart--;
 	}
 
 	if (KeyManager->KeyDown(VK_DOWN))
 	{
-		m_iDrawID++;
+		m_tFrame.iStart++;
 	}
 
 	if (KeyManager->KeyDown('c') ||
@@ -45,7 +45,7 @@ void CMenuText::LateUpdate()
 		KeyManager->KeyDown(VK_SPACE)
 		)
 	{
-		switch (m_iDrawID)
+		switch (m_tFrame.iStart)
 		{
 		case 0:
 			SceneManager->ChangeScene(CSceneManager::PLAYERSELECT);
@@ -53,18 +53,15 @@ void CMenuText::LateUpdate()
 		}
 	}
 
-	if (m_iDrawID < 0)
-		m_iDrawID += 3;
-	if (m_iDrawID > 2)
-		m_iDrawID -= 3;
+	if (m_tFrame.iStart < 0)
+		m_tFrame.iStart += m_tFrame.iEnd + 1;
+	if (m_tFrame.iStart > m_tFrame.iEnd)
+		m_tFrame.iStart -= m_tFrame.iEnd + 1;
 }
 
 void CMenuText::Render(HDC hDC)
 {
-	CMyBmp* pBmp = BmpManager->FindImage(m_pFrameKey);
-
-	GdiTransparentBlt(hDC, (int) m_tTexRect.left, (int) m_tTexRect.top, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
-		pBmp->GetMemDC(), m_iDrawID * pBmp->GetBmpCX() / 3, 0, pBmp->GetBmpCX() / 3, pBmp->GetBmpCY(), RGB(255, 0, 255));
+	DrawObject(hDC, m_pFrameKey);
 }
 
 void CMenuText::Release()

@@ -6,8 +6,8 @@
 #define WINCX 1280
 #define WINCY 960
 
-#define BUFCX 1280
-#define BUFCY 960
+#define BUFCX 320
+#define BUFCY 240
 
 // 타일 사이즈
 #define TILECX 64

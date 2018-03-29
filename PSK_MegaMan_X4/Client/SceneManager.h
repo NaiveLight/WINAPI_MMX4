@@ -5,7 +5,7 @@ class CSceneManager :
 	public CSingleton<CSceneManager>
 {
 public:
-	enum SCENEID {TITLE, MENU, PLAYERSELECT, LOBBY, STAGE, SCENE_END};
+	enum SCENEID {TITLE, MENU, PLAYERSELECT, LOBBY, STAGE1_1, STAGE1_2, SCENE_END};
 private:
 	CScene* m_pCurScene;
 	SCENEID m_eCurScene;

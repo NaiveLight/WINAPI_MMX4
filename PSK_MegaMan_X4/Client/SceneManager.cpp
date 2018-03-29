@@ -4,6 +4,7 @@
 #include "MyMenu.h"
 #include "PlayerSelect.h"
 #include "Lobby.h"
+#include "Stage1_1.h"
 
 CSceneManager::CSceneManager()
 	:m_pCurScene(nullptr), m_eCurScene(SCENE_END), m_ePrevScene(SCENE_END), m_bIsFade(false), m_btAlpha(0)
@@ -74,7 +75,8 @@ void CSceneManager::ChangeScene(SCENEID eSceneID)
 			m_pCurScene = new CLobby;
 			break;
 
-		case STAGE:
+		case STAGE1_1:
+			m_pCurScene = new CStage1_1;
 			break;
 		}
 

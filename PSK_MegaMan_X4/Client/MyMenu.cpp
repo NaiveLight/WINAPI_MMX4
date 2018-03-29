@@ -22,12 +22,10 @@ void CMyMenu::Init()
 
 void CMyMenu::LateInit()
 {
-	CGameObject* pMenuText = CAbstractFactory<CMenuText>::CreateObj((float)BUFCX / 2.f, (float)BUFCY / 9.f * 5.5f);
-	dynamic_cast<CMenuText*>(pMenuText)->SetFrameKey(L"MENU");
+	CGameObject* pMenuText = CAbstractFactory<CMenuText>::CreateObj((float)BUFCX / 2.f, (float)BUFCY / 9.f * 5.5f, L"MENU", 2, 3, 0, 1);
 	GameManager->AddObject(pMenuText, OBJ_UI);
 
-	CGameObject* pMenuUnder = CAbstractFactory<CMenuUnder>::CreateObj((float)BUFCX / 2.f, (float)(BUFCY / 9.f * 6.8f));
-	dynamic_cast<CMenuUnder*>(pMenuUnder)->SetFrameKey(L"MENU_UNDER");
+	CGameObject* pMenuUnder = CAbstractFactory<CMenuUnder>::CreateObj((float)BUFCX / 2.f, (float)(BUFCY / 9.f * 6.8f) , L"MENU_UNDER");
 	GameManager->AddObject(pMenuUnder, OBJ_UI);
 }
 

@@ -6,6 +6,8 @@ class CPS_Cursor :
 private:
 	CGameObject* m_pX;
 	CGameObject* m_pZero;
+	bool m_bIsSeleted;
+
 public:
 	CPS_Cursor();
 	virtual ~CPS_Cursor();
@@ -17,6 +19,9 @@ public:
 	virtual void LateUpdate() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
+
+public:
+	const bool& GetIsSelected() { return m_bIsSeleted;}
 
 public:
 	void SetTargetX(CGameObject* pObj) { m_pX = pObj; }

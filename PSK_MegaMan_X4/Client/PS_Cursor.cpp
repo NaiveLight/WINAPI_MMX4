@@ -3,6 +3,7 @@
 
 
 CPS_Cursor::CPS_Cursor()
+	:m_pX(nullptr), m_pZero(nullptr), m_bIsSeleted(false)
 {
 }
 
@@ -14,8 +15,8 @@ CPS_Cursor::~CPS_Cursor()
 
 void CPS_Cursor::Init()
 {
-	m_tInfo.fCX = 800.f;
-	m_tInfo.fCY = 700.f;
+	m_tInfo.fCX = 200.f;
+	m_tInfo.fCY = 180.f;
 	m_tFrame.iScene = 1;
 	m_tFrame.iStart = 0;
 	m_tFrame.iEnd = 2;
@@ -25,8 +26,8 @@ void CPS_Cursor::Init()
 
 void CPS_Cursor::LateInit()
 {
-	m_tInfo.fX = m_pX->GetInfo().fX + 50;
-	m_tInfo.fY = m_pX->GetInfo().fY - 50;
+	m_tInfo.fX = m_pX->GetInfo().fX + 5.f;
+	m_tInfo.fY = m_pX->GetInfo().fY - 10.f;
 }
 
 OBJECT_STATE CPS_Cursor::Update()
@@ -41,15 +42,15 @@ void CPS_Cursor::LateUpdate()
 	if (KeyManager->KeyDown(VK_RIGHT))
 	{
 		m_tFrame.iScene = 0;
-		m_tInfo.fX = m_pZero->GetInfo().fX - 10;
-		m_tInfo.fY = m_pZero->GetInfo().fY - 50;
+		m_tInfo.fX = m_pZero->GetInfo().fX;
+		m_tInfo.fY = m_pZero->GetInfo().fY - 10.f;
 	}
 
 	if (KeyManager->KeyDown(VK_LEFT))
 	{
 		m_tFrame.iScene = 1;
-		m_tInfo.fX = m_pX->GetInfo().fX + 40;
-		m_tInfo.fY = m_pX->GetInfo().fY - 50;
+		m_tInfo.fX = m_pX->GetInfo().fX +5.f;
+		m_tInfo.fY = m_pX->GetInfo().fY - 10.f;
 	}
 
 	if (KeyManager->KeyDown('c') ||
@@ -62,6 +63,7 @@ void CPS_Cursor::LateUpdate()
 	{
 		if (m_tFrame.iScene == 1)
 		{
+			m_bIsActive = true;
 			SceneManager->ChangeScene(CSceneManager::LOBBY);
 			return;
 		}

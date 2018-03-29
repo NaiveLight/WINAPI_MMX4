@@ -144,7 +144,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AbstractFactory.h" />
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="BmpManager.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
@@ -152,17 +154,22 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="LBText.h" />
+    <ClInclude Include="LB_X.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="Lobby.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="MapObj.h" />
     <ClInclude Include="MenuText.h" />
     <ClInclude Include="MenuUnder.h" />
     <ClInclude Include="MyBmp.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="MyMenu.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSelect.h" />
     <ClInclude Include="PSText.h" />
     <ClInclude Include="PS_Cursor.h" />
+    <ClInclude Include="PS_SmallX.h" />
     <ClInclude Include="PS_X.h" />
     <ClInclude Include="PS_Zero.h" />
     <ClInclude Include="Resource.h" />
@@ -170,39 +177,50 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="Stage1_1.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TileManager.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Typedef.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BmpManager.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="LBText.cpp" />
+    <ClCompile Include="LB_X.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="MapObj.cpp" />
     <ClCompile Include="MenuText.cpp" />
     <ClCompile Include="MenuUnder.cpp" />
     <ClCompile Include="MyBmp.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="MyMenu.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSelect.cpp" />
     <ClCompile Include="PSText.cpp" />
     <ClCompile Include="PS_Cursor.cpp" />
+    <ClCompile Include="PS_SmallX.cpp" />
     <ClCompile Include="PS_X.cpp" />
     <ClCompile Include="PS_Zero.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="Stage1_1.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>

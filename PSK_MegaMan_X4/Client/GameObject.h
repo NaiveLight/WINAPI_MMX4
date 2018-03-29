@@ -16,9 +16,9 @@ protected:
 	bool m_bIsActive;		// 활성화 되어있는가
 	bool m_bIsLeft;			// 왼쪽을 바라보는가 오른쪽을 바라보는가
 
-	int m_iAttack;			// 공격력
+	int m_iFrameCnt;
+	int m_iSceneCnt;
 	float m_fSpeed;			// 속도
-	int m_iDrawID;
 
 public:
 	CGameObject();
@@ -35,9 +35,11 @@ public:
 public:
 	void UpdateRect();
 	//void UpdateRect(float fX, float fY);
-	void FrameMove();
-	void DrawObject(HDC hDC, const TCHAR* szName);
-	void DrawHitBox(HDC hDC);
+	virtual void FrameMove();
+	void DrawObject(HDC hDC, const TCHAR* pFrameKey);
+	void DrawObjectScroll(HDC hDC, const TCHAR* pFrameKey);
+	void DrawObjectMaxScroll(HDC hDC, const TCHAR* pFrameKey);
+	bool CheckScreen() { return CCollision::Screen(GameManager->GetScreen(), this); }
 
 public:
 	//Getter 
@@ -49,20 +51,22 @@ public:
 	const bool& GetIsLeft()			{ return m_bIsLeft; }
 	const int& GetHitBoxCX()		{ return m_iHitBoxCX; }
 	const int& GetHitBoxCY()		{ return m_iHitBoxCY; }
-	const int& GetAttack()			{ return m_iAttack; }
+	//const int& GetAttack()			{ return m_iAttack; }
 	const float& GetSpeed()			{ return m_fSpeed; }
 
 public:
 	//Setter
-	void SetPos(float& fX, float& fY)		{ m_tInfo.fX = fX; m_tInfo.fY = fY; }
-	void SetHitBox(int& iCX, int& iCY)		{ m_iHitBoxCX = iCX; m_iHitBoxCY = iCY; }
+	void SetPos(float fX, float fY)		{ m_tInfo.fX = fX; m_tInfo.fY = fY; }
+	void SetSize(float fCX, float fCY)		{ m_tInfo.fCX = fCX; m_tInfo.fCY = fCY; }
+	void SetHitBox(int iCX, int iCY)		{ m_iHitBoxCX = iCX; m_iHitBoxCY = iCY; }
 	void SetActive(bool bIsActive)			{ m_bIsActive = bIsActive; }
 	void SetIsLeft(bool bIsLeft)			{ m_bIsLeft = bIsLeft; }
+	void SetFrameStart(int iStart)			{ m_tFrame.iStart = iStart; }
+	void SetFrameEnd(int iEnd)				{ m_tFrame.iEnd = iEnd; }
+	void SetFrameCnt(int iFrameCnt) { m_iFrameCnt = iFrameCnt; }
+	void SetFrameScene(int iScene)			{ m_tFrame.iScene = iScene; }
+	void SetSceneCnt(int iSceneCnt)			{ m_iSceneCnt = iSceneCnt; }
 	void SetTarget(CGameObject* pTarget)	{ m_pTarget = pTarget; }
 	void SetFrameKey(TCHAR* pFrameKey)		{ m_pFrameKey = pFrameKey; }
-	void SetDrawID(int iDrawID)				{ m_iDrawID = iDrawID; }
-
-	void IncreaseDrawID() { m_iDrawID++;}
-	void DecreaseDrawID() { m_iDrawID--; }
 };
 
