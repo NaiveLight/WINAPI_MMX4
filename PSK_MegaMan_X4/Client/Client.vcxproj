@@ -148,6 +148,7 @@
     <ClInclude Include="BmpManager.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Enum.h" />
     <ClInclude Include="Extern.h" />
     <ClInclude Include="Function.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="KeyManager.cpp" />

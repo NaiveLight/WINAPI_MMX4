@@ -6,7 +6,7 @@ CGameObject::CGameObject()
 	:m_tInfo({}), m_tTexRect({}), m_tHitBoxRect({}), m_iHitBoxCX(0), m_iHitBoxCY(0),
 	m_tFrame({}), m_pFrameKey(nullptr), m_pTarget(nullptr),
 	m_bIsInit(false), m_bIsActive(false), m_bIsLeft(false), 
-	m_iFrameCnt(1), m_iSceneCnt(1),  m_fSpeed(0.f)
+	m_iFrameCnt(1), m_iSceneCnt(1),  m_fMaxSpeed(0.f)
 {
 }
 
@@ -99,5 +99,10 @@ void CGameObject::DrawObjectMaxScroll(HDC hDC, const TCHAR * pFrameKey)
 
 	GdiTransparentBlt(hDC, m_tTexRect.left + iScrollX, m_tTexRect.top - iScrollY, (int)m_tInfo.fCX, (int)m_tInfo.fCY, pBmp->GetMemDC(),
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
+}
+
+void CGameObject::DrawHitBox(HDC hDC)
+{
+	Rectangle(hDC, m_tHitBoxRect.left, m_tHitBoxRect.top, m_tHitBoxRect.right, m_tHitBoxRect.bottom);
 }
 

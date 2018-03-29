@@ -21,13 +21,14 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
 
+	virtual void UpdateRect();
+	
 private:
 	void ProcessInput();
 	void Move();
 	void Attack();
 	void Jump();
 	void Dash();
-	void FrameMove();
 	void SceneChange();
 	void ScrollMove();
 

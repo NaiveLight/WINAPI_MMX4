@@ -34,16 +34,16 @@ OBJECT_STATE CLB_X::Update()
 {
 	CGameObject::LateInit();
 
-	if (m_ePrevStance == TALK && m_tFrame.iStart == m_tFrame.iEnd)
-	{
-		m_eCurStance = RUNOUT;
-		SceneChange();
-	}
 	return PLAY;
 }
 
 void CLB_X::LateUpdate()
 {
+	if (m_ePrevStance == TALK && m_tFrame.iStart == m_tFrame.iEnd)
+	{
+		m_eCurStance = RUNOUT;
+	}
+
 	if (m_eCurStance == RUNOUT && m_tFrame.iStart == m_tFrame.iEnd)
 	{
 		if(m_dwStop == 0)

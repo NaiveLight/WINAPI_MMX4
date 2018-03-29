@@ -2,6 +2,8 @@
 #include "Stage1_1.h"
 #include "Player.h"
 #include "MapObj.h"
+#include "Door.h"
+
 
 CStage1_1::CStage1_1()
 {
@@ -25,6 +27,12 @@ void CStage1_1::Init()
 	BmpManager->AddBitMap(L"../MyResource/ST1/MAP_OBJ_7.bmp", L"ST1_OBJ_7");
 	BmpManager->AddBitMap(L"../MyResource/ST1/MAP_OBJ_8.bmp", L"ST1_OBJ_8");
 
+	BmpManager->AddBitMap(L"../MyResource/ST1/ST1_HALF_DOOR.bmp", L"ST1_HALF_DOOR");
+	BmpManager->AddBitMap(L"../MyResource/ST1/ST1_FULL_DOOR.bmp", L"ST1_FULL_DOOR");
+
+	BmpManager->AddBitMap(L"../MyResource/PLAYER/x_left.bmp", L"X_LEFT");
+	BmpManager->AddBitMap(L"../MyResource/PLAYER/x_right.bmp", L"X_RIGHT");
+
 	// Max X : 5064 / Y : 104
 	// Boss 전 X : 4756
 	// Boss 등장 : 1250
@@ -43,6 +51,9 @@ void CStage1_1::Init()
 
 void CStage1_1::LateInit()
 {
+	//CGameObject* pPlayer = CAbstractFactory<CPlayer>::CreateObj();
+	//GameManager->AddObject(pPlayer, OBJ_PLAYER);
+	
 	CGameObject* m_Obj = CAbstractFactory<CMapObj>::CreateObj(77,  141 , L"ST1_OBJ_1");
 	m_Obj->SetSize(150.f, 200.f);
 	INFO temp = { 77, 141, 150, 200 };
@@ -91,7 +102,21 @@ void CStage1_1::LateInit()
 	dynamic_cast<CMapObj*>(m_Obj)->SetOriginInfo(temp);
 	GameManager->AddObject(m_Obj, OBJ_MAP);
 
-	//GameManager->SetScrollX(3576.f);
+	// 문
+	//1530 , 2050, 2560, 3070
+	//CGameObject* pHalfDoor = CAbstractFactory<CDoor>::CreateObj(1665, 131, L"ST1_HALF_DOOR",3, 4, 0, 1);
+	//GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+
+	//pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2181, 130, L"ST1_HALF_DOOR", 3, 4, 0, 1);
+	//GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+
+	//pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2692, 129, L"ST1_HALF_DOOR", 3, 4, 0, 1);
+	//GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+
+	//CGameObject* pFullDoor = CAbstractFactory<CDoor>::CreateObj(3215, 110, L"ST1_FULL_DOOR", 3, 4, 0, 1);
+	//GameManager->AddObject(pFullDoor, OBJ_GROUND);
+
+	//GameManager->SetScrollX(2500.f);
 	//GameManager->SetScrollX(104.f);
 }
 
@@ -132,7 +157,6 @@ void CStage1_1::Render(HDC hDC)
 	float fScrollY = GameManager->GetScrollY();
 
 	DrawBackground(hDC, L"BG_STAGE1_1", fScrollX, fScrollY);
-	Rectangle(hDC, 100, 100, 200, 200);
 	GameManager->Render(hDC);
 
 }

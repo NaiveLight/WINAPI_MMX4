@@ -19,7 +19,7 @@ void CMapObj::Init()
 
 void CMapObj::LateInit()
 {
-	m_bIsActive = true;
+	m_bIsActive = false;
 }
 
 OBJECT_STATE CMapObj::Update()

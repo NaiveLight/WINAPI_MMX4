@@ -40,8 +40,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     LoadStringW(hInstance, IDC_CLIENT, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-	g_lWINCX = 320;
-	g_lWINCY = 240;
+	g_lWINCX = 1280;
+	g_lWINCY = 960;
 
     // 응용 프로그램 초기화를 수행합니다.
     if (!InitInstance (hInstance, nCmdShow))

@@ -16,12 +16,12 @@ void CPS_X::Init()
 {
 	m_tInfo.fCX = 200.f;
 	m_tInfo.fCY = 200.f;
-	m_fSpeed = 10.f;
+	m_fMaxSpeed = 10.f;
 }
 
 OBJECT_STATE CPS_X::Update()
 {
-	m_tInfo.fX += m_fSpeed;
+	m_tInfo.fX += m_fMaxSpeed;
 	return PLAY;
 }
 
@@ -30,7 +30,7 @@ void CPS_X::LateUpdate()
 	CGameObject::UpdateRect();
 
 	if (m_tInfo.fX >= m_tInfo.fCX / 2.f  - 10.f)
-		m_fSpeed = 0.f;
+		m_fMaxSpeed = 0.f;
 }
 
 void CPS_X::Render(HDC hDC)

@@ -269,6 +269,9 @@
     <ClInclude Include="Actor.h">
       <Filter>01.GameObject\01.Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>01.GameObject\01.Actor\01.Door</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -361,6 +364,9 @@
     </ClCompile>
     <ClCompile Include="Actor.cpp">
       <Filter>01.GameObject\01.Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>01.GameObject\01.Actor\01.Door</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

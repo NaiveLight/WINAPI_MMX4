@@ -16,20 +16,26 @@ CPlayer::~CPlayer()
 
 void CPlayer::Init()
 {
-	m_tInfo.fCX = 200.f;
-	m_tInfo.fCY = 200.f;
-	m_iHitBoxCX = 60;
-	m_iHitBoxCY = 100;
+	m_tInfo.fX = 150.f;
+	m_tInfo.fY = 170.f;
+	m_tInfo.fCX = 100.f;
+	m_tInfo.fCY = 100.f;
+	m_iHitBoxCX = 30;
+	m_iHitBoxCY = 45;
 
 	m_pLeftFrameKey = L"X_LEFT";
-	m_pFrameKey = m_pRightFrameKey = L"X_RIGHT";
+	m_pFrameKey = m_pRightFrameKey = L"X_RIGHT"; 
+
+	SetStartPos(m_tInfo.fX, m_tInfo.fY);
 
 	m_bIsActive = true;
 	m_bIsLeft = false;
-	m_tFrame.iScene = 0;
+	m_iFrameCnt = 17;
+	m_iSceneCnt = 24;
+	m_tFrame.iScene = 1;
 	m_tFrame.iStart = 0;
-	m_tFrame.iEnd = 16;
-	m_tFrame.dwSpeed = 50;
+	m_tFrame.iEnd = 4;
+	m_tFrame.dwSpeed = 150;
 	m_tFrame.dwTime = GetTickCount();
 	m_eCurStance = m_ePrevStance = IDLE;
 	m_iArmor = A_NONE;
@@ -43,6 +49,8 @@ void CPlayer::LateInit()
 
 OBJECT_STATE CPlayer::Update()
 {
+	CGameObject::LateInit();
+
 	if (!m_bIsActive)
 	{
 		//Dead();
@@ -60,6 +68,7 @@ OBJECT_STATE CPlayer::Update()
 	Attack();
 
 	m_tInfo.fX += m_fVelocityX;
+	m_fVelocityX = 0;
 
 	return PLAY;
 }
@@ -79,11 +88,37 @@ void CPlayer::LateUpdate()
 
 void CPlayer::Render(HDC hDC)
 {
-	DrawObjectScroll(hDC, m_pFrameKey);
+	int iScrollX = (int)GameManager->GetScrollX();
+	int iScrollY = (int)GameManager->GetScrollY();
+
+	CMyBmp* pBmp = BmpManager->FindImage(m_pFrameKey);
+
+	int iSizeX = pBmp->GetBmpCX() / (m_iFrameCnt);
+	int iSizeY = pBmp->GetBmpCY() / (m_iSceneCnt);
+
+	DrawHitBox(hDC);
+	GdiTransparentBlt(hDC, m_tTexRect.left - iScrollX, m_tTexRect.top - iScrollY, (int)m_tInfo.fCX, (int)m_tInfo.fCY, pBmp->GetMemDC(),
+		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
 void CPlayer::Release()
 {
+}
+
+void CPlayer::UpdateRect()
+{
+	float fScrollX = GameManager->GetScrollX();
+	float fScrollY = GameManager->GetScrollY();
+
+	m_tTexRect.left = LONG(m_tInfo.fX - m_tInfo.fCX / 2);
+	m_tTexRect.top = LONG(m_tInfo.fY - m_tInfo.fCY / 2);
+	m_tTexRect.right = LONG(m_tInfo.fX + m_tInfo.fCX / 2);
+	m_tTexRect.bottom = LONG(m_tInfo.fY + m_tInfo.fCY / 2);
+
+	m_tHitBoxRect.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2 - fScrollX);
+	m_tHitBoxRect.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2 - fScrollY);
+	m_tHitBoxRect.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2 - fScrollX + 5);
+	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2 - fScrollY);
 }
 
 void CPlayer::ProcessInput()
@@ -155,22 +190,8 @@ void CPlayer::ProcessInput()
 
 void CPlayer::Move()
 {
-	if (m_bDash && !m_bAttack)
-	{
-		m_fAccelX = 10.f;
-		m_fSpeed = 5.f;
-
-		if (!m_bJump && !m_bAttack)
-			m_eCurStance = DASH;
-
-		if (m_tFrame.iStart == m_tFrame.iEnd)
-			m_tFrame.iStart = 1;
-	}
-	else if (m_bJump)
-	{
-
-	}
-
+	m_fMaxSpeed = 2.f;
+	m_fAccelX = 1.f;
 	// WALK : 좌우 방향키 Pressing 
 	// 만일 Object와 충돌 중일때 Pressing이 유지되면 벽 매달리기
 
@@ -178,17 +199,25 @@ void CPlayer::Move()
 	{
 		m_bIsLeft = true;
 		m_pFrameKey = m_pLeftFrameKey;
-		if (m_bWall)
-		{
+		m_tFrame.iScene = 6;
+		m_tFrame.iEnd = 15;
 
-		}
+		m_fVelocityX -= m_fMaxSpeed;
 	}
 
 	if (KeyManager->KeyPressing(VK_RIGHT))
 	{
 		m_bIsLeft = false;
 		m_pFrameKey = m_pRightFrameKey;
+		m_fVelocityX += m_fMaxSpeed;
+		m_tFrame.iScene = 6;
+		m_tFrame.iEnd = 15;
 	}
+
+	if (m_fVelocityX > m_fMaxSpeed && m_fVelocityX > 0)
+		m_fVelocityX = m_fMaxSpeed;
+	else if (m_fVelocityX < -m_fMaxSpeed && m_fVelocityX < 0)
+		m_fVelocityX = -m_fMaxSpeed;
 }
 
 void CPlayer::Attack()
@@ -203,12 +232,12 @@ void CPlayer::Dash()
 {
 }
 
-void CPlayer::FrameMove()
-{
-}
-
 void CPlayer::SceneChange()
 {
+	if (m_ePrevStance != m_eCurStance)
+	{
+
+	}
 }
 
 void CPlayer::ScrollMove()
@@ -216,9 +245,9 @@ void CPlayer::ScrollMove()
 	float fScrollX = GameManager->GetScrollX();
 	float fScrollY = GameManager->GetScrollY();
 
-	if (BUFCX * 0.5f < m_tInfo.fX + fScrollX && m_fVelocityX > 0)
-		GameManager->SetScrollX(fScrollX - m_fVelocityX);
+	if (BUFCX * 0.6f  < m_tInfo.fX - fScrollX)
+		GameManager->SetScrollX(m_fMaxSpeed);
 
-	if (BUFCX * 0.5f > m_tInfo.fX + fScrollX && m_fVelocityX < 0)
-		GameManager->SetScrollX(fScrollX - m_fVelocityX);
+	if (BUFCX * 0.4f > m_tInfo.fX - fScrollX)
+		GameManager->SetScrollX(-m_fMaxSpeed);
 }

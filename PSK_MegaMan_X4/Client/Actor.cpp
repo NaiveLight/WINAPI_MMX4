@@ -36,3 +36,4 @@ void CActor::Render(HDC hDC)
 void CActor::Release()
 {
 }
+

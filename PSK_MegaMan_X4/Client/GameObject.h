@@ -18,7 +18,7 @@ protected:
 
 	int m_iFrameCnt;
 	int m_iSceneCnt;
-	float m_fSpeed;			// 속도
+	float m_fMaxSpeed;			// 속도
 
 public:
 	CGameObject();
@@ -33,12 +33,14 @@ public:
 	virtual void Release() = 0;
 
 public:
-	void UpdateRect();
+	virtual void UpdateRect();
 	//void UpdateRect(float fX, float fY);
 	virtual void FrameMove();
 	void DrawObject(HDC hDC, const TCHAR* pFrameKey);
 	void DrawObjectScroll(HDC hDC, const TCHAR* pFrameKey);
 	void DrawObjectMaxScroll(HDC hDC, const TCHAR* pFrameKey);
+
+	virtual void DrawHitBox(HDC hDC);
 	bool CheckScreen() { return CCollision::Screen(GameManager->GetScreen(), this); }
 
 public:
@@ -51,8 +53,7 @@ public:
 	const bool& GetIsLeft()			{ return m_bIsLeft; }
 	const int& GetHitBoxCX()		{ return m_iHitBoxCX; }
 	const int& GetHitBoxCY()		{ return m_iHitBoxCY; }
-	//const int& GetAttack()			{ return m_iAttack; }
-	const float& GetSpeed()			{ return m_fSpeed; }
+	const float& GetSpeed()			{ return m_fMaxSpeed; }
 
 public:
 	//Setter

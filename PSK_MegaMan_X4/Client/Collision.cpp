@@ -20,3 +20,15 @@ bool CCollision::Screen(RECT & tScreen, CGameObject * pObj)
 
 	return false;
 }
+
+bool CCollision::Ground(CGameObject * pPlayer, OBJLIST & srcList)
+{
+	if (!pPlayer->GetIsActive())
+		return false;
+
+	for (auto& pSrc : srcList)
+	{
+
+	}
+	return false;
+}

@@ -38,7 +38,7 @@ void CLobby::Update()
 	//스크롤이 멈추었는지 확인
 	if (GameManager->GetScrollY() != GameManager->GetMaxScrollY())
 	{
-		GameManager->SetScrollY(2.5f);
+		GameManager->SetScrollY(1.0f);
 	}
 	else
 	{
@@ -66,6 +66,12 @@ void CLobby::LateUpdate()
 		KeyManager->KeyDown(VK_SPACE)
 		)
 	{
+		if (!m_bScrollStop)
+		{
+			GameManager->SetScrollY(GameManager->GetMaxScrollY() - GameManager->GetScrollY());
+			return;
+		}
+
 		if (m_pLBText != nullptr)
 		{
 			dynamic_cast<CLBText*>(m_pLBText)->IncreaseFrameStart();

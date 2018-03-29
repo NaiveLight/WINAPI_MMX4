@@ -39,6 +39,7 @@ public:
 
 public:
 	virtual void ApplyDamage(int iDamage) { m_iCurHP -= iDamage; }
+	
 
 protected:
 	int m_iCurHP;
