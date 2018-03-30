@@ -30,8 +30,10 @@ void CStage1_1::Init()
 	BmpManager->AddBitMap(L"../MyResource/ST1/ST1_HALF_DOOR.bmp", L"ST1_HALF_DOOR");
 	BmpManager->AddBitMap(L"../MyResource/ST1/ST1_FULL_DOOR.bmp", L"ST1_FULL_DOOR");
 
-	BmpManager->AddBitMap(L"../MyResource/PLAYER/x_left.bmp", L"X_LEFT");
-	BmpManager->AddBitMap(L"../MyResource/PLAYER/x_right.bmp", L"X_RIGHT");
+	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_LEFT.bmp", L"X_LEFT");
+	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RIGHT.bmp", L"X_RIGHT");
+	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RF_LEFT.bmp", L"X_RF_LEFT");
+	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RF_RIGHT.bmp", L"X_RF_RIGHT");
 
 	// Max X : 5064 / Y : 104
 	// Boss Àü X : 4756
@@ -51,8 +53,8 @@ void CStage1_1::Init()
 
 void CStage1_1::LateInit()
 {
-	//CGameObject* pPlayer = CAbstractFactory<CPlayer>::CreateObj();
-	//GameManager->AddObject(pPlayer, OBJ_PLAYER);
+	CGameObject* pPlayer = CAbstractFactory<CPlayer>::CreateObj();
+	GameManager->AddObject(pPlayer, OBJ_PLAYER);
 	
 	CGameObject* m_Obj = CAbstractFactory<CMapObj>::CreateObj(77,  141 , L"ST1_OBJ_1");
 	m_Obj->SetSize(150.f, 200.f);
@@ -104,17 +106,17 @@ void CStage1_1::LateInit()
 
 	// ¹®
 	//1530 , 2050, 2560, 3070
-	//CGameObject* pHalfDoor = CAbstractFactory<CDoor>::CreateObj(1665, 131, L"ST1_HALF_DOOR",3, 4, 0, 1);
-	//GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+	CGameObject* pHalfDoor = CAbstractFactory<CDoor>::CreateObj(1665, 131, L"ST1_HALF_DOOR",3, 4, 0, 1);
+	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
-	//pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2181, 130, L"ST1_HALF_DOOR", 3, 4, 0, 1);
-	//GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2181, 130, L"ST1_HALF_DOOR", 3, 4, 0, 1);
+	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
-	//pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2692, 129, L"ST1_HALF_DOOR", 3, 4, 0, 1);
-	//GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2692, 129, L"ST1_HALF_DOOR", 3, 4, 0, 1);
+	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
-	//CGameObject* pFullDoor = CAbstractFactory<CDoor>::CreateObj(3215, 110, L"ST1_FULL_DOOR", 3, 4, 0, 1);
-	//GameManager->AddObject(pFullDoor, OBJ_GROUND);
+	CGameObject* pFullDoor = CAbstractFactory<CDoor>::CreateObj(3215, 110, L"ST1_FULL_DOOR", 3, 4, 0, 1);
+	GameManager->AddObject(pFullDoor, OBJ_GROUND);
 
 	//GameManager->SetScrollX(2500.f);
 	//GameManager->SetScrollX(104.f);
@@ -128,25 +130,25 @@ void CStage1_1::Update()
 
 void CStage1_1::LateUpdate()
 {
-	if (KeyManager->KeyPressing(VK_UP))
-	{
-		GameManager->SetScrollY(-5.f);
-	}
+	//if (KeyManager->KeyPressing(VK_UP))
+	//{
+	//	GameManager->SetScrollY(-5.f);
+	//}
 
-	if (KeyManager->KeyPressing(VK_DOWN))
-	{
-		GameManager->SetScrollY(5.f);
-	}
+	//if (KeyManager->KeyPressing(VK_DOWN))
+	//{
+	//	GameManager->SetScrollY(5.f);
+	//}
 
-	if (KeyManager->KeyPressing(VK_LEFT))
-	{
-		GameManager->SetScrollX(-10.f);
-	}
+	//if (KeyManager->KeyPressing(VK_LEFT))
+	//{
+	//	GameManager->SetScrollX(-10.f);
+	//}
 
-	if (KeyManager->KeyPressing(VK_RIGHT))
-	{
-		GameManager->SetScrollX(10.f);
-	}
+	//if (KeyManager->KeyPressing(VK_RIGHT))
+	//{
+	//	GameManager->SetScrollX(10.f);
+	//}
 
 	GameManager->LateUpdate();
 }

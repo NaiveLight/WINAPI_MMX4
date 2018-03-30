@@ -20,6 +20,6 @@ public:
 
 private:
 	INFO m_tOriginInfo;
-
+	bool m_bIsUpdate;
 };
 

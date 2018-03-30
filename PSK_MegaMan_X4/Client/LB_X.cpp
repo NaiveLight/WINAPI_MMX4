@@ -39,6 +39,8 @@ OBJECT_STATE CLB_X::Update()
 
 void CLB_X::LateUpdate()
 {
+	UpdateRect();
+
 	if (m_ePrevStance == TALK && m_tFrame.iStart == m_tFrame.iEnd)
 	{
 		m_eCurStance = RUNOUT;
@@ -55,8 +57,8 @@ void CLB_X::LateUpdate()
 
 	if(!m_bIsPlayed)
 		FrameMove();
+	
 	SceneChange();
-	UpdateRect();
 }
 
 void CLB_X::Render(HDC hDC)

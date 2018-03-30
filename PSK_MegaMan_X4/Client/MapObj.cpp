@@ -19,22 +19,13 @@ void CMapObj::Init()
 
 void CMapObj::LateInit()
 {
-	m_bIsActive = false;
+	m_bIsActive = true;
+	m_bIsUpdate = false;
 }
 
 OBJECT_STATE CMapObj::Update()
 {
 	CGameObject::LateInit();
-
-	if (CheckScreen())
-	{
-		m_bIsActive = true;
-	}
-	else
-	{
-		Init();
-	}
-
 
 	if (m_bIsActive)
 		return PLAY;
@@ -44,8 +35,11 @@ OBJECT_STATE CMapObj::Update()
 
 void CMapObj::LateUpdate()
 {
-	if(m_bIsActive)
+	if (!m_bIsUpdate)
+	{
 		UpdateRect();
+	}
+		
 }
 
 void CMapObj::Render(HDC hDC)

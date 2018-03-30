@@ -59,8 +59,6 @@ OBJECT_STATE CPlayer::Update()
 
 	if (m_eCurStance == DAMAGED)
 		return PLAY;
-
-	ProcessInput();
 	
 	Dash();
 	Move();
@@ -84,21 +82,24 @@ void CPlayer::LateUpdate()
 	UpdateRect();
 	SceneChange();
 	ScrollMove();
+
+	ProcessInput();
 }
 
 void CPlayer::Render(HDC hDC)
 {
-	int iScrollX = (int)GameManager->GetScrollX();
-	int iScrollY = (int)GameManager->GetScrollY();
+	DrawObjectScroll(hDC, m_pFrameKey);
+	//int iScrollX = (int)GameManager->GetScrollX();
+	//int iScrollY = (int)GameManager->GetScrollY();
 
-	CMyBmp* pBmp = BmpManager->FindImage(m_pFrameKey);
+	//CMyBmp* pBmp = BmpManager->FindImage(m_pFrameKey);
 
-	int iSizeX = pBmp->GetBmpCX() / (m_iFrameCnt);
-	int iSizeY = pBmp->GetBmpCY() / (m_iSceneCnt);
+	//int iSizeX = pBmp->GetBmpCX() / (m_iFrameCnt);
+	//int iSizeY = pBmp->GetBmpCY() / (m_iSceneCnt);
 
-	DrawHitBox(hDC);
-	GdiTransparentBlt(hDC, m_tTexRect.left - iScrollX, m_tTexRect.top - iScrollY, (int)m_tInfo.fCX, (int)m_tInfo.fCY, pBmp->GetMemDC(),
-		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
+	//DrawHitBox(hDC);
+	//GdiTransparentBlt(hDC, m_tTexRect.left - iScrollX, m_tTexRect.top - iScrollY, (int)m_tInfo.fCX, (int)m_tInfo.fCY, pBmp->GetMemDC(),
+	//	m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
 void CPlayer::Release()
@@ -127,8 +128,18 @@ void CPlayer::ProcessInput()
 	if (KeyManager->KeyDown('a') || KeyManager->KeyDown('A'))
 	{
 		m_iWeapon++;
+
 		if (m_iWeapon >= W_END)
 			m_iWeapon -= W_END;
+
+		//system("cls");
+		//cout << m_iWeapon << endl;
+
+		if (m_iWeapon == RF)
+		{
+			m_pLeftFrameKey = L"X_RF_LEFT";
+			m_pRightFrameKey = L"X_RF_RIGHT";
+		}
 	}
 
 	//무기 변경
@@ -137,6 +148,12 @@ void CPlayer::ProcessInput()
 		m_iWeapon--;
 		if (m_iWeapon < 0)
 			m_iWeapon += W_END;
+
+		if (m_iWeapon == RF)
+		{
+			m_pLeftFrameKey = L"X_RF_LEFT";
+			m_pRightFrameKey = L"X_RF_RIGHT";
+		}
 	}
 
 	//기가 스킬
@@ -199,8 +216,11 @@ void CPlayer::Move()
 	{
 		m_bIsLeft = true;
 		m_pFrameKey = m_pLeftFrameKey;
-		m_tFrame.iScene = 6;
+
+		if(m_tFrame.iScene != 6)
+			m_tFrame.iScene = 6;
 		m_tFrame.iEnd = 15;
+		m_tFrame.dwTime = 50;
 
 		m_fVelocityX -= m_fMaxSpeed;
 	}
@@ -210,8 +230,10 @@ void CPlayer::Move()
 		m_bIsLeft = false;
 		m_pFrameKey = m_pRightFrameKey;
 		m_fVelocityX += m_fMaxSpeed;
-		m_tFrame.iScene = 6;
+		if (m_tFrame.iScene != 6)
+			m_tFrame.iScene = 6;
 		m_tFrame.iEnd = 15;
+		m_tFrame.dwTime = 50;
 	}
 
 	if (m_fVelocityX > m_fMaxSpeed && m_fVelocityX > 0)
