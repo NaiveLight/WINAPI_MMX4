@@ -52,9 +52,9 @@ void CPlayer::Init()
 	m_fVelocityY = 8.f;
 	m_fJumpSpeed = -6.f;
 	m_fJumpAccel = 0.25f;
-	m_fDashSpeed = 4.f;
+	m_fDashSpeed = 3.5f;
 	m_fDashAccel = 0.25f;
-	m_dwDashTime = 500.f;
+	m_dwDashTime = 1000;
 }
 
 void CPlayer::LateInit()
@@ -80,9 +80,13 @@ OBJECT_STATE CPlayer::Update()
 	if (m_eCurStance == DAMAGE_HIGH || m_eCurStance == DAMAGE_LOW)
 		return PLAY;
 	
-
+	Walk();
+	Dash();
 	Jump();
+	Attack();
 
+	if (m_tInfo.fX < 15)
+		m_tInfo.fX = 15;
 
 	return PLAY;
 }
@@ -208,9 +212,10 @@ void CPlayer::FrameMove()
 				m_eCurStance = GROUND;
 				m_bJump = false;
 			}
-				
-				break;
-		case GROUND:
+			break;
+		case DASH:
+			if (m_bDash && m_tFrame.iStart == 3)
+				return;
 			break;
 		}
 
@@ -238,6 +243,10 @@ void CPlayer::FrameMove()
 			m_tFrame.iStart = m_tFrame.iEnd;
 			break;
 		case GROUND:
+			m_eCurStance = IDLE;
+			break;
+		case DASH:
+			m_bDash = false;
 			m_eCurStance = IDLE;
 			break;
 		}
@@ -284,7 +293,14 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 2;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 1000;
+		m_tFrame.dwSpeed = 50;
+		break;
+	case DASH:
+		m_tFrame.iScene = 9;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 7;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 30;
 		break;
 	}
 }
@@ -358,19 +374,16 @@ void CPlayer::Dash()
 		if (m_bIsLeft)
 			m_fAccelX *= -1.f;
 
-		if (KeyManager->KeyUp('Z'))
+		if (KeyManager->KeyUp('Z') )
 		{
-			m_bDash = false;
+			m_tFrame.iStart = 4;
 			m_fAccelX = 0;
 		}
 
-		if (KeyManager->KeyDown(VK_LEFT) || KeyManager->KeyDown(VK_RIGHT))
-		{
-			m_bDash = false;
-			m_fAccelX = 0;
-		}
-
-		if (m_dwDashStrart + m_dwDashTime < GetTickCount())
+		if (m_bJump ||
+			KeyManager->KeyDown(VK_LEFT) ||
+			KeyManager->KeyDown(VK_RIGHT) ||
+			m_dwDashStrart + m_dwDashTime < GetTickCount())
 		{
 			m_bDash = false;
 			m_fAccelX = 0;
@@ -385,8 +398,8 @@ void CPlayer::Jump()
 
 	if (!m_bJump)
 	{
-		Walk();
-		Dash();
+		//Walk();
+		//Dash();
 
 		m_fVelocityX = m_fAccelX;
 
@@ -414,7 +427,7 @@ void CPlayer::Jump()
 			m_fVelocityY *= -1;
 	}
 
-	if (m_bWalk && m_bGround)
+	if (m_bWalk && m_bGround && !m_bDash)
 	{
 		m_eCurStance = WALK;
 	}
@@ -434,4 +447,13 @@ void CPlayer::Jump()
 
 	m_tInfo.fX += m_fVelocityX;
 	m_tInfo.fY += m_fVelocityY;
+}
+
+void CPlayer::Attack()
+{
+	if (KeyManager->KeyDown('C') || KeyManager->KeyDown('V'))
+	{
+		m_bAttack = true;
+
+	}
 }

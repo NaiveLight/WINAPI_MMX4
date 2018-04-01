@@ -56,6 +56,7 @@ private:
 	void Walk();
 	void Dash();
 	void Jump();
+	void Attack();
 
 private:
 	TCHAR* m_pLeftFrameKey;
@@ -90,13 +91,12 @@ private:
 	// 대시 관련
 	float m_fDashSpeed;
 	float m_fDashAccel;
+	DWORD m_dwDashStrart;
+	DWORD m_dwDashTime;
 
 	// 점프 관련
 	float m_fJumpSpeed;
 	float m_fJumpAccel;
-	
 
-	DWORD m_dwDashStrart;
-	DWORD m_dwDashTime;
 };
 
