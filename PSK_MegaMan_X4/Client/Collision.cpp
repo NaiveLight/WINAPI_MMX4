@@ -49,33 +49,22 @@ bool CCollision::PlayerGround(CPlayer* pPlayer, OBJLIST & srcList)
 					if (pPlayer->GetHitBoxRect().left < pSrc->GetTexRect().left)
 						fMoveX *= -1.f;
 
-					pPlayer->SetPos(pPlayer->GetInfo().fX + fMoveX, pPlayer->GetInfo().fY);
+					pPlayer->SetPos(pPlayer->GetInfo().fX + fMoveX , pPlayer->GetInfo().fY);
 					pPlayer->SetVelocityX(0.f);
+					pPlayer->SetVelocityY(0.f);
 
-					if (KeyManager->KeyPressing(VK_RIGHT) && !pPlayer->GetIsLeft())
-					{
-						pPlayer->SetWall(true);
-						pPlayer->SetVelocityY(1.f);
-					}
-					else if (KeyManager->KeyPressing(VK_LEFT) && pPlayer->GetIsLeft())
-					{
-						pPlayer->SetWall(true);
-						pPlayer->SetVelocityY(1.f);
-					}
-
-					return true;
+					return false;
 				}
 				else
 				{
 					if (pPlayer->GetInfo().fY + pPlayer->GetHitBoxCY() * 0.5f > pSrc->GetTexRect().bottom)
 					{
 						pPlayer->SetPos(pPlayer->GetInfo().fX, pPlayer->GetInfo().fY + fMoveY);
+						
 						return false;
 					}
 					else
 					{
-						cout << "저충돌이야\n" << endl;
-						// 라인충돌.
 						float x1 = float(pSrc->GetTexRect().left);
 						float x2 = float(pSrc->GetTexRect().right);
 						float y = float(pSrc->GetTexRect().top);
@@ -84,6 +73,7 @@ bool CCollision::PlayerGround(CPlayer* pPlayer, OBJLIST & srcList)
 						fMoveY = fGradient * (pPlayer->GetInfo().fX - x1) + y;
 						pPlayer->SetPos(pPlayer->GetInfo().fX, fMoveY - pPlayer->GetHitBoxCY() * 0.45f);
 						pPlayer->SetVelocityY(0);
+
 						return true;
 					}
 					

@@ -122,7 +122,7 @@ void CStage1_1::LateInit()
 	//GameManager->SetScrollX(3700.f);
 	//GameManager->SetScrollX(104.f);
 
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 100}), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 120}), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190, 3790, BUFCY}), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3790, 190 }, POINT{ 3800, 190 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3800, 190 }, POINT{4320, 320}), OBJ_GROUND);

@@ -8,6 +8,7 @@ CPlayer::CPlayer()
 	m_bWalk(false), m_bDash(false), m_bJump(false), m_bAttack(false), m_bCharge(false),
 	m_bGround(false), m_bWall(false), m_bDamaged(false),
 	m_fAccelX(0.f), m_fAccelY(0.f)
+	, m_dwDashStrart(0), m_dwDashTime(0)
 {
 }
 
@@ -46,11 +47,14 @@ void CPlayer::Init()
 	m_iCurHP = m_iMaxHP = 15;
 
 	m_fSpeedX = 2.f;
-	m_fSpeedY = -4.5f;
+	m_fSpeedY = -6.f;
 	m_fVelocityX = 0.f;
 	m_fVelocityY = 8.f;
-	m_fJumpSpeed = -5.5f;
+	m_fJumpSpeed = -6.f;
 	m_fJumpAccel = 0.25f;
+	m_fDashSpeed = 4.f;
+	m_fDashAccel = 0.25f;
+	m_dwDashTime = 500.f;
 }
 
 void CPlayer::LateInit()
@@ -77,44 +81,7 @@ OBJECT_STATE CPlayer::Update()
 		return PLAY;
 	
 
-
-	if (!m_bJump)
-	{
-		Walk();
-
-		m_fVelocityX = m_fAccelX;
-
-		if (KeyManager->KeyPressing('X'))
-		{
-			m_bJump = true;
-			m_fVelocityY = m_fJumpSpeed;
-		}
-	}
-	else
-	{
-		m_fVelocityY += m_fJumpAccel;
-
-		if (m_bGround && m_bWall)
-			m_bJump = false;
-
-		if (KeyManager->KeyUp('X') && m_fVelocityY < 0)
-			m_fVelocityY *= -1;
-			
-	}
-
-	if (m_bJump)
-	{
-		m_eCurStance = JUMP;
-	}
-
-	if (!m_bWalk && !m_bJump)
-	{
-		m_eCurStance = IDLE;
-	}
-	
-
-	m_tInfo.fX += m_fVelocityX;
-	m_tInfo.fY += m_fVelocityY;
+	Jump();
 
 
 	return PLAY;
@@ -129,30 +96,7 @@ void CPlayer::LateUpdate()
 
 	UpdateRect();
 
-	//system("cls");
-	//cout << "INFO\n";
-	//cout << m_tInfo.fX << endl;
-	//cout << m_tInfo.fY << endl;
-
-	//cout << "TEXBOX\n";
-	//cout << m_tTexRect.left << endl;
-	//cout << m_tTexRect.right << endl;
-
-	//cout << "HITBOX\n";
-	//cout << m_tHitBoxRect.left << endl;
-	//cout << m_tHitBoxRect.right << endl;
-
-	//cout << "SCrollX\n";
-	//cout << GameManager->GetScrollX() << endl;
-
-
 	m_bGround = CCollision::PlayerGround(this, GameManager->GetObjList(OBJ_GROUND));
-
-	//if (!m_bGround && !m_bWall)
-	//{
-	//	m_eCurStance =JUMP;
-	//	m_bJump = false;
-	//}
 
 	SceneChange();
 	FrameMove();
@@ -164,7 +108,6 @@ void CPlayer::Render(HDC hDC)
 	float fScrollX = GameManager->GetScrollX();
 	float fScrollY = GameManager->GetScrollY();
 	DrawHitBox(hDC);
-	//Rectangle(hDC, m_tHitBoxRect.left - fScrollX, m_tHitBoxRect.top, m_tHitBoxRect.right - fScrollX, m_tHitBoxRect.bottom);
 	DrawObjectScroll(hDC, m_pFrameKey);
 }
 
@@ -268,8 +211,6 @@ void CPlayer::FrameMove()
 				
 				break;
 		case GROUND:
-			if (!m_bGround)
-				return;
 			break;
 		}
 
@@ -322,7 +263,7 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 3;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 250;
+		m_tFrame.dwSpeed = 200;
 		break;
 	case WALK:
 		m_tFrame.iScene = 4;
@@ -343,7 +284,7 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 2;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 100;
+		m_tFrame.dwSpeed = 1000;
 		break;
 	}
 }
@@ -372,6 +313,9 @@ void CPlayer::Walk()
 {
 	if (KeyManager->KeyPressing(VK_LEFT))
 	{
+		//if (m_bDash)
+		//	m_bDash = false;
+
 		m_bWalk = true;
 		m_bIsLeft = true;
 		m_fAccelX = m_fSpeedX;
@@ -379,6 +323,9 @@ void CPlayer::Walk()
 	}
 	else if (KeyManager->KeyPressing(VK_RIGHT))
 	{
+		//if (m_bDash)
+		//	m_bDash = false;
+
 		m_bWalk = true;
 		m_bIsLeft = false;
 		m_fAccelX = m_fSpeedX;
@@ -387,12 +334,104 @@ void CPlayer::Walk()
 	else
 	{
 		m_bWalk = false;
-		m_fAccelX = 0;
+		m_fAccelX = 0.f;
 	}
 
 	if (m_bIsLeft && m_bWalk)
 		m_fAccelX *= -1;
+}
 
-	if (m_bWalk)
+void CPlayer::Dash()
+{
+	if (!m_bDash && !m_bJump)
+	{
+		if (KeyManager->KeyDown('Z'))
+		{
+			m_dwDashStrart = GetTickCount();
+			m_bDash = true;
+		}
+	}
+	else if (m_bDash)
+	{
+		m_fAccelX = m_fDashSpeed;
+		
+		if (m_bIsLeft)
+			m_fAccelX *= -1.f;
+
+		if (KeyManager->KeyUp('Z'))
+		{
+			m_bDash = false;
+			m_fAccelX = 0;
+		}
+
+		if (KeyManager->KeyDown(VK_LEFT) || KeyManager->KeyDown(VK_RIGHT))
+		{
+			m_bDash = false;
+			m_fAccelX = 0;
+		}
+
+		if (m_dwDashStrart + m_dwDashTime < GetTickCount())
+		{
+			m_bDash = false;
+			m_fAccelX = 0;
+		}
+	}
+
+
+}
+
+void CPlayer::Jump()
+{
+
+	if (!m_bJump)
+	{
+		Walk();
+		Dash();
+
+		m_fVelocityX = m_fAccelX;
+
+		if (KeyManager->KeyPressing('X'))
+		{
+			m_bJump = true;
+
+			if (!m_bWalk && m_bDash)
+			{
+				m_fVelocityX = 0.f;
+				m_bDash = false;
+			}
+
+			m_fVelocityY = m_fJumpSpeed;
+		}
+	}
+	else
+	{
+		m_fVelocityY += m_fJumpAccel;
+
+		if (m_bGround || m_bWall)
+			m_bJump = false;
+
+		if (KeyManager->KeyUp('X') && m_fVelocityY < 0)
+			m_fVelocityY *= -1;
+	}
+
+	if (m_bWalk && m_bGround)
+	{
 		m_eCurStance = WALK;
+	}
+	else if (m_bJump || !m_bGround)
+	{
+		m_eCurStance = JUMP;
+	}
+	else if (m_bDash)
+	{
+		m_eCurStance = DASH;
+	}
+	else if (!m_bWalk && !m_bJump)
+	{
+		m_eCurStance = IDLE;
+	}
+
+
+	m_tInfo.fX += m_fVelocityX;
+	m_tInfo.fY += m_fVelocityY;
 }
