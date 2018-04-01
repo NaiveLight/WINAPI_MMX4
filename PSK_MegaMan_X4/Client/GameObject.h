@@ -18,7 +18,8 @@ protected:
 
 	int m_iFrameCnt;
 	int m_iSceneCnt;
-	float m_fMaxSpeed;			// 속도
+	float m_fSpeedX;			//x 축 최대 속도
+	float m_fSpeedY;
 
 public:
 	CGameObject();
@@ -53,7 +54,7 @@ public:
 	const bool& GetIsLeft()			{ return m_bIsLeft; }
 	const int& GetHitBoxCX()		{ return m_iHitBoxCX; }
 	const int& GetHitBoxCY()		{ return m_iHitBoxCY; }
-	const float& GetSpeed()			{ return m_fMaxSpeed; }
+	const float& GetSpeed()			{ return m_fSpeedX; }
 
 public:
 	//Setter

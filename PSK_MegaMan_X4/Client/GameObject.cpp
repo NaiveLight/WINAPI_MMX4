@@ -6,7 +6,7 @@ CGameObject::CGameObject()
 	:m_tInfo({}), m_tTexRect({}), m_tHitBoxRect({}), m_iHitBoxCX(0), m_iHitBoxCY(0),
 	m_tFrame({}), m_pFrameKey(nullptr), m_pTarget(nullptr),
 	m_bIsInit(false), m_bIsActive(false), m_bIsLeft(false), 
-	m_iFrameCnt(1), m_iSceneCnt(1),  m_fMaxSpeed(0.f)
+	m_iFrameCnt(1), m_iSceneCnt(1),  m_fSpeedX(0.f), m_fSpeedY(0.f)
 {
 }
 
@@ -103,6 +103,8 @@ void CGameObject::DrawObjectMaxScroll(HDC hDC, const TCHAR * pFrameKey)
 
 void CGameObject::DrawHitBox(HDC hDC)
 {
-	Rectangle(hDC, m_tHitBoxRect.left, m_tHitBoxRect.top, m_tHitBoxRect.right, m_tHitBoxRect.bottom);
+	int iScrollX = (int)GameManager->GetScrollX();
+	int iScrollY = (int)GameManager->GetScrollY();
+	Rectangle(hDC, m_tHitBoxRect.left - iScrollX, m_tHitBoxRect.top - iScrollY, m_tHitBoxRect.right - iScrollX, m_tHitBoxRect.bottom - iScrollY);
 }
 

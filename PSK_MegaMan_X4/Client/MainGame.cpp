@@ -19,7 +19,7 @@ void CMainGame::Init()
 	BmpManager->AddBitMap(L"../MyResource/BG/BG_WHITE.bmp", L"BG_WHITE");
 	BmpManager->AddBitMap(L"../MyResource/BG/sz_BG_BLACK.bmp", L"BG_BLACK");
 	BmpManager->AddBitMap(L"../MyResource/BG/BG_TITLE.bmp", L"BG_TITLE");
-	SceneManager->ChangeScene(CSceneManager::MENU);
+	SceneManager->ChangeScene(CSceneManager::STAGE1_1);
 }
 
 void CMainGame::LateInit()

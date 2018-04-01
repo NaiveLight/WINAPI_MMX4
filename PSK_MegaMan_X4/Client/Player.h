@@ -5,9 +5,20 @@ class CPlayer :
 	public CActor
 {
 public:
-	enum STANCE {IDLE, ATT, CHARGE_ATT, WALK, WALK_ATT, DASH, DASH_ATT, DAMAGED, ST_END };
-	enum WEAPON {W_NONE, LW, RF, W_END};
-	enum ARMOR {A_NONE, FORTH, ULTIMATE, A_END};
+	enum STANCE { SPAWN, IDLE, ATTACK_NORMAL, ATTACK_BUSTER,
+									WALK, WALK_ATT,
+									JUMP, JUMP_ATT,
+									GROUND, 
+									DASH, DASH_ATT,
+									WALL, WALL_ATT,
+									WALL_JUMP, WALL_JUMP_ATTACK,
+									DAMAGE_LOW, DAMAGE_HIGH,
+									IDLE_HP_LESS,
+									WARP, ST_END};
+
+	enum WEAPON {W_NONE, RF, W_END};
+	enum ARMOR {A_NONE, ULTIMATE, A_END};
+
 
 public:
 	CPlayer();
@@ -21,16 +32,28 @@ public:
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
 
-	virtual void UpdateRect();
-	
+public :
+	const bool GetJump() { return m_bJump; }
+	const float GetJumpSpeed() { return m_fJumpSpeed; }
+
+public:
+	void SetWall(bool bwall) { m_bWall = bwall; }
+
 private:
-	void ProcessInput();
-	void Move();
-	void Attack();
-	void Jump();
-	void Dash();
+	virtual void UpdateRect();
+	virtual void FrameMove();
 	void SceneChange();
 	void ScrollMove();
+
+private:
+	// 아머 및 무기에 따른 애니메이션 프레임 지정
+	void NoArmorNoWeaponScene();
+	void NoArmorRFScene();
+	void UltiNoWeaponScene();
+	void UltiRFScene();
+
+private:
+	void Walk();
 
 private:
 	TCHAR* m_pLeftFrameKey;
@@ -38,14 +61,18 @@ private:
 
 	STANCE m_eCurStance;
 	STANCE m_ePrevStance;
-	
-	bool m_bAttack;
-	bool m_bJump;
+
+	//입력 관련해서 변하는 상태
+	bool m_bWalk;
 	bool m_bDash;
+	bool m_bJump;
+	bool m_bAttack;
 	bool m_bCharge;
+
+	//충돌 관련해서 변하는 상태
+	bool m_bGround;
 	bool m_bWall;
-	bool m_bIsGround;
-	bool m_bDamage;
+	bool m_bDamaged;
 
 	//아머타입
 	int  m_iArmor;
@@ -53,5 +80,13 @@ private:
 	int m_iWeapon;
 
 	float m_fAngle;
+
+	// 속도 관련
+	float m_fAccelX;
+	float m_fAccelY;
+
+	// 점프 관련
+	float m_fJumpSpeed;
+	float m_fJumpAccel;
 };
 

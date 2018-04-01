@@ -1,5 +1,6 @@
 #pragma once
 
+class CPlayer;
 class CCollision
 {
 public:
@@ -8,6 +9,6 @@ public:
 
 public:
 	static bool Screen(RECT& tScreen, CGameObject* pObj);
-	static bool Ground(CGameObject* pPlayer, OBJLIST& srcList);
+	static bool PlayerGround(CPlayer* pPlayer, OBJLIST& srcList);
 };
 

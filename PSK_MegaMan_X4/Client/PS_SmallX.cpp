@@ -14,8 +14,8 @@ CPS_SmallX::~CPS_SmallX()
 
 void CPS_SmallX::Init()
 {
-	m_tInfo.fCX = 400.f;
-	m_tInfo.fCY = 400.f;
+	m_tInfo.fCX = 100.f;
+	m_tInfo.fCY = 100.f;
 }
 
 void CPS_SmallX::LateInit()
@@ -33,11 +33,6 @@ OBJECT_STATE CPS_SmallX::Update()
 void CPS_SmallX::LateUpdate()
 {
 	FrameMove();
-	if (m_pCursor->GetIsActive())
-	{
-		SceneManager->ChangeScene(CSceneManager::LOBBY);
-		return;
-	}
 }
 
 void CPS_SmallX::Render(HDC hDC)

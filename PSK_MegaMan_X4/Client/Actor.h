@@ -49,13 +49,8 @@ protected:
 	float m_fStartX;
 	float m_fStartY;
 
-	float m_fJumpPower;
-	float m_fDrag;
-
 	float m_fVelocityX;
 	float m_fVelocityY;
-	float m_fAccelX;
-	float m_fAccelY;
 
 	bool m_bIsDamaged;
 };

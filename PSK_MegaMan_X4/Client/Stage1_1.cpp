@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "MapObj.h"
 #include "Door.h"
+#include "Ground.h"
 
 
 CStage1_1::CStage1_1()
@@ -107,19 +108,28 @@ void CStage1_1::LateInit()
 	// ¹®
 	//1530 , 2050, 2560, 3070
 	CGameObject* pHalfDoor = CAbstractFactory<CDoor>::CreateObj(1665, 131, L"ST1_HALF_DOOR",3, 4, 0, 1);
-	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+	GameManager->AddObject(pHalfDoor, OBJ_INTERACT);
 
 	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2181, 130, L"ST1_HALF_DOOR", 3, 4, 0, 1);
-	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+	GameManager->AddObject(pHalfDoor, OBJ_INTERACT);
 
 	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2692, 129, L"ST1_HALF_DOOR", 3, 4, 0, 1);
-	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
+	GameManager->AddObject(pHalfDoor, OBJ_INTERACT);
 
 	CGameObject* pFullDoor = CAbstractFactory<CDoor>::CreateObj(3215, 110, L"ST1_FULL_DOOR", 3, 4, 0, 1);
-	GameManager->AddObject(pFullDoor, OBJ_GROUND);
+	GameManager->AddObject(pFullDoor, OBJ_INTERACT);
 
-	//GameManager->SetScrollX(2500.f);
+	//GameManager->SetScrollX(3700.f);
 	//GameManager->SetScrollX(104.f);
+
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 100}), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190, 3790, BUFCY}), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3790, 190 }, POINT{ 3800, 190 }), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3800, 190 }, POINT{4320, 320}), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4320, 320, 5384, 400 }), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4900, 100, 5050, 145 }), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 5042, 145, 5060, 255 }), OBJ_GROUND);
+
 }
 
 void CStage1_1::Update()
@@ -166,6 +176,9 @@ void CStage1_1::Render(HDC hDC)
 void CStage1_1::Release()
 {
 	GameManager->ReleaseObj(OBJ_PLAYER);
+	GameManager->ReleaseObj(OBJ_INTERACT);
+	GameManager->ReleaseObj(OBJ_GROUND);
+	GameManager->ReleaseObj(OBJ_MAP);
 	GameManager->ReleaseObj(OBJ_MONSTER);
 	GameManager->ReleaseObj(OBJ_UI);
 	GameManager->ResetScroll();

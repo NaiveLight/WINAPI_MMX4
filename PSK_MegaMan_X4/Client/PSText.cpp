@@ -15,18 +15,18 @@ void CPSText::Init()
 {
 	m_tInfo.fCX = 200.f;
 	m_tInfo.fCY = 30.f;
-	m_fMaxSpeed = 2.0f;
+	m_fSpeedX = 2.0f;
 }
 
 OBJECT_STATE CPSText::Update()
 {
 	if (m_bIsLeft)
 	{
-		m_tInfo.fX -= m_fMaxSpeed;
+		m_tInfo.fX -= m_fSpeedX;
 	}
 	else
 	{
-		m_tInfo.fX += m_fMaxSpeed;
+		m_tInfo.fX += m_fSpeedX;
 	}
 
 	return PLAY;

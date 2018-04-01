@@ -65,5 +65,5 @@ void CDoor::UpdateRect()
 	m_tHitBoxRect.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2) - fScrollX + 15;
 	m_tHitBoxRect.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2) - fScrollY + 20;
 	m_tHitBoxRect.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2) - fScrollX + 15;
-	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2) - fScrollY + 20;
+	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2) - fScrollY + 30;
 }

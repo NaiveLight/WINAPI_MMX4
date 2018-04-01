@@ -11,8 +11,8 @@
 // Windows 헤더 파일:
 #include <windows.h>
 
-//#include <iostream>
-//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+#include <iostream>
+#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 
 // C 런타임 헤더 파일입니다.
 #include <stdlib.h>

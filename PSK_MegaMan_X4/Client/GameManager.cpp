@@ -36,11 +36,6 @@ void CGameManager::Update()
 			}
 			else if (WAIT)
 			{
-				//system("cls");
-				//if((*iter_begin)->GetFrameKey() == L"ST1_OBJ_1")
-				//	wcout << (*iter_begin)->GetFrameKey() << endl;
-	
-
 				if (iter_begin == m_ObjectList[i].end())
 					continue;
 				else

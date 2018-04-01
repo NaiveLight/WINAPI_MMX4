@@ -146,6 +146,42 @@
     <Filter Include="01.GameObject\01.Actor\02.BossDoor">
       <UniqueIdentifier>{a7671ad7-3b4a-4a74-9de2-c2a95ea35e09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.GameObject\02.Ground">
+      <UniqueIdentifier>{ad49bc58-64f6-44fb-b5c4-14592d910a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player">
+      <UniqueIdentifier>{7b0e82b0-aaec-43b8-bdc4-b0dbbf72c51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player\00.Fire">
+      <UniqueIdentifier>{7c6476c1-162d-47cc-b564-776379644f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player\01.Dash">
+      <UniqueIdentifier>{9b4e9975-9af5-412d-8652-f618c96f1f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player\02.Charge">
+      <UniqueIdentifier>{18014496-dc69-44c1-802a-6a1775523c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player\03.Wall">
+      <UniqueIdentifier>{b4609edd-f629-4d57-8572-2dc247903e10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player\04.WallKick">
+      <UniqueIdentifier>{dd440d9a-8e1e-4239-b301-e4585393a719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player\NewFilter1">
+      <UniqueIdentifier>{cb6660cb-87f4-4bd1-9863-3f99f40d275d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\01.Explosion">
+      <UniqueIdentifier>{bf0483f9-0849-4fd4-a9d6-dea3dace8c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\02.HUD">
+      <UniqueIdentifier>{e716b3ec-c3f3-4b86-b975-e3ae6f63dc36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\02.HUD\01.BossHPBar">
+      <UniqueIdentifier>{015e4eb9-5636-403d-b19f-73d4bb4f4c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\02.HUD\00.PlayerHPBar">
+      <UniqueIdentifier>{0ea6ad3d-8156-4fa3-b6f3-c3b1fc05d4b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -272,6 +308,9 @@
     <ClInclude Include="Door.h">
       <Filter>01.GameObject\01.Actor\01.Door</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>01.GameObject\02.Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -367,6 +406,9 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>01.GameObject\01.Actor\01.Door</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>01.GameObject\02.Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

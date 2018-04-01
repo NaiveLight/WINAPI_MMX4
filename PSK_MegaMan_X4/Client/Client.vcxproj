@@ -154,6 +154,7 @@
     <ClInclude Include="Function.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LBText.h" />
     <ClInclude Include="LB_X.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LBText.cpp" />
     <ClCompile Include="LB_X.cpp" />

@@ -58,4 +58,21 @@ public:
 
 		return pObj;
 	}
+
+	static CGameObject* CreateRectGround(RECT& rc)
+	{
+		CGameObject* pObj = new T(rc);
+		pObj->Init();
+		pObj->SetIsLeft(true);
+		return pObj;
+	}
+
+	static CGameObject* CreateLineGround(POINT& p1, POINT& p2)
+	{
+		CGameObject* pObj = new T(p1, p2);
+		pObj->Init();
+		pObj->SetIsLeft(false);
+
+		return pObj;
+	}
 };

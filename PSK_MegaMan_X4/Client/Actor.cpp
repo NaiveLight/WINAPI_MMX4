@@ -22,7 +22,7 @@ void CActor::LateInit()
 
 OBJECT_STATE CActor::Update()
 {
-	return OBJECT_STATE();
+	return PLAY;
 }
 
 void CActor::LateUpdate()
