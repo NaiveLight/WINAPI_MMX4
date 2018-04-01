@@ -21,6 +21,7 @@ void CDoor::Init()
 	m_tFrame.dwSpeed = 50;
 	m_tFrame.dwTime = GetTickCount();
 	m_iCurHP = m_iMaxHP = 5;
+	m_bIsDamaged = false;
 }
 
 void CDoor::LateInit()
@@ -29,23 +30,40 @@ void CDoor::LateInit()
 
 OBJECT_STATE CDoor::Update()
 {
-	LateInit();
+	CGameObject::LateInit();
 
-	return OBJECT_STATE();
+	//if (!m_bIsActive)
+	//{
+	//	if (CCollision::Screen(GameManager->GetScreen(), this))
+	//		m_bIsActive = true;
+	//}
+	//if (m_bIsActive)
+	//	return PLAY;
+	//else
+	//	return WAIT;
+	return PLAY;
 }
 
 void CDoor::LateUpdate()
 {
-	UpdateRect();
+	//if (m_bIsActive)
+	//{
+	//	UpdateRect();
 
-	if (m_bIsDamaged)
-		FrameMove();
+	//	if (m_bIsDamaged)
+	//		FrameMove();
+	//}
+	UpdateRect();
 }
 
 void CDoor::Render(HDC hDC)
 {
+	float fScrollX = GameManager->GetScrollX();
+	float fScrollY = GameManager->GetScrollY();
+
+
 	DrawObjectScroll(hDC, m_pFrameKey);
-	Rectangle(hDC, m_tHitBoxRect.left, m_tHitBoxRect.top, m_tHitBoxRect.right, m_tHitBoxRect.bottom);
+	Rectangle(hDC, m_tHitBoxRect.left - fScrollX, m_tHitBoxRect.top - fScrollY, m_tHitBoxRect.right - fScrollX, m_tHitBoxRect.bottom - fScrollY);
 }
 
 void CDoor::Release()
@@ -54,16 +72,13 @@ void CDoor::Release()
 
 void CDoor::UpdateRect()
 {
-	float fScrollX = GameManager->GetScrollX();
-	float fScrollY = GameManager->GetScrollY();
-
 	m_tTexRect.left = LONG(m_tInfo.fX - m_tInfo.fCX / 2);
 	m_tTexRect.top = LONG(m_tInfo.fY - m_tInfo.fCY / 2);
 	m_tTexRect.right = LONG(m_tInfo.fX + m_tInfo.fCX / 2);
 	m_tTexRect.bottom = LONG(m_tInfo.fY + m_tInfo.fCY / 2);
 
-	m_tHitBoxRect.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2) - fScrollX + 15;
-	m_tHitBoxRect.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2) - fScrollY + 20;
-	m_tHitBoxRect.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2) - fScrollX + 15;
-	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2) - fScrollY + 30;
+	m_tHitBoxRect.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2) + 15;
+	m_tHitBoxRect.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2) + 20;
+	m_tHitBoxRect.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2) + 15;
+	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2) + 30;
 }

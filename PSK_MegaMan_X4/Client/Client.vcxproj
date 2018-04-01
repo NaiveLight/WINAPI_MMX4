@@ -146,6 +146,7 @@
     <ClInclude Include="AbstractFactory.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="BmpManager.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Door.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="MyMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerHPBar.h" />
     <ClInclude Include="PlayerSelect.h" />
     <ClInclude Include="PSText.h" />
     <ClInclude Include="PS_Cursor.h" />
@@ -190,6 +192,7 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BmpManager.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -208,6 +211,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="MyMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerHPBar.cpp" />
     <ClCompile Include="PlayerSelect.cpp" />
     <ClCompile Include="PSText.cpp" />
     <ClCompile Include="PS_Cursor.cpp" />

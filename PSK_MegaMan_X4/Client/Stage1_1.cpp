@@ -36,6 +36,8 @@ void CStage1_1::Init()
 	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RF_LEFT.bmp", L"X_RF_LEFT");
 	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RF_RIGHT.bmp", L"X_RF_RIGHT");
 
+	BmpManager->AddBitMap(L"../MyResource/UI/HUD_HPBAR.bmp", L"PLAYER_HP_BAR");
+
 	// Max X : 5064 / Y : 104
 	// Boss ¿¸ X : 4756
 	// Boss µÓ¿Â : 1250

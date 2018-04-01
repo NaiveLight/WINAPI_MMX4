@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "PlayerHPBar.h"
 
 
 CPlayer::CPlayer()
@@ -8,7 +9,8 @@ CPlayer::CPlayer()
 	m_bWalk(false), m_bDash(false), m_bJump(false), m_bAttack(false), m_bCharge(false),
 	m_bGround(false), m_bWall(false), m_bDamaged(false),
 	m_fAccelX(0.f), m_fAccelY(0.f)
-	, m_dwDashStrart(0), m_dwDashTime(0)
+	, m_dwDashStrart(0), m_dwDashTime(0),
+	m_iLife(0)
 {
 }
 
@@ -44,7 +46,7 @@ void CPlayer::Init()
 	m_eCurStance = m_ePrevStance = SPAWN;
 	m_iArmor = A_NONE;
 	m_iWeapon = W_NONE;
-	m_iCurHP = m_iMaxHP = 15;
+	
 
 	m_fSpeedX = 2.f;
 	m_fSpeedY = -6.f;
@@ -55,10 +57,16 @@ void CPlayer::Init()
 	m_fDashSpeed = 3.5f;
 	m_fDashAccel = 0.25f;
 	m_dwDashTime = 1000;
+
+	m_iCurHP = m_iMaxHP = 15;
+	m_iLife = 3;
 }
 
 void CPlayer::LateInit()
 {
+	CGameObject* pHPbar = CAbstractFactory<CPlayerHPBar>::CreateObj(25, BUFCY / 3.5f, L"PLAYER_HP_BAR", 1, 2, 0, 1);
+	pHPbar->SetTarget(this);
+	GameManager->AddObject(pHPbar, OBJ_UI);
 }
 
 OBJECT_STATE CPlayer::Update()

@@ -33,6 +33,7 @@ public:
 	virtual void Release() override;
 
 public :
+	const int GetLife() { return m_iLife; }
 	const bool GetJump() { return m_bJump; }
 	const float GetJumpSpeed() { return m_fJumpSpeed; }
 
@@ -98,5 +99,6 @@ private:
 	float m_fJumpSpeed;
 	float m_fJumpAccel;
 
+	int m_iLife;
 };
 

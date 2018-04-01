@@ -22,6 +22,8 @@ public:
 	virtual void Release() override;
 
 public:
+	const int GetCurHp() { return m_iCurHP; }
+	const int GetMaxHp() { return m_iMaxHP; }
 	const float GetHPRatio() { return m_iCurHP / (float)m_iMaxHP; }
 	const int GetAttack() { return m_iAttack; }
 	const float GetVelocityX(){ return m_fVelocityX; }

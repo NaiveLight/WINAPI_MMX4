@@ -49,8 +49,8 @@ void CGameManager::Update()
 
 void CGameManager::LateUpdate()
 {
-	m_tScreenRect = { LONG(-50 + m_fScrollX), LONG(0 + m_fScrollY),
-		LONG(BUFCX + m_fScrollX), LONG(BUFCY+ m_fScrollY) };
+	m_tScreenRect = { LONG(-50 - m_fScrollX), LONG(0 - m_fScrollY),
+		LONG(BUFCX - m_fScrollX), LONG(BUFCY- m_fScrollY) };
 
 	for (int i = 0; i < OBJ_END; ++i)
 	{

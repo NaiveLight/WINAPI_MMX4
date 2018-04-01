@@ -182,6 +182,9 @@
     <Filter Include="06.UI\02.HUD\00.PlayerHPBar">
       <UniqueIdentifier>{0ea6ad3d-8156-4fa3-b6f3-c3b1fc05d4b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Player\00.Bullet">
+      <UniqueIdentifier>{0662af90-8c0a-4b8d-9562-915e82909625}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -311,6 +314,12 @@
     <ClInclude Include="Ground.h">
       <Filter>01.GameObject\02.Ground</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>02.Player\00.Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHPBar.h">
+      <Filter>06.UI\02.HUD\00.PlayerHPBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -409,6 +418,12 @@
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>01.GameObject\02.Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>02.Player\00.Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHPBar.cpp">
+      <Filter>06.UI\02.HUD\00.PlayerHPBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
