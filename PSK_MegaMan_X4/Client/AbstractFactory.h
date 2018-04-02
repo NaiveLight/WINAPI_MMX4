@@ -45,6 +45,19 @@ public:
 		return pObj;
 	}
 
+	static CGameObject* CreateObj(TCHAR* pFrameKey, int iEnd, int m_iFrameCnt, int iScene, int iSceneCnt)
+	{
+		CGameObject* pObj = new T;
+		pObj->Init();
+		pObj->SetFrameKey(pFrameKey);
+		pObj->SetFrameEnd(iEnd);
+		pObj->SetFrameCnt(m_iFrameCnt);
+		pObj->SetFrameScene(iScene);
+		pObj->SetSceneCnt(iSceneCnt);
+
+		return pObj;
+	}
+
 	static CGameObject* CreateObj(float fX, float fY, TCHAR* pFrameKey, int iEnd, int m_iFrameCnt, int iScene, int iSceneCnt)
 	{
 		CGameObject* pObj = new T;

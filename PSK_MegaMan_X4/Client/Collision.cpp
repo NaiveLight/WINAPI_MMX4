@@ -51,7 +51,7 @@ bool CCollision::PlayerGround(CPlayer* pPlayer, OBJLIST & srcList)
 
 					pPlayer->SetPos(pPlayer->GetInfo().fX + fMoveX , pPlayer->GetInfo().fY);
 					pPlayer->SetVelocityX(0.f);
-					pPlayer->SetVelocityY(0.f);
+					pPlayer->SetVelocityY(1.f);
 
 					return false;
 				}
@@ -60,7 +60,6 @@ bool CCollision::PlayerGround(CPlayer* pPlayer, OBJLIST & srcList)
 					if (pPlayer->GetInfo().fY + pPlayer->GetHitBoxCY() * 0.5f > pSrc->GetTexRect().bottom)
 					{
 						pPlayer->SetPos(pPlayer->GetInfo().fX, pPlayer->GetInfo().fY + fMoveY);
-						
 						return false;
 					}
 					else
@@ -72,8 +71,7 @@ bool CCollision::PlayerGround(CPlayer* pPlayer, OBJLIST & srcList)
 						float fGradient = (y - y) / (x2 - x1);
 						fMoveY = fGradient * (pPlayer->GetInfo().fX - x1) + y;
 						pPlayer->SetPos(pPlayer->GetInfo().fX, fMoveY - pPlayer->GetHitBoxCY() * 0.45f);
-						pPlayer->SetVelocityY(0);
-
+						pPlayer->SetVelocityY(0.f);
 						return true;
 					}
 					
@@ -101,7 +99,7 @@ bool CCollision::PlayerGround(CPlayer* pPlayer, OBJLIST & srcList)
 					return false;
 
 				pPlayer->SetPos(pPlayer->GetInfo().fX, fMoveY - pPlayer->GetHitBoxCY() * 0.45f);
-				pPlayer->SetVelocityY(0.f);
+				pPlayer->SetVelocityY(2.5f);
 				return true;
 			}
 		}

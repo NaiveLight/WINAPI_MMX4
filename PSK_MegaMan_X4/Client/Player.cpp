@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "PlayerHPBar.h"
-
+#include "Bullet_Normal.h"
+#include "Effect_NB_Fire.h"
+#include "Effect_Charge.h"
+#include "Effect_Charge_Body.h"
 
 CPlayer::CPlayer()
 	:m_pLeftFrameKey(nullptr), m_pRightFrameKey(nullptr),
@@ -10,6 +13,7 @@ CPlayer::CPlayer()
 	m_bGround(false), m_bWall(false), m_bDamaged(false),
 	m_fAccelX(0.f), m_fAccelY(0.f)
 	, m_dwDashStrart(0), m_dwDashTime(0),
+	m_dwChargeStart(0), m_dwChargeTime(0),
 	m_iLife(0)
 {
 }
@@ -57,6 +61,7 @@ void CPlayer::Init()
 	m_fDashSpeed = 3.5f;
 	m_fDashAccel = 0.25f;
 	m_dwDashTime = 1000;
+	m_dwChargeTime = 1000;
 
 	m_iCurHP = m_iMaxHP = 15;
 	m_iLife = 3;
@@ -263,7 +268,7 @@ void CPlayer::FrameMove()
 			m_tFrame.iStart = 0;
 			break;
 		// IDLE에서 ATTACK했을시 다시 IDLE로 돌아가야함
-		case ATTACK_NORMAL: case ATTACK_BUSTER:
+		case ATTACK_NORMAL:
 			m_bAttack = false;
 			m_eCurStance = IDLE;
 			break;
@@ -328,13 +333,6 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.iEnd = 7;
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 30;
-		break;
-	case ATTACK_BUSTER:
-		m_tFrame.iScene = 3;
-		m_tFrame.iStart = 0;
-		m_tFrame.iEnd = 7;
-		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
 		break;
 	case WALK:
 		m_tFrame.iScene = 4;
@@ -477,9 +475,7 @@ void CPlayer::Dash()
 		if (m_bIsLeft)
 			m_fAccelX *= -1.f;
 
-		if (KeyManager->KeyUp('Z') 
-			||
-			m_dwDashStrart + m_dwDashTime < GetTickCount())
+		if (KeyManager->KeyUp('Z') )
 		{
 			m_tFrame.iStart = 4;
 			m_fAccelX = 0;
@@ -487,7 +483,8 @@ void CPlayer::Dash()
 
 		if (m_bJump ||
 			KeyManager->KeyDown(VK_LEFT) ||
-			KeyManager->KeyDown(VK_RIGHT) )
+			KeyManager->KeyDown(VK_RIGHT) ||
+			m_dwDashStrart + m_dwDashTime < GetTickCount())
 		{
 			m_iHitBoxCX = m_iOriginHitBoxCX;
 			m_iHitBoxCY = m_iOriginHitBoxCY;
@@ -506,6 +503,7 @@ void CPlayer::Jump()
 	{
 		m_fVelocityX = m_fAccelX;
 
+		Attack();
 		if (KeyManager->KeyPressing('X'))
 		{
 			m_bJump = true;
@@ -548,12 +546,86 @@ void CPlayer::Attack()
 {
 	if (KeyManager->KeyDown('C') || KeyManager->KeyDown('V'))
 	{
+		cout << "normal attack\n";
 		m_bAttack = true;
 		m_iPrevFrame = m_tFrame.iStart;
+		m_dwAttackStart = GetTickCount();
+
+		CGameObject* pEffect = CAbstractFactory<CEffect_NB_Fire>::CreateObj(L"E_NB_FIRE_L", 4, 5, 0, 1);
+		pEffect->SetTarget(this);
+		GameManager->AddObject(pEffect, OBJ_EFFECT);
+		// create normal bullet
+		CGameObject* pBullet = CAbstractFactory<CBullet_Normal>::CreateObj(L"BULLET_NBR", 4, 5, 0, 1);
+		pBullet->SetTarget(this);
+		GameManager->AddObject(pBullet, OBJ_BULLET);
 	}
 	else
 	{
-		m_iPrevFrame = m_tFrame.iStart;
+		if (!m_bCharge && m_dwAttackStart + 500 < GetTickCount())
+		{
+			if (KeyManager->KeyPressing('C') || KeyManager->KeyDown('V'))
+			{
+				m_bCharge = true;
+				m_dwChargeStart = GetTickCount();
+				// create charge 1 effect 
+				CGameObject* pEffect = CAbstractFactory<CEffect_Charge>::CreateObj(L"E_CHARGE", 9, 10, 0, 1);
+				pEffect->SetTarget(this);
+				GameManager->AddObject(pEffect, OBJ_EFFECT);
+			}
+		}
+		else if(m_bCharge)
+		{
+			if (!m_bBodyEffectBlue)
+			{
+				if (m_dwChargeStart + 500 < GetTickCount())
+				{
+					CGameObject* pEffect = CAbstractFactory<CEffect_Charge_Body>::CreateObj(L"E_CHARGE_BODY", 3, 4, 0, 1);
+					pEffect->SetSize(80, 80);
+					pEffect->SetTarget(this);
+					GameManager->AddObject(pEffect, OBJ_EFFECT);
+				}
+			}
+
+			if (!m_bBodyEffectGreen)
+			{
+				if (m_dwChargeStart + 800 < GetTickCount())
+				{
+					CGameObject* pEffect = CAbstractFactory<CEffect_Charge>::CreateObj(L"E_CHARGE_G", 9, 10, 0, 1);
+					pEffect->SetTarget(this);
+					GameManager->AddObject(pEffect, OBJ_EFFECT);
+
+					pEffect = CAbstractFactory<CEffect_Charge_Body>::CreateObj(L"E_CHARGE_BODY_G", 3, 4, 0, 1);
+					pEffect->SetTarget(this);
+					GameManager->AddObject(pEffect, OBJ_EFFECT);
+
+					m_bBodyEffectGreen = true;
+				}
+			}
+
+			//create charge 2 effect
+			if (KeyManager->KeyUp('C') || KeyManager->KeyUp('V'))
+			{
+				if (m_dwChargeStart + m_dwChargeTime < GetTickCount())
+				{
+					// create full buster bullet & Effect
+					cout << "Full Buster\n";
+				}
+				else
+				{
+					// create semi buster bullet & effect
+					cout << "Semi buster\n";
+				}
+
+				m_bAttack = true;
+				m_bCharge = false;
+				m_bBodyEffectBlue = false;
+				m_bBodyEffectGreen = false;
+				m_iPrevFrame = m_tFrame.iStart;
+
+				//remove charge effect
+			}
+			m_iPrevFrame = m_tFrame.iStart;
+		}
 	}
 
 	if (m_bWalk && m_bGround && !m_bDash)
@@ -579,7 +651,7 @@ void CPlayer::Attack()
 	}
 	else if (!m_bWalk && !m_bJump)
 	{
-		if (m_bAttack && !m_bCharge)
+		if (m_bAttack)
 			m_eCurStance = ATTACK_NORMAL;
 		else if(!m_bAttack)
 			m_eCurStance = IDLE;

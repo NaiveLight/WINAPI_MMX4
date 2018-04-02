@@ -152,9 +152,6 @@
     <Filter Include="04.Effect\00.Player">
       <UniqueIdentifier>{7b0e82b0-aaec-43b8-bdc4-b0dbbf72c51e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Effect\00.Player\00.Fire">
-      <UniqueIdentifier>{7c6476c1-162d-47cc-b564-776379644f7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04.Effect\00.Player\01.Dash">
       <UniqueIdentifier>{9b4e9975-9af5-412d-8652-f618c96f1f11}</UniqueIdentifier>
     </Filter>
@@ -167,12 +164,6 @@
     <Filter Include="04.Effect\00.Player\04.WallKick">
       <UniqueIdentifier>{dd440d9a-8e1e-4239-b301-e4585393a719}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Effect\00.Player\NewFilter1">
-      <UniqueIdentifier>{cb6660cb-87f4-4bd1-9863-3f99f40d275d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04.Effect\01.Explosion">
-      <UniqueIdentifier>{bf0483f9-0849-4fd4-a9d6-dea3dace8c96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06.UI\02.HUD">
       <UniqueIdentifier>{e716b3ec-c3f3-4b86-b975-e3ae6f63dc36}</UniqueIdentifier>
     </Filter>
@@ -184,6 +175,27 @@
     </Filter>
     <Filter Include="02.Player\00.Bullet">
       <UniqueIdentifier>{0662af90-8c0a-4b8d-9562-915e82909625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Player\00.Bullet\00.Bullet_Normal">
+      <UniqueIdentifier>{9718a868-f27c-401d-8f9a-5a3a9f12d13b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Player\00.Bullet\01.Bullet_SemiBuster">
+      <UniqueIdentifier>{ed2b3872-2fee-4b1c-a6fa-fb86f122088f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Player\00.Bullet\02.Bullet_FullBuster">
+      <UniqueIdentifier>{38757a83-e6da-4f2a-b2c6-4f8f6780531d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\01.Bullet">
+      <UniqueIdentifier>{7c6476c1-162d-47cc-b564-776379644f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\02.Explosion">
+      <UniqueIdentifier>{bf0483f9-0849-4fd4-a9d6-dea3dace8c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\00.Player\05.Attack">
+      <UniqueIdentifier>{cb6660cb-87f4-4bd1-9863-3f99f40d275d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\01.Bullet\00.NormalBullet">
+      <UniqueIdentifier>{9897c08f-6a1e-46c7-a78e-dbc60a586eed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +332,23 @@
     <ClInclude Include="PlayerHPBar.h">
       <Filter>06.UI\02.HUD\00.PlayerHPBar</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet_Normal.h">
+      <Filter>02.Player\00.Bullet\00.Bullet_Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet_SemiBuster.h">
+      <Filter>02.Player\00.Bullet\01.Bullet_SemiBuster</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet_FullBuster.h">
+      <Filter>02.Player\00.Bullet\02.Bullet_FullBuster</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="Effect_NB_Fire.h">
+      <Filter>04.Effect\01.Bullet\00.NormalBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Charge.h">
+      <Filter>04.Effect\00.Player\02.Charge</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Charge_Body.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -425,6 +454,23 @@
     <ClCompile Include="PlayerHPBar.cpp">
       <Filter>06.UI\02.HUD\00.PlayerHPBar</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet_Normal.cpp">
+      <Filter>02.Player\00.Bullet\00.Bullet_Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_SemiBuster.cpp">
+      <Filter>02.Player\00.Bullet\01.Bullet_SemiBuster</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_FullBuster.cpp">
+      <Filter>02.Player\00.Bullet\02.Bullet_FullBuster</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Effect_NB_Fire.cpp">
+      <Filter>04.Effect\01.Bullet\00.NormalBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Charge.cpp">
+      <Filter>04.Effect\00.Player\02.Charge</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Charge_Body.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

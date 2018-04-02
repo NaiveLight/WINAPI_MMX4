@@ -19,6 +19,7 @@ void CStage1_1::Init()
 {
 	BmpManager->AddBitMap(L"../MyResource/BG/BG_ST1_1.bmp", L"BG_STAGE1_1");
 
+	//배경 이미지
 	BmpManager->AddBitMap(L"../MyResource/ST1/MAP_OBJ_1.bmp", L"ST1_OBJ_1");
 	BmpManager->AddBitMap(L"../MyResource/ST1/MAP_OBJ_2.bmp", L"ST1_OBJ_2");
 	BmpManager->AddBitMap(L"../MyResource/ST1/MAP_OBJ_3.bmp", L"ST1_OBJ_3");
@@ -28,15 +29,48 @@ void CStage1_1::Init()
 	BmpManager->AddBitMap(L"../MyResource/ST1/MAP_OBJ_7.bmp", L"ST1_OBJ_7");
 	BmpManager->AddBitMap(L"../MyResource/ST1/MAP_OBJ_8.bmp", L"ST1_OBJ_8");
 
+	// 인터랙션 
 	BmpManager->AddBitMap(L"../MyResource/ST1/ST1_HALF_DOOR.bmp", L"ST1_HALF_DOOR");
 	BmpManager->AddBitMap(L"../MyResource/ST1/ST1_FULL_DOOR.bmp", L"ST1_FULL_DOOR");
 
+	// 캐릭터
 	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_LEFT.bmp", L"X_LEFT");
 	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RIGHT.bmp", L"X_RIGHT");
 	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RF_LEFT.bmp", L"X_RF_LEFT");
 	BmpManager->AddBitMap(L"../MyResource/PLAYER/X_RF_RIGHT.bmp", L"X_RF_RIGHT");
 
+	//UI
 	BmpManager->AddBitMap(L"../MyResource/UI/HUD_HPBAR.bmp", L"PLAYER_HP_BAR");
+
+	// 총알 이미지
+	BmpManager->AddBitMap(L"../MyResource/BULLET/BULLET_BUSTER_LARGE_LEFT.bmp", L"BULLET_BLL");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/BULLET_BUSTER_LARGE_RIGHT.bmp", L"BULLET_BLR");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/BULLET_BUSTER_SMALL_LEFT.bmp", L"BULLET_BSL");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/BULLET_BUSTER_SMALL_RIGHT.bmp", L"BULLET_BSR");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/BULLET_NORMAL_LEFT.bmp", L"BULLET_NBL");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/BULLET_NORMAL_RIGHT.bmp", L"BULLET_NBR");
+
+	//차지 이펙트
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_CHARGE.bmp", L"E_CHARGE");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_CHARGE_BODY.bmp", L"E_CHARGE_BODY");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_CHARGE_GREEN.bmp", L"E_CHARGE_G");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_CHARGE_BODY_GREEN.bmp", L"E_CHARGE_BODY_G");
+
+	// 총알 히트 이펙트
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BULLET_BLOCKED_LEFT.bmp", L"E_BLOCK_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BULLET_BLOCKED_RIGHT.bmp", L"E_BLOCK_R");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_NORMAL_BULLET_COLLISION_LEFT.bmp", L"E_NB_HIT_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_NORMAL_BULLET_COLLISION_RIGHT.bmp", L"E_NB_HIT_R");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_BULLET_COLLISON_LEFT.bmp", L"E_BL_HIT_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_BULLET_COLLISON_RIGHT.bmp", L"E_BL_HIT_R");
+
+	// 총알 발사 이펙트
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BULLET_NORMAL_LEFT.bmp", L"E_NB_FIRE_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BULLET_NORMAL_RIGHT.bmp", L"E_NB_FIRE_R");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_SMALL_LEFT.bmp", L"E_BS_FIRE_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_SMALL_RIGHT.bmp", L"E_BS_FIRE_R");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_LARGE_LEFT.bmp", L"E_BL_FIRE_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_LARGE_RIGHT.bmp", L"E_BL_FIRE_R");
 
 	// Max X : 5064 / Y : 104
 	// Boss 전 X : 4756
@@ -125,7 +159,8 @@ void CStage1_1::LateInit()
 	//GameManager->SetScrollX(104.f);
 
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 120}), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190, 3800, 200}), OBJ_GROUND);
+	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190, 3800, 200}), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 0, 190 }, POINT{ 3800, 190 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3800, 190 }, POINT{4320, 320}), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4320, 320, 5384, 400 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4900, 100, 5050, 145 }), OBJ_GROUND);

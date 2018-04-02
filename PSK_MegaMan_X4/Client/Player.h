@@ -36,6 +36,8 @@ public :
 	const int GetLife() { return m_iLife; }
 	const bool GetJump() { return m_bJump; }
 	const float GetJumpSpeed() { return m_fJumpSpeed; }
+	const bool GetIsCharge() { return m_bCharge; }
+	const STANCE GetStance() { return m_eCurStance; }
 
 public:
 	void SetWall(bool bwall) { m_bWall = bwall; }
@@ -75,6 +77,7 @@ private:
 	bool m_bJump;
 	bool m_bAttack;
 	bool m_bCharge;
+	bool m_bFire_Charge;
 
 	//충돌 관련해서 변하는 상태
 	bool m_bGround;
@@ -102,7 +105,16 @@ private:
 	float m_fJumpSpeed;
 	float m_fJumpAccel;
 
+	DWORD m_dwAttackStart;
+
+	// 차지 공격 관련
+	STANCE m_ePrevChargeStance;
+	DWORD m_dwChargeStart;
+	DWORD m_dwChargeTime;
+	bool m_bBodyEffectBlue = false;
+	bool m_bBodyEffectGreen = false;
+
 	int m_iPrevFrame = 0;
-	int m_iLife;
+	int m_iLife = 3;
 };
 

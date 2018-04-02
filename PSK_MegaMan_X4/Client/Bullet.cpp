@@ -14,7 +14,6 @@ CBullet::~CBullet()
 
 void CBullet::Init()
 {
-	//m_iAttack = 
 }
 
 void CBullet::LateInit()

@@ -101,6 +101,30 @@ void CGameObject::DrawObjectMaxScroll(HDC hDC, const TCHAR * pFrameKey)
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
+void CGameObject::DrawAlphaScroll(HDC hDC, const TCHAR * pFrameKey, float alpha)
+{
+	HDC temphDC = GetDC(g_hWnd);
+
+	HDC hMemDC = CreateCompatibleDC(temphDC);
+	ReleaseDC(g_hWnd, temphDC);
+
+	CMyBmp* pBmp = BmpManager->FindImage(pFrameKey);
+
+	int iScrollX = (int)GameManager->GetScrollX();
+	int iScrollY = (int)GameManager->GetScrollY();
+	int iSizeX = pBmp->GetBmpCX() / (m_iFrameCnt);
+	int iSizeY = pBmp->GetBmpCY() / (m_iSceneCnt);
+
+	GdiTransparentBlt(hMemDC, 0, 0, pBmp->GetBmpCX(), pBmp->GetBmpCY(), pBmp->GetMemDC(),
+		0, 0, pBmp->GetBmpCX(), pBmp->GetBmpCY(), RGB(255, 0, 255));
+
+	BLENDFUNCTION bf = { 0, 0, alpha, 0 };
+
+	GdiAlphaBlend(hDC, m_tInfo.fX - iScrollX, m_tInfo.fX - iScrollY, (int)m_tInfo.fCX, (int)m_tInfo.fCY, hMemDC, m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, bf);
+
+	ReleaseDC(g_hWnd, hMemDC);
+}
+
 void CGameObject::DrawHitBox(HDC hDC)
 {
 	int iScrollX = (int)GameManager->GetScrollX();

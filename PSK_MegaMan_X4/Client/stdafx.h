@@ -14,6 +14,9 @@
 #include <iostream>
 #pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 
+//#include "fmod.h"
+//#pragma comment(lib, "fmodex_vc.lib")
+
 // C 런타임 헤더 파일입니다.
 #include <stdlib.h>
 #include <malloc.h>
