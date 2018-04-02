@@ -41,6 +41,10 @@ void CStage1_1::Init()
 
 	//UI
 	BmpManager->AddBitMap(L"../MyResource/UI/HUD_HPBAR.bmp", L"PLAYER_HP_BAR");
+	BmpManager->AddBitMap(L"../MyResource/UI/HUD_CUR_HP.bmp", L"PLAYER_CUR_HP");
+	BmpManager->AddBitMap(L"../MyResource/UI/HUD_DAMAGED_HP.bmp", L"PLAYER_DAMAGED_HP");
+	BmpManager->AddBitMap(L"../MyResource/UI/HUD_LIFE_COUNT.bmp", L"HUD_LIFE_COUNT");
+	BmpManager->AddBitMap(L"../MyResource/UI/HUD_WEAPON.bmp", L"PLAYER_WEAPON_ICON");
 
 	// ÃÑ¾Ë ÀÌ¹ÌÁö
 	BmpManager->AddBitMap(L"../MyResource/BULLET/BULLET_BUSTER_LARGE_LEFT.bmp", L"BULLET_BLL");
@@ -159,6 +163,7 @@ void CStage1_1::LateInit()
 	//GameManager->SetScrollX(104.f);
 
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 120}), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 100,  150, 150, 200 }), OBJ_GROUND);
 	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190, 3800, 200}), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 0, 190 }, POINT{ 3800, 190 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3800, 190 }, POINT{4320, 320}), OBJ_GROUND);

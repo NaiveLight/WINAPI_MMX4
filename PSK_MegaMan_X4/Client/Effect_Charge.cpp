@@ -48,7 +48,7 @@ void CEffect_Charge::LateUpdate()
 
 void CEffect_Charge::Render(HDC hDC)
 {
-	if(g_iFrame%4 >= 2)
+	if(g_iFrame % 2 == 0)
 		DrawObjectScroll(hDC, m_pFrameKey);
 }
 

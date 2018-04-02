@@ -151,9 +151,11 @@
     <ClInclude Include="Bullet_Normal.h" />
     <ClInclude Include="Bullet_SemiBuster.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="CurHP.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="Effect_BS_Fire.h" />
     <ClInclude Include="Effect_Charge.h" />
     <ClInclude Include="Effect_Charge_Body.h" />
     <ClInclude Include="Effect_NB_Fire.h" />
@@ -204,8 +206,10 @@
     <ClCompile Include="Bullet_Normal.cpp" />
     <ClCompile Include="Bullet_SemiBuster.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CurHP.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Effect_BS_Fire.cpp" />
     <ClCompile Include="Effect_Charge.cpp" />
     <ClCompile Include="Effect_Charge_Body.cpp" />
     <ClCompile Include="Effect_NB_Fire.cpp" />

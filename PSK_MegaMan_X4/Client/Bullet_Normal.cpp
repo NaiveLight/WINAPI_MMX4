@@ -16,6 +16,8 @@ void CBullet_Normal::Init()
 	m_bIsActive = true;
 	m_tInfo.fCX = 20.f;
 	m_tInfo.fCY = 20.f;
+	m_iHitBoxCX = 10.f;
+	m_iHitBoxCY = 10.f;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 50;
 	m_LeftKey = L"BULLET_NBL";
@@ -72,23 +74,21 @@ void CBullet_Normal::LateInit()
 
 	m_tInfo.fX = fPlayerX + fOffsetX;
 	m_tInfo.fY = fPlayerY + fOffsetY;
-
-	// effect1 Create
-
 }
 
 OBJECT_STATE CBullet_Normal::Update()
 {
 	CGameObject::LateInit();
+	m_tInfo.fX += m_fSpeedX;
+
+	if (abs(m_pTarget->GetInfo().fX - m_tInfo.fX) > 300)
+		m_bIsActive = false;
 
 	if (!m_bIsActive)
 	{
 		// effect2 Create
 		return DESTROY;
 	}
-
-	m_tInfo.fX += m_fSpeedX;
-
 	return PLAY;
 }
 
@@ -100,6 +100,7 @@ void CBullet_Normal::LateUpdate()
 
 void CBullet_Normal::Render(HDC hDC)
 {
+	//DrawHitBox(hDC);
 	DrawObjectScroll(hDC, m_pFrameKey);
 }
 

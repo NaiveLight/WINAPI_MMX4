@@ -197,6 +197,18 @@
     <Filter Include="04.Effect\01.Bullet\00.NormalBullet">
       <UniqueIdentifier>{9897c08f-6a1e-46c7-a78e-dbc60a586eed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Effect\01.Bullet\01.BusterSmall">
+      <UniqueIdentifier>{89a9beb4-cdb9-40d8-bf5a-aab660d7c72d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\01.Bullet\02.BusterLarge">
+      <UniqueIdentifier>{8341697c-83ca-4326-9558-8cfe8ef4ea60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\02.HUD\02.CurHP">
+      <UniqueIdentifier>{664371e9-e926-45cf-a4a3-5e3fbd4947b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.UI\02.HUD\03.DamagedHP">
+      <UniqueIdentifier>{cad37473-b91b-4595-934e-8036dee55e7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -348,7 +360,13 @@
     <ClInclude Include="Effect_Charge.h">
       <Filter>04.Effect\00.Player\02.Charge</Filter>
     </ClInclude>
-    <ClInclude Include="Effect_Charge_Body.h" />
+    <ClInclude Include="Effect_BS_Fire.h">
+      <Filter>04.Effect\01.Bullet\01.BusterSmall</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Charge_Body.h">
+      <Filter>04.Effect\00.Player\02.Charge</Filter>
+    </ClInclude>
+    <ClInclude Include="CurHP.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -470,7 +488,13 @@
     <ClCompile Include="Effect_Charge.cpp">
       <Filter>04.Effect\00.Player\02.Charge</Filter>
     </ClCompile>
-    <ClCompile Include="Effect_Charge_Body.cpp" />
+    <ClCompile Include="Effect_BS_Fire.cpp">
+      <Filter>04.Effect\01.Bullet\01.BusterSmall</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Charge_Body.cpp">
+      <Filter>04.Effect\00.Player\02.Charge</Filter>
+    </ClCompile>
+    <ClCompile Include="CurHP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

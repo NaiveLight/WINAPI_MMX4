@@ -23,7 +23,8 @@ void CPlayerHPBar::LateInit()
 	UpdateRect();
 	// 체력바 & 무기 & 라이프 세팅
 	m_iLife = dynamic_cast<CPlayer*>(m_pTarget)->GetIsLeft();
-	m_iCurHp = dynamic_cast<CPlayer*>(m_pTarget)->GetHPRatio();
+	m_iCurHp = dynamic_cast<CPlayer*>(m_pTarget)->GetCurHp();
+	m_iMaxHp= dynamic_cast<CPlayer*>(m_pTarget)->GetMaxHp();
 }
 
 OBJECT_STATE CPlayerHPBar::Update()

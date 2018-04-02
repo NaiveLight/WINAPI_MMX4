@@ -2,9 +2,12 @@
 #include "Player.h"
 #include "PlayerHPBar.h"
 #include "Bullet_Normal.h"
+#include "Bullet_SemiBuster.h"
+#include "Bullet_FullBuster.h"
 #include "Effect_NB_Fire.h"
 #include "Effect_Charge.h"
 #include "Effect_Charge_Body.h"
+
 
 CPlayer::CPlayer()
 	:m_pLeftFrameKey(nullptr), m_pRightFrameKey(nullptr),
@@ -132,9 +135,7 @@ void CPlayer::LateUpdate()
 
 void CPlayer::Render(HDC hDC)
 {
-	float fScrollX = GameManager->GetScrollX();
-	float fScrollY = GameManager->GetScrollY();
-	DrawHitBox(hDC);
+	//DrawHitBox(hDC);
 	DrawObjectScroll(hDC, m_pFrameKey);
 }
 
@@ -546,7 +547,6 @@ void CPlayer::Attack()
 {
 	if (KeyManager->KeyDown('C') || KeyManager->KeyDown('V'))
 	{
-		cout << "normal attack\n";
 		m_bAttack = true;
 		m_iPrevFrame = m_tFrame.iStart;
 		m_dwAttackStart = GetTickCount();
@@ -588,7 +588,7 @@ void CPlayer::Attack()
 
 			if (!m_bBodyEffectGreen)
 			{
-				if (m_dwChargeStart + 800 < GetTickCount())
+				if (m_dwChargeStart + m_dwChargeTime < GetTickCount())
 				{
 					CGameObject* pEffect = CAbstractFactory<CEffect_Charge>::CreateObj(L"E_CHARGE_G", 9, 10, 0, 1);
 					pEffect->SetTarget(this);
@@ -608,12 +608,16 @@ void CPlayer::Attack()
 				if (m_dwChargeStart + m_dwChargeTime < GetTickCount())
 				{
 					// create full buster bullet & Effect
-					cout << "Full Buster\n";
+					CGameObject* pBullet = CAbstractFactory<CBullet_FullBuster>::CreateObj(L"BULLET_BBR", 2, 3, 0, 1);
+					pBullet->SetTarget(this);
+					GameManager->AddObject(pBullet, OBJ_BULLET);
 				}
 				else
 				{
 					// create semi buster bullet & effect
-					cout << "Semi buster\n";
+					CGameObject* pBullet = CAbstractFactory<CBullet_SemiBuster>::CreateObj(L"BULLET_BSR", 6, 7, 0, 1);
+					pBullet->SetTarget(this);
+					GameManager->AddObject(pBullet, OBJ_BULLET);
 				}
 
 				m_bAttack = true;
@@ -651,7 +655,7 @@ void CPlayer::Attack()
 	}
 	else if (!m_bWalk && !m_bJump)
 	{
-		if (m_bAttack)
+		if (m_bAttack && !m_bCharge)
 			m_eCurStance = ATTACK_NORMAL;
 		else if(!m_bAttack)
 			m_eCurStance = IDLE;
