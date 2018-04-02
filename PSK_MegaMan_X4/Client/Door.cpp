@@ -31,29 +31,15 @@ void CDoor::LateInit()
 OBJECT_STATE CDoor::Update()
 {
 	CGameObject::LateInit();
-
-	//if (!m_bIsActive)
-	//{
-	//	if (CCollision::Screen(GameManager->GetScreen(), this))
-	//		m_bIsActive = true;
-	//}
-	//if (m_bIsActive)
-	//	return PLAY;
-	//else
-	//	return WAIT;
 	return PLAY;
 }
 
 void CDoor::LateUpdate()
 {
-	//if (m_bIsActive)
-	//{
-	//	UpdateRect();
-
-	//	if (m_bIsDamaged)
-	//		FrameMove();
-	//}
 	UpdateRect();
+
+	if (m_bIsDamaged)
+		FrameMove();
 }
 
 void CDoor::Render(HDC hDC)

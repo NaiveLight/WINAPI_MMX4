@@ -66,6 +66,9 @@ private:
 	STANCE m_eCurStance;
 	STANCE m_ePrevStance;
 
+	int m_iOriginHitBoxCX = 0;
+	int m_iOriginHitBoxCY = 0;
+
 	//입력 관련해서 변하는 상태
 	bool m_bWalk;
 	bool m_bDash;
@@ -99,6 +102,7 @@ private:
 	float m_fJumpSpeed;
 	float m_fJumpAccel;
 
+	int m_iPrevFrame = 0;
 	int m_iLife;
 };
 

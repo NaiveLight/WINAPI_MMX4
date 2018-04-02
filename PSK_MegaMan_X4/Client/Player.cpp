@@ -25,8 +25,8 @@ void CPlayer::Init()
 	m_tInfo.fY = 0.f;
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 100.f;
-	m_iHitBoxCX = 30;
-	m_iHitBoxCY = 45;
+	m_iOriginHitBoxCX = m_iHitBoxCX = 30;
+	m_iOriginHitBoxCY = m_iHitBoxCY = 45;
 
 	m_pLeftFrameKey = L"X_LEFT";
 	m_pFrameKey = m_pRightFrameKey = L"X_RIGHT"; 
@@ -113,6 +113,16 @@ void CPlayer::LateUpdate()
 	SceneChange();
 	FrameMove();
 	ScrollMove();
+
+	//system("cls");
+	//cout << ((m_eCurStance == WALK) ? ("WALK") : ("WALKATT" ))<< endl;
+	//cout << m_tFrame.iStart << endl;
+	//cout << m_tFrame.iEnd << endl;
+	////attack 후 다시 원래 모션으로 돌리기
+	//switch (m_eCurStance)
+	//{
+	//case WALK_ATT:
+	//}
 }
 
 void CPlayer::Render(HDC hDC)
@@ -137,10 +147,10 @@ void CPlayer::UpdateRect()
 	m_tTexRect.right = LONG(m_tInfo.fX + m_tInfo.fCX / 2);
 	m_tTexRect.bottom = LONG(m_tInfo.fY + m_tInfo.fCY / 2);
 
-	m_tHitBoxRect.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2 /*- fScrollX*/);
-	m_tHitBoxRect.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2 /*- fScrollY*/);
-	m_tHitBoxRect.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2 /*- fScrollX + 5*/);
-	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2 /*- fScrollY*/);
+	m_tHitBoxRect.left = LONG(m_tInfo.fX - m_iHitBoxCX / 2);
+	m_tHitBoxRect.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2);
+	m_tHitBoxRect.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2);
+	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2);
 }
 
 void CPlayer::SceneChange()
@@ -225,6 +235,14 @@ void CPlayer::FrameMove()
 			if (m_bDash && m_tFrame.iStart == 3)
 				return;
 			break;
+		case DASH_ATT:
+			if (m_bDash && m_tFrame.iStart == 3)
+			{
+				m_eCurStance = DASH;
+				m_bAttack = false;
+				return;
+			}
+			break;
 		}
 
 		++m_tFrame.iStart;
@@ -244,19 +262,41 @@ void CPlayer::FrameMove()
 		case IDLE:
 			m_tFrame.iStart = 0;
 			break;
+		// IDLE에서 ATTACK했을시 다시 IDLE로 돌아가야함
+		case ATTACK_NORMAL: case ATTACK_BUSTER:
+			m_bAttack = false;
+			m_eCurStance = IDLE;
+			break;
 		case WALK:
 			m_tFrame.iStart = 2;
 			break;
+		case WALK_ATT:
+			if (m_tFrame.iStart == 16)
+				m_tFrame.iStart = 2;
+			m_eCurStance = WALK;
+			m_bAttack = false;
+			break;
 		case JUMP:
 			m_tFrame.iStart = m_tFrame.iEnd;
+			break;
+		case JUMP_ATT:
+			m_tFrame.iStart = m_tFrame.iEnd;
+			m_eCurStance = JUMP;
+			m_bAttack = false;
 			break;
 		case GROUND:
 			m_eCurStance = IDLE;
 			break;
 		case DASH:
 			m_bDash = false;
+			m_iHitBoxCX = m_iOriginHitBoxCX;
+			m_iHitBoxCY = m_iOriginHitBoxCY;
 			m_eCurStance = IDLE;
 			break;
+		case DASH_ATT:
+			m_eCurStance = DASH;
+			m_bAttack = false;
+			break;			
 		}
 	}
 }
@@ -282,17 +322,61 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 200;
 		break;
+	case ATTACK_NORMAL:
+		m_tFrame.iScene = 2;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 7;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 30;
+		break;
+	case ATTACK_BUSTER:
+		m_tFrame.iScene = 3;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 7;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
+		break;
 	case WALK:
 		m_tFrame.iScene = 4;
-		m_tFrame.iStart = 0;
+		if (m_ePrevStance == WALK_ATT)
+			m_tFrame.iStart = m_iPrevFrame + 1;
+		else
+			m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 15;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
+		break;
+	case WALK_ATT:
+		m_tFrame.iScene = 5;
+		m_tFrame.iStart = m_iPrevFrame + 1;
+		m_tFrame.iEnd = m_iPrevFrame + 3;
+		if (m_tFrame.iStart >= 13)
+		{
+			m_tFrame.iStart %= 16;
+			m_tFrame.iEnd %= 16;
+		}
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 50;
 		break;
 	case JUMP:
 		m_tFrame.iScene = 6;
-		m_tFrame.iStart = 0;
+		if (m_ePrevStance == WALK_ATT)
+			m_tFrame.iStart = 6;
+		else
+			m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 7;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
+		break;
+	case JUMP_ATT:
+		m_tFrame.iScene = 7;
+		m_tFrame.iStart = m_iPrevFrame + 1;
+		m_tFrame.iEnd = m_iPrevFrame + 3;
+		if (m_tFrame.iStart >= 3)
+		{
+			m_tFrame.iStart %= 8;
+			m_tFrame.iEnd %= 8;
+		}
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 50;
 		break;
@@ -305,10 +389,25 @@ void CPlayer::NoArmorNoWeaponScene()
 		break;
 	case DASH:
 		m_tFrame.iScene = 9;
-		m_tFrame.iStart = 0;
+		if (m_ePrevStance == DASH_ATT)
+			m_tFrame.iStart = 3;
+		else
+			m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 7;
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 30;
+		break;
+	case DASH_ATT:
+		m_tFrame.iScene = 10;
+		m_tFrame.iStart = m_iPrevFrame - 2;
+		m_tFrame.iEnd = m_iPrevFrame + 3;
+		if (m_tFrame.iStart >= 3)
+		{
+			m_tFrame.iStart %= 8;
+			m_tFrame.iEnd %= 8;
+		}
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
 		break;
 	}
 }
@@ -337,9 +436,6 @@ void CPlayer::Walk()
 {
 	if (KeyManager->KeyPressing(VK_LEFT))
 	{
-		//if (m_bDash)
-		//	m_bDash = false;
-
 		m_bWalk = true;
 		m_bIsLeft = true;
 		m_fAccelX = m_fSpeedX;
@@ -347,9 +443,6 @@ void CPlayer::Walk()
 	}
 	else if (KeyManager->KeyPressing(VK_RIGHT))
 	{
-		//if (m_bDash)
-		//	m_bDash = false;
-
 		m_bWalk = true;
 		m_bIsLeft = false;
 		m_fAccelX = m_fSpeedX;
@@ -373,6 +466,8 @@ void CPlayer::Dash()
 		{
 			m_dwDashStrart = GetTickCount();
 			m_bDash = true;
+			m_iHitBoxCX = 45;
+			m_iHitBoxCY = 30;
 		}
 	}
 	else if (m_bDash)
@@ -382,7 +477,9 @@ void CPlayer::Dash()
 		if (m_bIsLeft)
 			m_fAccelX *= -1.f;
 
-		if (KeyManager->KeyUp('Z') )
+		if (KeyManager->KeyUp('Z') 
+			||
+			m_dwDashStrart + m_dwDashTime < GetTickCount())
 		{
 			m_tFrame.iStart = 4;
 			m_fAccelX = 0;
@@ -390,9 +487,10 @@ void CPlayer::Dash()
 
 		if (m_bJump ||
 			KeyManager->KeyDown(VK_LEFT) ||
-			KeyManager->KeyDown(VK_RIGHT) ||
-			m_dwDashStrart + m_dwDashTime < GetTickCount())
+			KeyManager->KeyDown(VK_RIGHT) )
 		{
+			m_iHitBoxCX = m_iOriginHitBoxCX;
+			m_iHitBoxCY = m_iOriginHitBoxCY;
 			m_bDash = false;
 			m_fAccelX = 0;
 		}
@@ -406,9 +504,6 @@ void CPlayer::Jump()
 
 	if (!m_bJump)
 	{
-		//Walk();
-		//Dash();
-
 		m_fVelocityX = m_fAccelX;
 
 		if (KeyManager->KeyPressing('X'))
@@ -419,6 +514,16 @@ void CPlayer::Jump()
 			{
 				m_fVelocityX = 0.f;
 				m_bDash = false;
+				m_iHitBoxCX = m_iOriginHitBoxCX;
+				m_iHitBoxCY = m_iOriginHitBoxCY;
+			}
+			else if (m_bWall)
+			{
+				m_fAccelX = 2.f;
+				if (m_bIsLeft)
+					m_fAccelX *= -1.f;
+
+				m_fVelocityX += m_fAccelX;
 			}
 
 			m_fVelocityY = m_fJumpSpeed;
@@ -435,24 +540,6 @@ void CPlayer::Jump()
 			m_fVelocityY *= -1;
 	}
 
-	if (m_bWalk && m_bGround && !m_bDash)
-	{
-		m_eCurStance = WALK;
-	}
-	else if (m_bJump || !m_bGround)
-	{
-		m_eCurStance = JUMP;
-	}
-	else if (m_bDash)
-	{
-		m_eCurStance = DASH;
-	}
-	else if (!m_bWalk && !m_bJump)
-	{
-		m_eCurStance = IDLE;
-	}
-
-
 	m_tInfo.fX += m_fVelocityX;
 	m_tInfo.fY += m_fVelocityY;
 }
@@ -462,6 +549,39 @@ void CPlayer::Attack()
 	if (KeyManager->KeyDown('C') || KeyManager->KeyDown('V'))
 	{
 		m_bAttack = true;
+		m_iPrevFrame = m_tFrame.iStart;
+	}
+	else
+	{
+		m_iPrevFrame = m_tFrame.iStart;
+	}
 
+	if (m_bWalk && m_bGround && !m_bDash)
+	{
+		if (m_bAttack)
+			m_eCurStance = WALK_ATT;
+		else
+			m_eCurStance = WALK;
+	}
+	else if (m_bJump && !m_bGround)
+	{
+		if (m_bAttack)
+			m_eCurStance = JUMP_ATT;
+		else
+			m_eCurStance = JUMP;
+	}
+	else if (m_bDash)
+	{
+		if (m_bAttack)
+			m_eCurStance = DASH_ATT;
+		else
+			m_eCurStance = DASH;
+	}
+	else if (!m_bWalk && !m_bJump)
+	{
+		if (m_bAttack && !m_bCharge)
+			m_eCurStance = ATTACK_NORMAL;
+		else if(!m_bAttack)
+			m_eCurStance = IDLE;
 	}
 }
