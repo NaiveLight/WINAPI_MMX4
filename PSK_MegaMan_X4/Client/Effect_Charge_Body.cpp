@@ -20,7 +20,7 @@ void CEffect_Charge_Body::Init()
 void CEffect_Charge_Body::LateInit()
 {
 	m_tFrame.dwTime = GetTickCount();
-	m_tFrame.dwSpeed = 50;
+	m_tFrame.dwSpeed = 100;
 }
 
 OBJECT_STATE CEffect_Charge_Body::Update()

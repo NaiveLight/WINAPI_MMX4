@@ -33,11 +33,24 @@ public:
 	virtual void Release() override;
 
 public :
+	const bool GetIsLeft() 
+	{	if (!m_bWall) 
+		{ return m_bIsLeft; } 
+	else 
+		{ return !m_bIsLeft; } 
+	}
+	const bool GetIsGround() { return m_bGround; }
+	const bool GetWall() { return m_bWall; }
 	const int GetLife() { return m_iLife; }
 	const bool GetJump() { return m_bJump; }
 	const float GetJumpSpeed() { return m_fJumpSpeed; }
 	const bool GetIsCharge() { return m_bCharge; }
 	const STANCE GetStance() { return m_eCurStance; }
+
+	void SetStance(STANCE eStance) { m_ePrevStance = m_eCurStance = eStance; }
+	void SetAccelX(float fX) { m_fAccelX = fX; }
+	void SetAccelY(float fY) { m_fAccelY = fY; }
+	void SetJump(bool bJump) { m_bJump = bJump; }
 
 public:
 	void SetWall(bool bwall) { m_bWall = bwall; }

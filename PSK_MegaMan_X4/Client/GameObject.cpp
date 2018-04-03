@@ -101,7 +101,7 @@ void CGameObject::DrawObjectMaxScroll(HDC hDC, const TCHAR * pFrameKey)
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
-void CGameObject::DrawAlphaScroll(HDC hDC, const TCHAR * pFrameKey, float alpha)
+void CGameObject::DrawAlphaScroll(HDC hDC, const TCHAR * pFrameKey, BYTE alpha)
 {
 	HDC temphDC = GetDC(g_hWnd);
 

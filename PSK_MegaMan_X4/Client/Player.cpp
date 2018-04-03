@@ -32,8 +32,8 @@ void CPlayer::Init()
 	m_tInfo.fY = 0.f;
 	m_tInfo.fCX = 100.f;
 	m_tInfo.fCY = 100.f;
-	m_iOriginHitBoxCX = m_iHitBoxCX = 30;
-	m_iOriginHitBoxCY = m_iHitBoxCY = 45;
+	m_iOriginHitBoxCX = m_iHitBoxCX = 25;
+	m_iOriginHitBoxCY = m_iHitBoxCY = 40;
 
 	m_pLeftFrameKey = L"X_LEFT";
 	m_pFrameKey = m_pRightFrameKey = L"X_RIGHT"; 
@@ -96,10 +96,128 @@ OBJECT_STATE CPlayer::Update()
 	if (m_eCurStance == DAMAGE_HIGH || m_eCurStance == DAMAGE_LOW)
 		return PLAY;
 	
+	//if (m_fVelocityX == 0 && m_fVelocityY == 0 && !m_bWalk && !m_bDash && !m_bJump)
+	//{
+	//	if (m_bAttack)
+	//		m_eCurStance = ATTACK_NORMAL;
+	//	else
+	//		m_eCurStance = IDLE;
+	//}
+
+	//if (KeyManager->KeyDown('Z') && !m_bJump)
+	//{
+	//	//대시
+	//	m_bDash = true;
+	//	//대시 사운드 이펙트
+
+	//}
+	//else if (KeyManager->KeyDown('X'))
+	//{
+	//	//점프
+	//	if (m_bGround && !m_bJump)
+	//	{
+	//		m_bGround = false;
+	//		m_bJump = true;
+	//	}
+	//	//점프 사운드 이펙트
+	//}
+
+	//if (m_bDash)
+	//{
+	//	m_fVelocityX = m_fDashSpeed;
+
+	//	if (!m_bJump && !m_bAttack)
+	//		m_eCurStance = DASH;
+	//	else if (!m_bJump && m_bAttack)
+	//		m_eCurStance = DASH_ATT;
+	//}
+
+	//if (KeyManager->KeyPressing(VK_LEFT))
+	//{
+	//	if (!m_bIsLeft && m_bDash)
+	//	{
+	//		m_bWalk = true;
+	//		m_bIsLeft = true;
+	//		m_pFrameKey = m_pLeftFrameKey;
+	//		m_fVelocityX = m_fSpeedX;
+	//	}
+	//}
+	//else if (KeyManager->KeyPressing(VK_RIGHT))
+	//{
+	//	if (m_bIsLeft && m_bDash)
+	//	{
+	//		m_bWalk = true;
+	//		m_bIsLeft = false;
+	//		m_pFrameKey = m_pRightFrameKey;
+	//		m_fVelocityX = m_fSpeedX;
+	//	}
+	//}
+	//else if(!m_bDash)
+	//{
+	//	m_bWalk = false;
+	//	m_fVelocityX = 0.f;
+	//}
+
+	//if (m_bIsLeft)
+	//	m_fVelocityX *= -1.f;
+
+
+
 	Walk();
 	Dash();
 	Jump();
 	Attack();
+
+	//m_tInfo.fX += m_fVelocityX;
+	//m_tInfo.fY += m_fVelocityY;
+
+
+
+	//switch (m_eCurStance)
+	//{
+	//case SPAWN:
+	//	cout << "SPAWN\n";
+	//	break;
+	//case IDLE:
+	//	cout << "IDLE\n";
+	//	break;
+	//case ATTACK_NORMAL:
+	//	cout << "ATTACK_NORMAL\n";
+	//	break;
+	//case WALK:
+	//	cout << "WALK\n";
+	//	break;
+	//case WALK_ATT:
+	//	cout << "WALK_ATT\n";
+	//	break;
+	//case JUMP:
+	//	cout << "JUMP\n";
+	//	break;
+	//case JUMP_ATT:
+	//	cout << "JUMP_ATT\n";
+	//	break;
+	//case GROUND:
+	//	cout << "GROUND\n";
+	//	break;
+	//case DASH:
+	//	cout << "DASH\n";
+	//	break;
+	//case DASH_ATT:
+	//	cout << "DASH_ATT\n";
+	//	break;
+	//case WALL:
+	//	cout << "WALL\n";
+	//	break;
+	//case WALL_ATT:
+	//	cout << "WALL_ATT\n";
+	//	break;
+	//case WALL_JUMP:
+	//	cout << "WALL_JUMP\n";
+	//	break;
+	//case WALL_JUMP_ATTACK:
+	//	cout << "IDLE\n";
+	//	break;
+	//}
 
 	if (m_tInfo.fX < 15)
 		m_tInfo.fX = 15;
@@ -116,7 +234,75 @@ void CPlayer::LateUpdate()
 
 	UpdateRect();
 
-	m_bGround = CCollision::PlayerGround(this, GameManager->GetObjList(OBJ_GROUND));
+	m_bGround = CCollision::PlayerToGround(this, GameManager->GetObjList(OBJ_GROUND));
+	//m_bWall = CCollision::PlayerToWall(this, GameManager->GetObjList(OBJ_GROUND));
+
+	if (m_bGround)
+		m_bWall = false;
+	//if (m_bWall)
+	//	cout << "응 벽이야 \n";
+
+
+	//system("cls");
+
+	//if (m_bGround)
+	//	cout << "Ground \n";
+	//if (m_bWalk)
+	//	cout << "Walk\n";
+	//if (m_bDash)
+	//	cout << "DASH\n";
+	//if (m_bJump)
+	//	cout << "Jump\n";
+	//if (m_bWall)
+	//	cout << "Wall\n";
+
+
+	//if (m_bGround)
+	//	cout << "응 땅이야\n";
+
+	if (m_eCurStance != SPAWN)
+	{
+		if (m_bWall)
+		{
+			if (m_bAttack && m_bJump)
+				m_eCurStance = WALL_JUMP_ATTACK;
+			else if (m_bAttack)
+				m_eCurStance = WALL_ATT;
+			else if (m_bJump)
+				m_eCurStance = WALL_JUMP;
+			else
+				m_eCurStance = WALL;
+		}
+		else if (m_bWalk && m_bGround && !m_bDash && !m_bJump)
+		{
+			if (m_bAttack)
+				m_eCurStance = WALK_ATT;
+			else
+				m_eCurStance = WALK;
+		}
+		else if (m_bJump && !m_bGround)
+		{
+			if (m_bAttack)
+				m_eCurStance = JUMP_ATT;
+			else
+				m_eCurStance = JUMP;
+		}
+		else if (m_bDash)
+		{
+			if (m_bAttack)
+				m_eCurStance = DASH_ATT;
+			else
+				m_eCurStance = DASH;
+		}
+		else if (!m_bWalk && !m_bJump && m_bGround)
+		{
+			if (m_bAttack && !m_bCharge)
+				m_eCurStance = ATTACK_NORMAL;
+			else if (!m_bAttack)
+				m_eCurStance = IDLE;
+		}
+	}
+
 
 	SceneChange();
 	FrameMove();
@@ -135,7 +321,7 @@ void CPlayer::LateUpdate()
 
 void CPlayer::Render(HDC hDC)
 {
-	//DrawHitBox(hDC);
+	DrawHitBox(hDC);
 	DrawObjectScroll(hDC, m_pFrameKey);
 }
 
@@ -239,7 +425,10 @@ void CPlayer::FrameMove()
 			break;
 		case DASH:
 			if (m_bDash && m_tFrame.iStart == 3)
+			{
+				m_tFrame.dwSpeed = 80;
 				return;
+			}
 			break;
 		case DASH_ATT:
 			if (m_bDash && m_tFrame.iStart == 3)
@@ -291,15 +480,18 @@ void CPlayer::FrameMove()
 			m_bAttack = false;
 			break;
 		case GROUND:
+			m_tFrame.iStart = m_tFrame.iEnd;
 			m_eCurStance = IDLE;
 			break;
 		case DASH:
+			m_tFrame.iStart = m_tFrame.iEnd;
 			m_bDash = false;
 			m_iHitBoxCX = m_iOriginHitBoxCX;
 			m_iHitBoxCY = m_iOriginHitBoxCY;
 			m_eCurStance = IDLE;
 			break;
 		case DASH_ATT:
+			m_tFrame.iStart = m_tFrame.iEnd;
 			m_eCurStance = DASH;
 			m_bAttack = false;
 			break;			
@@ -417,10 +609,10 @@ void CPlayer::NoArmorRFScene()
 	m_pRightFrameKey = L"X_RIGHT";
 	m_pFrameKey = m_bIsLeft ? m_pLeftFrameKey : m_pRightFrameKey;
 
-	switch (m_eCurStance)
-	{
+	//switch (m_eCurStance)
+	//{
 
-	}
+	//}
 }
 
 void CPlayer::UltiNoWeaponScene()
@@ -433,6 +625,7 @@ void CPlayer::UltiRFScene()
 
 void CPlayer::Walk()
 {
+	//좌우 키 입력
 	if (KeyManager->KeyPressing(VK_LEFT))
 	{
 		m_bWalk = true;
@@ -466,23 +659,26 @@ void CPlayer::Dash()
 			m_dwDashStrart = GetTickCount();
 			m_bDash = true;
 			m_iHitBoxCX = 45;
-			m_iHitBoxCY = 30;
+			m_iHitBoxCY = 40;
 		}
 	}
 	else if (m_bDash)
 	{
 		m_fAccelX = m_fDashSpeed;
-		
-		if (m_bIsLeft)
-			m_fAccelX *= -1.f;
 
-		if (KeyManager->KeyUp('Z') )
+		if (KeyManager->KeyUp('Z'))
 		{
 			m_tFrame.iStart = 4;
 			m_fAccelX = 0;
 		}
 
-		if (m_bJump ||
+		if (m_bJump && m_bWalk)
+		{
+			m_iHitBoxCX = m_iOriginHitBoxCX;
+			m_iHitBoxCY = m_iOriginHitBoxCY;
+			m_fAccelX = m_fDashSpeed;
+		}
+		else if (m_bJump ||
 			KeyManager->KeyDown(VK_LEFT) ||
 			KeyManager->KeyDown(VK_RIGHT) ||
 			m_dwDashStrart + m_dwDashTime < GetTickCount())
@@ -492,20 +688,30 @@ void CPlayer::Dash()
 			m_bDash = false;
 			m_fAccelX = 0;
 		}
+
+		if (m_bIsLeft)
+			m_fAccelX *= -1.f;
 	}
-
-
 }
 
 void CPlayer::Jump()
 {
-
+	m_fVelocityX = m_fAccelX;
 	if (!m_bJump)
 	{
-		m_fVelocityX = m_fAccelX;
+		if (KeyManager->KeyDown('X'))
+		{
+			if (m_bWall)
+			{
+				m_fAccelX = 8.f;
+				if (!m_bIsLeft)
+					m_fAccelX *= -1.f;
 
-		Attack();
-		if (KeyManager->KeyPressing('X'))
+				m_fVelocityX = m_fAccelX;
+				m_fVelocityY = m_fJumpSpeed - 3;
+			}
+		}
+		else if (KeyManager->KeyPressing('X') && !m_bWall)
 		{
 			m_bJump = true;
 
@@ -516,21 +722,24 @@ void CPlayer::Jump()
 				m_iHitBoxCX = m_iOriginHitBoxCX;
 				m_iHitBoxCY = m_iOriginHitBoxCY;
 			}
-			else if (m_bWall)
-			{
-				m_fAccelX = 2.f;
-				if (m_bIsLeft)
-					m_fAccelX *= -1.f;
+			//else if (m_bWall)
+			//{
+			//	m_fAccelX = 5.f;
+			//	if (!m_bIsLeft)
+			//		m_fAccelX *= -1.f;
 
-				m_fVelocityX += m_fAccelX;
-			}
+			//	m_fVelocityX = m_fAccelX;
+			//}
 
 			m_fVelocityY = m_fJumpSpeed;
 		}
 	}
 	else
 	{
-		m_fVelocityY += m_fJumpAccel;
+		if(!m_bWall)
+			m_fVelocityY += m_fJumpAccel;
+		if (m_bWall)
+			m_fVelocityY += 2.5f;
 
 		if (m_bGround || m_bWall)
 			m_bJump = false;
@@ -540,7 +749,8 @@ void CPlayer::Jump()
 	}
 
 	m_tInfo.fX += m_fVelocityX;
-	m_tInfo.fY += m_fVelocityY;
+	m_tInfo.fY += m_fVelocityY + m_fAccelY;
+	m_fAccelY = 0;
 }
 
 void CPlayer::Attack()
@@ -605,6 +815,7 @@ void CPlayer::Attack()
 			//create charge 2 effect
 			if (KeyManager->KeyUp('C') || KeyManager->KeyUp('V'))
 			{
+				cout << "응 차지 키 뗐어\n";
 				if (m_dwChargeStart + m_dwChargeTime < GetTickCount())
 				{
 					// create full buster bullet & Effect
@@ -632,32 +843,5 @@ void CPlayer::Attack()
 		}
 	}
 
-	if (m_bWalk && m_bGround && !m_bDash)
-	{
-		if (m_bAttack)
-			m_eCurStance = WALK_ATT;
-		else
-			m_eCurStance = WALK;
-	}
-	else if (m_bJump && !m_bGround)
-	{
-		if (m_bAttack)
-			m_eCurStance = JUMP_ATT;
-		else
-			m_eCurStance = JUMP;
-	}
-	else if (m_bDash)
-	{
-		if (m_bAttack)
-			m_eCurStance = DASH_ATT;
-		else
-			m_eCurStance = DASH;
-	}
-	else if (!m_bWalk && !m_bJump)
-	{
-		if (m_bAttack && !m_bCharge)
-			m_eCurStance = ATTACK_NORMAL;
-		else if(!m_bAttack)
-			m_eCurStance = IDLE;
-	}
+
 }

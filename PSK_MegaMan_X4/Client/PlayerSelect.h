@@ -17,6 +17,8 @@ public:
 
 private:
 	CGameObject* m_pX;
+	CGameObject* m_pCursor;
 	bool m_bCreateCursor;
+	bool m_bChanceScene;
 };
 

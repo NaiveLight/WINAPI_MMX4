@@ -12,7 +12,7 @@ private:
 	SCENEID m_ePrevScene;
 
 	bool m_bIsFade;
-	BYTE m_btAlpha;
+	int m_btAlpha;
 
 public:
 	CSceneManager();
@@ -26,9 +26,14 @@ public:
 	void Release();
 
 public:
-	void FadeIn();
-	void FadeOut();
+	bool FadeIn();
+	bool FadeOut();
+	void DrawAlphaColor(HDC hDC, int Alpha);
 	void ChangeScene(SCENEID eSceneID);
-	void RestartScene();
+	void RestartScene()
+	{
+		m_ePrevScene = SCENE_END; 
+		ChangeScene(m_eCurScene);
+	}
 };
 

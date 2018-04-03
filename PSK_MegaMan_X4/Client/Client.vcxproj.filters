@@ -366,7 +366,12 @@
     <ClInclude Include="Effect_Charge_Body.h">
       <Filter>04.Effect\00.Player\02.Charge</Filter>
     </ClInclude>
-    <ClInclude Include="CurHP.h" />
+    <ClInclude Include="CurHP.h">
+      <Filter>06.UI\02.HUD\02.CurHP</Filter>
+    </ClInclude>
+    <ClInclude Include="SpikeMarl.h">
+      <Filter>03.Monster\00.Normal\00.SpikeMarl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -494,7 +499,12 @@
     <ClCompile Include="Effect_Charge_Body.cpp">
       <Filter>04.Effect\00.Player\02.Charge</Filter>
     </ClCompile>
-    <ClCompile Include="CurHP.cpp" />
+    <ClCompile Include="CurHP.cpp">
+      <Filter>06.UI\02.HUD\02.CurHP</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeMarl.cpp">
+      <Filter>03.Monster\00.Normal\00.SpikeMarl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

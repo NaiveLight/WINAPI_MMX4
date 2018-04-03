@@ -9,31 +9,5 @@ CActor::CActor()
 
 CActor::~CActor()
 {
-	Release();
-}
-
-void CActor::Init()
-{
-}
-
-void CActor::LateInit()
-{
-}
-
-OBJECT_STATE CActor::Update()
-{
-	return PLAY;
-}
-
-void CActor::LateUpdate()
-{
-}
-
-void CActor::Render(HDC hDC)
-{
-}
-
-void CActor::Release()
-{
 }
 

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PlayerHPBar.h"
 #include "Player.h"
+#include "CurHP.h"
 
 
 CPlayerHPBar::CPlayerHPBar()
@@ -22,9 +23,10 @@ void CPlayerHPBar::LateInit()
 {
 	UpdateRect();
 	// 체력바 & 무기 & 라이프 세팅
-	m_iLife = dynamic_cast<CPlayer*>(m_pTarget)->GetIsLeft();
-	m_iCurHp = dynamic_cast<CPlayer*>(m_pTarget)->GetCurHp();
-	m_iMaxHp= dynamic_cast<CPlayer*>(m_pTarget)->GetMaxHp();
+
+	//CGameObject* pCurHP = CAbstractFactory<CCurHP>::CreateObj(m_tInfo.fX, m_tInfo.fY);
+	//pCurHP->SetTarget(GameManager->GetPlayer());
+	//GameManager->AddObject(pCurHP, OBJ_UI);
 }
 
 OBJECT_STATE CPlayerHPBar::Update()
@@ -40,6 +42,12 @@ OBJECT_STATE CPlayerHPBar::Update()
 	{
 		m_tFrame.iStart++;
 	}
+
+	if (m_tFrame.iStart < 0)
+		m_tFrame.iStart += m_tFrame.iEnd;
+
+	if (m_tFrame.iStart > m_tFrame.iEnd)
+		m_tFrame.iStart -= m_tFrame.iEnd;
 
 	return PLAY;
 }

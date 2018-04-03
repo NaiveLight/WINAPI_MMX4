@@ -14,12 +14,12 @@ public:
 	virtual ~CActor();
 
 	// CGameObject을(를) 통해 상속됨
-	virtual void Init() override;
-	virtual void LateInit();
-	virtual OBJECT_STATE Update() override;
-	virtual void LateUpdate() override;
-	virtual void Render(HDC hDC) override;
-	virtual void Release() override;
+	virtual void Init() = 0;
+	virtual void LateInit() = 0;
+	virtual OBJECT_STATE Update() = 0;
+	virtual void LateUpdate() = 0;
+	virtual void Render(HDC hDC) = 0;
+	virtual void Release() = 0;
 
 public:
 	const int GetCurHp() { return m_iCurHP; }

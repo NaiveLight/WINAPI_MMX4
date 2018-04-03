@@ -9,6 +9,7 @@ public:
 
 public:
 	static bool Screen(RECT& tScreen, CGameObject* pObj);
-	static bool PlayerGround(CPlayer* pPlayer, OBJLIST& srcList);
+	static bool PlayerToWall(CPlayer* pPlayer, OBJLIST& srcList);
+	static bool PlayerToGround(CPlayer* pPlayer, OBJLIST& srcList);
 };
 

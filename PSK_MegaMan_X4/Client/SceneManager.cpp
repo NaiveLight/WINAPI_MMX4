@@ -23,7 +23,10 @@ void CSceneManager::LateInit()
 
 void CSceneManager::Update()
 {
-	m_pCurScene->Update();
+	if (!m_bIsFade)
+		m_pCurScene->Update();
+	else
+		FadeIn();
 }
 
 void CSceneManager::LateUpdate()
@@ -33,8 +36,8 @@ void CSceneManager::LateUpdate()
 
 void CSceneManager::Render(HDC hDC)
 {
-	if(!m_bIsFade)
-		m_pCurScene->Render(hDC);
+	m_pCurScene->Render(hDC);
+	DrawAlphaColor(hDC, m_btAlpha);
 }
 
 void CSceneManager::Release()
@@ -42,12 +45,41 @@ void CSceneManager::Release()
 	SafeDelete<CScene*>(m_pCurScene);
 }
 
-void CSceneManager::FadeIn()
+bool CSceneManager::FadeIn()
 {
+	if (m_btAlpha >= 10)
+		m_btAlpha -= 6;
+	else
+	{
+		m_btAlpha = 0;
+		m_bIsFade = false;
+		return true;
+	}
+
+	return false;
 }
 
-void CSceneManager::FadeOut()
+bool CSceneManager::FadeOut()
 {
+	if (m_btAlpha < 245)
+		m_btAlpha += 6;
+	else
+	{
+		m_btAlpha = 255;
+		m_bIsFade = true;
+		return true;
+	}
+
+	return false;
+}
+
+void CSceneManager::DrawAlphaColor(HDC hDC, int Alpha)
+{
+	CMyBmp* pBmp = BmpManager->FindImage(L"BG_BLACK");
+
+	BLENDFUNCTION bf = { 0, 0, Alpha, 0 };
+
+	GdiAlphaBlend(hDC, 0, 0, WINCX, WINCY, pBmp->GetMemDC(), 0, 0, WINCX, WINCY, bf);
 }
 
 void CSceneManager::ChangeScene(SCENEID eSceneID)
@@ -61,6 +93,7 @@ void CSceneManager::ChangeScene(SCENEID eSceneID)
 		switch (m_eCurScene)
 		{
 		case TITLE:
+			m_pCurScene = new CTitle;
 			break;
 
 		case MENU:
@@ -83,10 +116,4 @@ void CSceneManager::ChangeScene(SCENEID eSceneID)
 		m_pCurScene->Init();
 		m_ePrevScene = m_eCurScene;
 	}
-}
-
-
-
-void CSceneManager::RestartScene()
-{
 }

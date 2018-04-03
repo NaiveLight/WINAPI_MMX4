@@ -76,6 +76,10 @@ void CStage1_1::Init()
 	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_LARGE_LEFT.bmp", L"E_BL_FIRE_L");
 	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_LARGE_RIGHT.bmp", L"E_BL_FIRE_R");
 
+	// 몬스터
+	BmpManager->AddBitMap(L"../MyResource/MyResource/Monster/Monster_Spike_Left.bmp", L"M_SPIKE_L");
+	BmpManager->AddBitMap(L"../MyResource/MyResource/Monster/Monster_Spike_Right.bmp", L"M_SPIKE_R");
+
 	// Max X : 5064 / Y : 104
 	// Boss 전 X : 4756
 	// Boss 등장 : 1250
@@ -94,6 +98,7 @@ void CStage1_1::Init()
 
 void CStage1_1::LateInit()
 {
+	SoundManager->PlayBGM(L"06_Opening Stage X.mp3");
 	CGameObject* pPlayer = CAbstractFactory<CPlayer>::CreateObj();
 	GameManager->AddObject(pPlayer, OBJ_PLAYER);
 	
@@ -162,15 +167,15 @@ void CStage1_1::LateInit()
 	//GameManager->SetScrollX(3700.f);
 	//GameManager->SetScrollX(104.f);
 
+	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190 , 3800, BUFCY}), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 120}), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 100,  150, 150, 200 }), OBJ_GROUND);
-	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190, 3800, 200}), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 0, 190 }, POINT{ 3800, 190 }), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3800, 190 }, POINT{4320, 320}), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4320, 320, 5384, 400 }), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 50,  150, 100, 200 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4900, 100, 5050, 145 }), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 5042, 145, 5060, 255 }), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 5042, 145, 5080, 257 }), OBJ_GROUND);
 
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 0, 190 }, POINT{ 3800, 190 }), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3800, 190 }, POINT{ 4320, 320 }), OBJ_GROUND);
+	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 4320, 320 }, POINT{ 5384, 320 }), OBJ_GROUND);
 }
 
 void CStage1_1::Update()

@@ -30,11 +30,13 @@ void CMenuText::LateUpdate()
 	if (KeyManager->KeyDown(VK_UP))
 	{
 		m_tFrame.iStart--;
+		SoundManager->PlaySound(L"MENU_CONTROL.wav", CSoundManager::UI);
 	}
 
 	if (KeyManager->KeyDown(VK_DOWN))
 	{
 		m_tFrame.iStart++;
+		SoundManager->PlaySound(L"MENU_CONTROL.wav", CSoundManager::UI);
 	}
 
 	if (KeyManager->KeyDown('c') ||
@@ -48,6 +50,7 @@ void CMenuText::LateUpdate()
 		switch (m_tFrame.iStart)
 		{
 		case 0:
+			SoundManager->PlaySound(L"MENU_SELECT.wav", CSoundManager::UI);
 			SceneManager->ChangeScene(CSceneManager::PLAYERSELECT);
 			return;
 		}

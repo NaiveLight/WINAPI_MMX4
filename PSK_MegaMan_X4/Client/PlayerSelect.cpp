@@ -7,7 +7,7 @@
 
 
 CPlayerSelect::CPlayerSelect()
-	:m_pX(nullptr), m_bCreateCursor(false)
+	:m_pX(nullptr), m_bCreateCursor(false), m_pCursor(nullptr)
 {
 }
 
@@ -19,12 +19,14 @@ CPlayerSelect::~CPlayerSelect()
 
 void CPlayerSelect::Init()
 {
+	m_bChanceScene = false;
 	BmpManager->AddBitMap(L"../MyResource/BG/BG_PLAYERSELECT.bmp", L"BG_PLAYER_SELECT");
 	BmpManager->AddBitMap(L"../MyResource/PlayerSelect/포맷변환_PS_TEXT.bmp", L"PS_TEXT");
 	BmpManager->AddBitMap(L"../MyResource/PlayerSelect/포맷변환_PS_X.bmp", L"PS_X");
 	BmpManager->AddBitMap(L"../MyResource/PlayerSelect/포맷변환_PS_ZERO.bmp", L"PS_ZERO");
 	BmpManager->AddBitMap(L"../MyResource/PlayerSelect/포맷변환_PS_CURSOR.bmp", L"PS_CURSOR");
 	BmpManager->AddBitMap(L"../MyResource/PlayerSelect/PS_X_ANI", L"PS_X_ANI");
+	SoundManager->PlayBGM(L"04_Player Select.mp3");
 }
 
 void CPlayerSelect::LateInit()
@@ -56,14 +58,25 @@ void CPlayerSelect::Update()
 	{
 		BmpManager->AddBitMap(L"../MyResource/PlayerSelect/PS_X_ANI", L"PS_X_ANI");
 
-		CGameObject* pPS_Cursor = CAbstractFactory<CPS_Cursor>::CreateObj(-BUFCX, -BUFCY, L"PS_CURSOR", 2, 3, 1, 2);
-		dynamic_cast<CPS_Cursor*>(pPS_Cursor)->SetTargetX(GameManager->GetTargetByFrameKey(L"PS_X", OBJ_UI));
-		dynamic_cast<CPS_Cursor*>(pPS_Cursor)->SetTargetZero(GameManager->GetTargetByFrameKey(L"PS_ZERO", OBJ_UI));
-		GameManager->AddObject(pPS_Cursor, OBJ_UI);
+		m_pCursor = CAbstractFactory<CPS_Cursor>::CreateObj(-BUFCX, -BUFCY, L"PS_CURSOR", 2, 3, 1, 2);
+		dynamic_cast<CPS_Cursor*>(m_pCursor)->SetTargetX(GameManager->GetTargetByFrameKey(L"PS_X", OBJ_UI));
+		dynamic_cast<CPS_Cursor*>(m_pCursor)->SetTargetZero(GameManager->GetTargetByFrameKey(L"PS_ZERO", OBJ_UI));
+		GameManager->AddObject(m_pCursor, OBJ_UI);
 		m_bCreateCursor = true;
 	}
 
+	if(m_pCursor != nullptr)
+		m_bChanceScene = m_pCursor->GetIsActive();
+
 	GameManager->Update();
+
+	if (m_bChanceScene)
+	{
+		if (SceneManager->FadeOut())
+		{
+			SceneManager->ChangeScene(CSceneManager::LOBBY);
+		}
+	}
 }
 
 void CPlayerSelect::LateUpdate()
@@ -79,5 +92,6 @@ void CPlayerSelect::Render(HDC hDC)
 
 void CPlayerSelect::Release()
 {
+	SoundManager->StopSound(CSoundManager::BGM);
 	GameManager->ReleaseObj(OBJ_UI);
 }

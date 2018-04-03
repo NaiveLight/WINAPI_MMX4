@@ -44,6 +44,7 @@ void CPS_Cursor::LateUpdate()
 		m_tFrame.iScene = 0;
 		m_tInfo.fX = m_pZero->GetInfo().fX;
 		m_tInfo.fY = m_pZero->GetInfo().fY - 10.f;
+		SoundManager->PlaySound(L"PS_CONTROL.wav", CSoundManager::UI);
 	}
 
 	if (KeyManager->KeyDown(VK_LEFT))
@@ -51,6 +52,7 @@ void CPS_Cursor::LateUpdate()
 		m_tFrame.iScene = 1;
 		m_tInfo.fX = m_pX->GetInfo().fX +5.f;
 		m_tInfo.fY = m_pX->GetInfo().fY - 10.f;
+		SoundManager->PlaySound(L"PS_CONTROL.wav", CSoundManager::UI);
 	}
 
 	if (KeyManager->KeyDown('c') ||
@@ -64,8 +66,8 @@ void CPS_Cursor::LateUpdate()
 		if (m_tFrame.iScene == 1)
 		{
 			m_bIsActive = true;
-			SceneManager->ChangeScene(CSceneManager::LOBBY);
-			return;
+			SoundManager->PlaySound(L"PS_SELECT.wav", CSoundManager::UI);
+			m_tFrame.dwTime = GetTickCount();
 		}
 	}
 

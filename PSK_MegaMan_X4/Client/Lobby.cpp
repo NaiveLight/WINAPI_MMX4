@@ -25,6 +25,8 @@ void CLobby::Init()
 
 void CLobby::LateInit()
 {
+	SoundManager->PlayBGM(L"05_Stage Select.mp3");
+
 	float fMaxScrollX = GameManager->GetMaxScrollX();
 	float fMaxScrollY = GameManager->GetMaxScrollY();
 	m_pLobbyX = CAbstractFactory<CLB_X>::CreateObj(BUFCX/5, BUFCY+BUFCY/5*3.5f, L"LOBBY_X", 2, 6, 0, 3);
@@ -102,6 +104,7 @@ void CLobby::Render(HDC hDC)
 
 void CLobby::Release()
 {
+	SoundManager->StopAll();
 	GameManager->ReleaseObj(OBJ_UI);
 	GameManager->ResetScroll();
 }

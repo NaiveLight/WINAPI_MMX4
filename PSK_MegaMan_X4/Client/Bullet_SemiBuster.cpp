@@ -17,13 +17,14 @@ void CBullet_SemiBuster::Init()
 	m_bIsActive = true;
 	m_tInfo.fCX = 30.f;
 	m_tInfo.fCY = 30.f;
-	m_iHitBoxCX = 20.f;
-	m_iHitBoxCY = 20.f;
+	m_iHitBoxCX = 20;
+	m_iHitBoxCY = 20;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 50;
 	m_LeftKey = L"BULLET_BSL";
 	m_RightKey = L"BULLET_BSR";
 	m_fSpeedX = 8.f;
+	m_iAttack = 2;
 }
 
 void CBullet_SemiBuster::LateInit()
@@ -33,34 +34,34 @@ void CBullet_SemiBuster::LateInit()
 	float fOffsetX = 0.f;
 	float fOffsetY = 0.f;
 	CPlayer::STANCE eStance = dynamic_cast<CPlayer*>(m_pTarget)->GetStance();
-	m_bIsLeft = m_pTarget->GetIsLeft();
+	m_bIsLeft = dynamic_cast<CPlayer*>(m_pTarget)->GetIsLeft();
 
 	switch (eStance)
 	{
-	case CPlayer::ATTACK_NORMAL:
+	case CPlayer::ATTACK_NORMAL: case CPlayer::IDLE:
 		fOffsetX = 15.f;
-		fOffsetY = -10.f;
+		fOffsetY = -20.f;
 		break;
 
-	case CPlayer::WALK_ATT:
+	case CPlayer::WALK_ATT: case CPlayer::WALK:
 		fOffsetX = 28.f;
 		fOffsetY = -10.f;
 		break;
 
-	case CPlayer::DASH_ATT:
+	case CPlayer::DASH_ATT: case CPlayer::DASH:
 		fOffsetX = 34.f;
 		fOffsetY = -2.f;
 		break;
 
-	case CPlayer::JUMP_ATT:
+	case CPlayer::JUMP_ATT: case CPlayer::JUMP:
 		fOffsetX = 15.f;
 		fOffsetY = -11.f;
 		break;
 
-	case CPlayer::WALL_ATT:
+	case CPlayer::WALL_ATT: case CPlayer::WALL:
 		break;
 
-	case CPlayer::WALL_JUMP_ATTACK:
+	case CPlayer::WALL_JUMP_ATTACK: case CPlayer::WALL_JUMP:
 		break;
 	}
 

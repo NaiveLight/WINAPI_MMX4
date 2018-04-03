@@ -17,7 +17,8 @@ public:
 
 public:
 	const int  GetAttack() { return m_iAttack; }
-private:
+
+protected:
 	int m_iAttack;
 };
 

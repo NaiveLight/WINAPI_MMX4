@@ -40,7 +40,7 @@ public:
 	void DrawObject(HDC hDC, const TCHAR* pFrameKey);
 	void DrawObjectScroll(HDC hDC, const TCHAR* pFrameKey);
 	void DrawObjectMaxScroll(HDC hDC, const TCHAR* pFrameKey);
-	void DrawAlphaScroll(HDC hDC, const TCHAR* pFrameKey, float alpha);
+	void DrawAlphaScroll(HDC hDC, const TCHAR* pFrameKey, BYTE alpha);
 
 	virtual void DrawHitBox(HDC hDC);
 	bool CheckScreen() { return CCollision::Screen(GameManager->GetScreen(), this); }

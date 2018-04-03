@@ -35,6 +35,7 @@ void CMainGame::LateUpdate()
 {
 	SceneManager->LateUpdate();
 	KeyManager->Update();
+	SoundManager->Update();
 }
 
 void CMainGame::Render()
@@ -57,6 +58,7 @@ void CMainGame::Render()
 
 void CMainGame::Release()
 {
+	SoundManager->DestroyInstance();
 	SceneManager->DestroyInstance();
 	BmpManager->DestroyInstance();
 	KeyManager->DestroyInstance();

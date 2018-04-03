@@ -16,13 +16,14 @@ void CBullet_Normal::Init()
 	m_bIsActive = true;
 	m_tInfo.fCX = 20.f;
 	m_tInfo.fCY = 20.f;
-	m_iHitBoxCX = 10.f;
-	m_iHitBoxCY = 10.f;
+	m_iHitBoxCX = 10;
+	m_iHitBoxCY = 10;
 	m_tFrame.dwTime = GetTickCount();
-	m_tFrame.dwSpeed = 50;
+	m_tFrame.dwSpeed = 30;
 	m_LeftKey = L"BULLET_NBL";
 	m_RightKey = L"BULLET_NBR";
 	m_fSpeedX = 8.f;
+	m_iAttack = 1;
 }
 
 void CBullet_Normal::LateInit()
@@ -32,16 +33,16 @@ void CBullet_Normal::LateInit()
 	float fOffsetX = 0.f;
 	float fOffsetY = 0.f;
 	CPlayer::STANCE eStance = dynamic_cast<CPlayer*>(m_pTarget)->GetStance();
-	m_bIsLeft = m_pTarget->GetIsLeft();
+	m_bIsLeft = dynamic_cast<CPlayer*>(m_pTarget)->GetIsLeft();
 
 	switch (eStance)
 	{
-	case CPlayer::ATTACK_NORMAL:
+	case CPlayer::ATTACK_NORMAL: case CPlayer::IDLE:
 		fOffsetX = 15.f;
 		fOffsetY = -10.f;
 		break;
 
-	case CPlayer::WALK_ATT:
+	case CPlayer::WALK_ATT: case CPlayer::WALK:
 		fOffsetX = 28.f;
 		fOffsetY = -10.f;
 		break;
