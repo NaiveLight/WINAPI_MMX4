@@ -28,5 +28,6 @@ private:
 	STANCE m_eCurStance;
 	STANCE m_ePrevStance;
 	float m_fTragetDist;
+	bool m_bAttack;
 };
 

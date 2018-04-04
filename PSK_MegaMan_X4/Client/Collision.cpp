@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "Ground.h"
+#include "Bullet.h"
 
 CCollision::CCollision()
 {
@@ -16,7 +17,7 @@ bool CCollision::Screen(RECT & tScreen, CGameObject * pObj)
 {
 	RECT rc = {};
 
-	if (IntersectRect(&rc, &tScreen, &pObj->GetTexRect()))
+	if (IntersectRect(&rc, &tScreen, &pObj->GetHitBoxRect()))
 		return true;
 
 	return false;
@@ -42,7 +43,7 @@ bool CCollision::PlayerToWall(CPlayer * pPlayer, OBJLIST & srcList)
 		if (pSrc->GetIsLeft())
 		{
 			RECT rc = {};
-			if (IntersectRect(&rc, &(pPlayer->GetHitBoxRect()), &(pSrc->GetTexRect())))
+			if (IntersectRect(&rc, &(pPlayer->GetHitBoxRect()), &(pSrc->GetHitBoxRect())))
 			{
 				fMoveX = float(rc.right - rc.left);
 				fMoveY = float(rc.bottom - rc.top);
@@ -50,7 +51,7 @@ bool CCollision::PlayerToWall(CPlayer * pPlayer, OBJLIST & srcList)
 				if (fMoveX < fMoveY)
 				{
 					bool isWallLeft = false;
-					if (pPlayer->GetHitBoxRect().left < pSrc->GetTexRect().left)
+					if (pPlayer->GetHitBoxRect().left < pSrc->GetHitBoxRect().left)
 					{
 						//cout << "벽 좌측 충돌\n";
 						fMoveX *= -1.f;
@@ -123,7 +124,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 		else
 		{
 			RECT rc = {};
-			if (IntersectRect(&rc, &(pPlayer->GetHitBoxRect()), &(pSrc->GetTexRect())))
+			if (IntersectRect(&rc, &(pPlayer->GetHitBoxRect()), &(pSrc->GetHitBoxRect())))
 			{
 				fMoveX = float(rc.right - rc.left);
 				fMoveY = float(rc.bottom - rc.top);
@@ -131,7 +132,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 				if (fMoveX > fMoveY)
 				{
 					//위 아래 판별
-					if (pPlayer->GetInfo().fY + pPlayer->GetHitBoxCY() * 0.5f > pSrc->GetTexRect().bottom)
+					if (pPlayer->GetInfo().fY + pPlayer->GetHitBoxCY() * 0.5f > pSrc->GetHitBoxRect().bottom)
 					{
 						//cout << "렉트 하단 충돌\n";
 						pPlayer->SetPos(pPlayer->GetInfo().fX, pPlayer->GetInfo().fY + fMoveY);
@@ -140,8 +141,8 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 					}
 					else
 					{
-						float x1 = float(pSrc->GetTexRect().left);
-						float x2 = float(pSrc->GetTexRect().right);
+						float x1 = float(pSrc->GetHitBoxRect().left);
+						float x2 = float(pSrc->GetHitBoxRect().right);
 
 						if (x1 > pPlayer->GetInfo().fX|| x2 < pPlayer->GetInfo().fX)
 						{
@@ -156,7 +157,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 							return false;
 						}
 
-						float y = float(pSrc->GetTexRect().top);
+						float y = float(pSrc->GetHitBoxRect().top);
 						float fGradient = (y - y) / (x2 - x1);
 						fMoveY = fGradient * (pPlayer->GetInfo().fX - x1) + y;
 
@@ -171,7 +172,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 				{
 					if (pPlayer->GetIsGround())
 					{
-						if (pPlayer->GetHitBoxRect().left < pSrc->GetTexRect().left)
+						if (pPlayer->GetHitBoxRect().left < pSrc->GetHitBoxRect().left)
 						{
 							//cout << "땅 + 벽 좌측 충돌\n";
 							fMoveX *= -1.f;
@@ -186,12 +187,12 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 					}
 					else
 					{
-						float y1 = float(pSrc->GetTexRect().top);
-						float y2 = float(pSrc->GetTexRect().bottom);
+						float y1 = float(pSrc->GetHitBoxRect().top);
+						float y2 = float(pSrc->GetHitBoxRect().bottom);
 
 						if (y2 < pPlayer->GetInfo().fY - pPlayer->GetHitBoxCY() * 0.1f)
 						{
-							if (pPlayer->GetHitBoxRect().left < pSrc->GetTexRect().left)
+							if (pPlayer->GetHitBoxRect().left < pSrc->GetHitBoxRect().left)
 							{
 								//cout << "땅 + 벽 좌측 충돌\n";
 								fMoveX *= -1.f;
@@ -204,7 +205,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 							pPlayer->SetPos(pPlayer->GetInfo().fX + fMoveX, pPlayer->GetInfo().fY);
 						}
 
-						else if (pPlayer->GetHitBoxRect().left < pSrc->GetTexRect().left)
+						else if (pPlayer->GetHitBoxRect().left < pSrc->GetHitBoxRect().left)
 						{
 							if (KeyManager->KeyPressing(VK_RIGHT))
 							{
@@ -251,51 +252,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 	}
 }
 
-//bool CCollision::PlayerGround(CPlayer* pPlayer, OBJLIST & srcList)
-//{
-//	if (!pPlayer->GetIsActive())
-//	{
-//		return false;
-//	}
-//
-//	float fMoveX = 0.f;
-//	float fMoveY = 0.f;
-//
-//	for (auto& pSrc : srcList)
-//	{
-//		// true = RECT, false = Line
-//		if (!pSrc->GetIsLeft())
-//		{
-//			// 라인 Ground 충돌
-//			float x1 = (float)dynamic_cast<CGround*>(pSrc)->GetPointLT().x;
-//			float x2 = (float)dynamic_cast<CGround*>(pSrc)->GetPointRB().x;
-//
-//			if (x1 < pPlayer->GetInfo().fX && pPlayer->GetInfo().fX < x2)
-//			{
-//				
-//				float y1 = (float)dynamic_cast<CGround*>(pSrc)->GetPointLT().y;
-//				float y2 = (float)dynamic_cast<CGround*>(pSrc)->GetPointRB().y;
-//
-//				float fGradient = (y2 - y1) / (x2 - x1);
-//				fMoveY = fGradient * (pPlayer->GetInfo().fX - x1) + y1;
-//
-//				if (fMoveY - pPlayer->GetHitBoxCY() * 0.55f >= pPlayer->GetInfo().fY)
-//				{
-//					pPlayer->SetAccelY(1.f);
-//					return false;
-//				}
-//
-//
-//				pPlayer->SetPos(pPlayer->GetInfo().fX, fMoveY - pPlayer->GetHitBoxCY() * 0.45f);
-//				pPlayer->SetVelocityY(0.f);
-//				pPlayer->SetAccelY(0.f);
-//				//cout << "라인 위 충돌이야\n";
-//				return true;
-//			}
-//		}
-//		else
-//		{
-//		
-//		} // is rect or line
-//	} // for
-//} // PlayerGround
+void CCollision::BulletToObject(OBJLIST & bulletList, OBJLIST & srcList)
+{
+
+}

@@ -17,6 +17,9 @@ public:
 	virtual void FrameMove();
 
 private:
+	void CollisionCheck(OBJECT_ID eID);
+
+private:
 	TCHAR* m_LeftKey;
 	TCHAR* m_RightKey;
 };

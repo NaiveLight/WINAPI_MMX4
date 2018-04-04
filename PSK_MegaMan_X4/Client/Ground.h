@@ -10,10 +10,12 @@ public:
 	CGround(RECT& rc)
 		: m_ptLeftTop{}, m_ptRightBottom{}
 	{
-		m_tTexRect.left = rc.left;
-		m_tTexRect.top = rc.top;
-		m_tTexRect.right = rc.right;
-		m_tTexRect.bottom = rc.bottom;
+		m_iHitBoxCX = rc.right - rc.left;
+		m_iHitBoxCY = rc.bottom - rc.top;
+		m_tHitBoxRect.left = rc.left;
+		m_tHitBoxRect.top = rc.top;
+		m_tHitBoxRect.right = rc.right;
+		m_tHitBoxRect.bottom = rc.bottom;
 
 		m_bIsLeft = true;
 	}

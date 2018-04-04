@@ -28,6 +28,7 @@ OBJECT_STATE CGround::Update()
 
 void CGround::LateUpdate()
 {
+	//UpdateRect();
 }
 
 void CGround::Render(HDC hDC)
@@ -37,7 +38,7 @@ void CGround::Render(HDC hDC)
 
 	if (m_bIsLeft)
 	{
-		Rectangle(hDC, m_tTexRect.left - iScrollX, m_tTexRect.top - iScrollY, m_tTexRect.right - iScrollX, m_tTexRect.bottom - iScrollY);
+		//Rectangle(hDC, m_tHitBoxRect.left - iScrollX, m_tHitBoxRect.top - iScrollY, m_tHitBoxRect.right - iScrollX, m_tHitBoxRect.bottom - iScrollY);
 	}
 	else
 	{

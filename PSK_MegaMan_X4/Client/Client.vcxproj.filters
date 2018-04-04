@@ -128,9 +128,6 @@
     <Filter Include="03.Monster\00.Normal\02.KnotBeret2">
       <UniqueIdentifier>{920dd29e-b9a7-46d4-bcdd-8da0d139a754}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.Monster\00.Normal\03.MadBull">
-      <UniqueIdentifier>{ec0a1940-422d-4ae8-87ff-e8df11a586bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.Monster\01.Boss">
       <UniqueIdentifier>{a2270554-32ab-4c16-a4b0-be4f6c4b6e3e}</UniqueIdentifier>
     </Filter>
@@ -208,6 +205,12 @@
     </Filter>
     <Filter Include="06.UI\02.HUD\03.DamagedHP">
       <UniqueIdentifier>{cad37473-b91b-4595-934e-8036dee55e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\00.Normal\03.ItemCarrier">
+      <UniqueIdentifier>{ec0a1940-422d-4ae8-87ff-e8df11a586bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\01.Boss\00.Eregion">
+      <UniqueIdentifier>{a6190ae2-6648-4f6f-82c9-aa21b8b8e2f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -353,7 +356,6 @@
     <ClInclude Include="Bullet_FullBuster.h">
       <Filter>02.Player\00.Bullet\02.Bullet_FullBuster</Filter>
     </ClInclude>
-    <ClInclude Include="Effect.h" />
     <ClInclude Include="Effect_NB_Fire.h">
       <Filter>04.Effect\01.Bullet\00.NormalBullet</Filter>
     </ClInclude>
@@ -371,6 +373,21 @@
     </ClInclude>
     <ClInclude Include="SpikeMarl.h">
       <Filter>03.Monster\00.Normal\00.SpikeMarl</Filter>
+    </ClInclude>
+    <ClInclude Include="KnotBeretA.h">
+      <Filter>03.Monster\00.Normal\01.KnotBeret1</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemCarrier.h">
+      <Filter>03.Monster\00.Normal\03.ItemCarrier</Filter>
+    </ClInclude>
+    <ClInclude Include="Eregion.h">
+      <Filter>03.Monster\01.Boss\00.Eregion</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Explosion.h">
+      <Filter>04.Effect\02.Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>04.Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -486,7 +503,6 @@
     <ClCompile Include="Bullet_FullBuster.cpp">
       <Filter>02.Player\00.Bullet\02.Bullet_FullBuster</Filter>
     </ClCompile>
-    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Effect_NB_Fire.cpp">
       <Filter>04.Effect\01.Bullet\00.NormalBullet</Filter>
     </ClCompile>
@@ -504,6 +520,21 @@
     </ClCompile>
     <ClCompile Include="SpikeMarl.cpp">
       <Filter>03.Monster\00.Normal\00.SpikeMarl</Filter>
+    </ClCompile>
+    <ClCompile Include="KnotBeretA.cpp">
+      <Filter>03.Monster\00.Normal\01.KnotBeret1</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemCarrier.cpp">
+      <Filter>03.Monster\00.Normal\03.ItemCarrier</Filter>
+    </ClCompile>
+    <ClCompile Include="Eregion.cpp">
+      <Filter>03.Monster\01.Boss\00.Eregion</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Explosion.cpp">
+      <Filter>04.Effect\02.Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>04.Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

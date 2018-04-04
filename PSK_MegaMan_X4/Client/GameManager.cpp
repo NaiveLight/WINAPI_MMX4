@@ -25,6 +25,9 @@ void CGameManager::Update()
 		auto iter_begin = m_ObjectList[i].begin();
 		auto iter_end = m_ObjectList[i].end();
 
+		//if (i == OBJ_EFFECT)
+		//	cout << m_ObjectList[i].size();
+
 		for (; iter_begin != iter_end;)
 		{
 			int iEvent = (*iter_begin)->Update();

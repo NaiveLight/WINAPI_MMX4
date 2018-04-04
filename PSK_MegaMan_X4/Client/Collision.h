@@ -1,6 +1,7 @@
 #pragma once
 
 class CPlayer;
+class CBullet;
 class CCollision
 {
 public:
@@ -11,5 +12,6 @@ public:
 	static bool Screen(RECT& tScreen, CGameObject* pObj);
 	static bool PlayerToWall(CPlayer* pPlayer, OBJLIST& srcList);
 	static bool PlayerToGround(CPlayer* pPlayer, OBJLIST& srcList);
+	static void BulletToObject(OBJLIST& bulletList, OBJLIST& srcList);
 };
 

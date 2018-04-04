@@ -40,7 +40,7 @@ void CBullet_SemiBuster::LateInit()
 	{
 	case CPlayer::ATTACK_NORMAL: case CPlayer::IDLE:
 		fOffsetX = 15.f;
-		fOffsetY = -20.f;
+		fOffsetY = -10.f;
 		break;
 
 	case CPlayer::WALK_ATT: case CPlayer::WALK:
@@ -58,10 +58,14 @@ void CBullet_SemiBuster::LateInit()
 		fOffsetY = -11.f;
 		break;
 
-	case CPlayer::WALL_ATT: case CPlayer::WALL:
+	case CPlayer::WALL_ATT:
+		fOffsetX = -20.f;
+		fOffsetY = -5.f;
 		break;
 
-	case CPlayer::WALL_JUMP_ATTACK: case CPlayer::WALL_JUMP:
+	case CPlayer::WALL_JUMP_ATTACK:
+		fOffsetX = -20.f;
+		fOffsetY = -5.f;
 		break;
 	}
 
@@ -73,6 +77,17 @@ void CBullet_SemiBuster::LateInit()
 	}
 	else
 		m_pFrameKey = m_RightKey;
+
+
+	CPlayer::STANCE eCurStance = dynamic_cast<CPlayer*>(m_pTarget)->GetStance();
+
+	if (eCurStance == CPlayer::WALL_ATT || eCurStance == CPlayer::WALL_JUMP_ATTACK)
+	{
+		if (m_pFrameKey == m_LeftKey)
+			m_pFrameKey = m_RightKey;
+		else
+			m_pFrameKey = m_LeftKey;
+	}
 
 	m_tInfo.fX = fPlayerX + fOffsetX;
 	m_tInfo.fY = fPlayerY + fOffsetY;

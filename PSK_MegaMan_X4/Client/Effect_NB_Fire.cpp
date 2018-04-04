@@ -66,9 +66,13 @@ OBJECT_STATE CEffect_NB_Fire::Update()
 		break;
 
 	case CPlayer::WALL_ATT:
+		fOffsetX = -20.f;
+		fOffsetY = -5.f;
 		break;
 
 	case CPlayer::WALL_JUMP_ATTACK:
+		fOffsetX = -20.f;
+		fOffsetY = -5.f;
 		break;
 	}
 
@@ -79,6 +83,16 @@ OBJECT_STATE CEffect_NB_Fire::Update()
 	}
 	else
 		m_pFrameKey = m_RightKey;
+
+	CPlayer::STANCE eCurStance = dynamic_cast<CPlayer*>(m_pTarget)->GetStance();
+
+	if (eCurStance == CPlayer::WALL_ATT || eCurStance == CPlayer::WALL_JUMP_ATTACK)
+	{
+		if (m_pFrameKey == m_LeftKey)
+			m_pFrameKey = m_RightKey;
+		else
+			m_pFrameKey = m_LeftKey;
+	}
 
 	m_tInfo.fX = fPlayerX + fOffsetX;
 	m_tInfo.fY = fPlayerY + fOffsetY;

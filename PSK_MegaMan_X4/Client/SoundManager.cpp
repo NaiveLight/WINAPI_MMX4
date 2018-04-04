@@ -16,7 +16,6 @@ void CSoundManager::Init()
 {
 	FMOD_System_Create(&m_pSystem);	// 시스템 할당
 	FMOD_System_Init(m_pSystem, END, FMOD_INIT_NORMAL, nullptr); // 시스템 초기화
-
 	LoadSoundFile();
 }
 

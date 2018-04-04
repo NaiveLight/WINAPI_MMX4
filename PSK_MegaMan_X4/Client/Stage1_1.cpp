@@ -4,6 +4,10 @@
 #include "MapObj.h"
 #include "Door.h"
 #include "Ground.h"
+#include "SpikeMarl.h"
+#include "KnotBeretA.h"
+#include "Eregion.h"
+#include "Effect_Explosion.h"
 
 
 CStage1_1::CStage1_1()
@@ -77,8 +81,17 @@ void CStage1_1::Init()
 	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_LARGE_RIGHT.bmp", L"E_BL_FIRE_R");
 
 	// 몬스터
-	BmpManager->AddBitMap(L"../MyResource/MyResource/Monster/Monster_Spike_Left.bmp", L"M_SPIKE_L");
-	BmpManager->AddBitMap(L"../MyResource/MyResource/Monster/Monster_Spike_Right.bmp", L"M_SPIKE_R");
+	BmpManager->AddBitMap(L"../MyResource/Monster/Monster_Spike_Left.bmp", L"M_SPIKE_L");
+	BmpManager->AddBitMap(L"../MyResource/Monster/Monster_Spike_Right.bmp", L"M_SPIKE_R");
+	BmpManager->AddBitMap(L"../MyResource/Monster/KnotBeret_LEFT.bmp", L"M_KNOT_BERET_A_L");
+	BmpManager->AddBitMap(L"../MyResource/Monster/KnotBeret_RIGHT.bmp", L"M_KNOT_BERET_A_R");
+
+	//보스
+	BmpManager->AddBitMap(L"../MyResource/Monster/BOSS_Erigon_LEFT.bmp", L"B_EREGION_L");
+	BmpManager->AddBitMap(L"../MyResource/Monster/BOSS_Erigon_RIGHT.bmp", L"B_EREGION_R");
+
+	//폭발 이펙트
+	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_EXPLOSION.bmp", L"E_EXPLOSION");
 
 	// Max X : 5064 / Y : 104
 	// Boss 전 X : 4756
@@ -153,22 +166,27 @@ void CStage1_1::LateInit()
 	// 문
 	//1530 , 2050, 2560, 3070
 	CGameObject* pHalfDoor = CAbstractFactory<CDoor>::CreateObj(1665, 131, L"ST1_HALF_DOOR",3, 4, 0, 1);
-	GameManager->AddObject(pHalfDoor, OBJ_INTERACT);
+	pHalfDoor->SetIsLeft(true);
+	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
 	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2181, 130, L"ST1_HALF_DOOR", 3, 4, 0, 1);
-	GameManager->AddObject(pHalfDoor, OBJ_INTERACT);
+	pHalfDoor->SetIsLeft(true);
+	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
 	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2692, 129, L"ST1_HALF_DOOR", 3, 4, 0, 1);
-	GameManager->AddObject(pHalfDoor, OBJ_INTERACT);
+	pHalfDoor->SetIsLeft(true);
+	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
 	CGameObject* pFullDoor = CAbstractFactory<CDoor>::CreateObj(3215, 110, L"ST1_FULL_DOOR", 3, 4, 0, 1);
-	GameManager->AddObject(pFullDoor, OBJ_INTERACT);
+	pFullDoor->SetHitBox(40, 150);
+	pFullDoor->SetIsLeft(true);
+	GameManager->AddObject(pFullDoor, OBJ_GROUND);
 
 	//GameManager->SetScrollX(3700.f);
 	//GameManager->SetScrollX(104.f);
 
 	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190 , 3800, BUFCY}), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 120}), OBJ_GROUND);
+	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 120}), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 50,  150, 100, 200 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4900, 100, 5050, 145 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 5042, 145, 5080, 257 }), OBJ_GROUND);
@@ -176,6 +194,30 @@ void CStage1_1::LateInit()
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 0, 190 }, POINT{ 3800, 190 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 3800, 190 }, POINT{ 4320, 320 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateLineGround(POINT{ 4320, 320 }, POINT{ 5384, 320 }), OBJ_GROUND);
+
+	//몬스터
+	//스파이크
+	CGameObject* pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(150.f, 175.f, L"M_SPIKE_R", 3, 7, 0, 5);
+	pMonster->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pMonster, OBJ_MONSTER);
+
+	//놋베렛
+	//CGameObject* pMonster = CAbstractFactory<CKnotBeretA>::CreateObj(150.f, 165.f, L"M_KNOT_BERET_R", 6, 7, 0, 5);
+	//pMonster->SetTarget(GameManager->GetPlayer());
+	//GameManager->AddObject(pMonster, OBJ_MONSTER);
+
+	//CGameObject* pEffect = CAbstractFactory<CEffect_Explosion>::CreateObj(200.f, 150.f, L"E_EXPLOSION", 17, 18, 0, 1);
+	//GameManager->AddObject(pEffect, OBJ_EFFECT);
+
+	//pEffect = CAbstractFactory<CEffect_Explosion>::CreateObj(220.f, 160.f, L"E_EXPLOSION", 17, 18, 0, 1);
+	//GameManager->AddObject(pEffect, OBJ_EFFECT);
+
+	//pEffect = CAbstractFactory<CEffect_Explosion>::CreateObj(180.f, 140.f, L"E_EXPLOSION", 17, 18, 0, 1);
+	//GameManager->AddObject(pEffect, OBJ_EFFECT);
+
+	CGameObject* pBoss = CAbstractFactory<CEregion>::CreateObj(300, BUFCY / 4, L"B_EREGION_R", 5, 7, 0, 3);
+	pBoss->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pBoss, OBJ_BOSS);
 }
 
 void CStage1_1::Update()

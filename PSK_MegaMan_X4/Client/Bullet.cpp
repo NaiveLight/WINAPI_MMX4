@@ -3,7 +3,7 @@
 
 
 CBullet::CBullet()
-	:	m_iAttack(0)
+	:	m_iAttack(0), m_bIsBuster(false)
 {
 }
 

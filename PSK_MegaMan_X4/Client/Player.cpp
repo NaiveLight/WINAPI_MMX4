@@ -64,7 +64,7 @@ void CPlayer::Init()
 	m_fDashSpeed = 3.5f;
 	m_fDashAccel = 0.25f;
 	m_dwDashTime = 1000;
-	m_dwChargeTime = 1000;
+	m_dwChargeTime = 1200;
 
 	m_iCurHP = m_iMaxHP = 15;
 	m_iLife = 3;
@@ -268,11 +268,11 @@ void CPlayer::LateUpdate()
 		}
 		else if (m_bWall)
 		{
-			if (m_bAttack && m_bJump)
+			if (m_bAttack && m_bWallKick)
 				m_eCurStance = WALL_JUMP_ATTACK;
 			else if (m_bAttack)
 				m_eCurStance = WALL_ATT;
-			else if (m_bJump)
+			else if (m_bWallKick)
 				m_eCurStance = WALL_JUMP;
 			else
 				m_eCurStance = WALL;
@@ -486,7 +486,7 @@ void CPlayer::FrameMove()
 			m_tFrame.iStart = m_tFrame.iEnd;
 			break;
 		case JUMP_ATT:
-			m_tFrame.iStart = m_tFrame.iEnd;
+			m_tFrame.iStart =m_iPrevFrame;
 			m_eCurStance = JUMP;
 			m_bAttack = false;
 			break;
@@ -517,6 +517,13 @@ void CPlayer::FrameMove()
 		case WALL_JUMP:
 			m_tFrame.iStart = m_tFrame.iEnd;
 			m_bWallKick = false;
+			break;
+
+		case WALL_JUMP_ATTACK:
+			m_tFrame.iStart = m_tFrame.iEnd;
+			m_eCurStance = WALL_JUMP;
+			m_bWallKick = false;
+			m_bAttack = false;
 			break;
 		case DAMAGE_LOW:
 			m_tFrame.iStart = 0;
@@ -556,7 +563,7 @@ void CPlayer::NoArmorNoWeaponScene()
 	case WALK:
 		m_tFrame.iScene = 4;
 		if (m_ePrevStance == WALK_ATT)
-			m_tFrame.iStart = m_iPrevFrame + 1;
+			m_tFrame.iStart = m_iPrevFrame;
 		else
 			m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 15;
@@ -565,15 +572,15 @@ void CPlayer::NoArmorNoWeaponScene()
 		break;
 	case WALK_ATT:
 		m_tFrame.iScene = 5;
-		m_tFrame.iStart = m_iPrevFrame + 1;
-		m_tFrame.iEnd = m_iPrevFrame + 3;
+		m_tFrame.iStart = m_iPrevFrame;
+		m_tFrame.iEnd = m_iPrevFrame+1;
 		if (m_tFrame.iStart >= 13)
 		{
 			m_tFrame.iStart %= 16;
 			m_tFrame.iEnd %= 16;
 		}
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
+		m_tFrame.dwSpeed = 20;
 		break;
 	case JUMP:
 		m_tFrame.iScene = 6;
@@ -587,15 +594,10 @@ void CPlayer::NoArmorNoWeaponScene()
 		break;
 	case JUMP_ATT:
 		m_tFrame.iScene = 7;
-		m_tFrame.iStart = m_iPrevFrame + 1;
-		m_tFrame.iEnd = m_iPrevFrame + 3;
-		if (m_tFrame.iStart >= 3)
-		{
-			m_tFrame.iStart %= 8;
-			m_tFrame.iEnd %= 8;
-		}
+		m_tFrame.iStart = m_iPrevFrame;
+		m_tFrame.iEnd = m_iPrevFrame+1;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
+		m_tFrame.dwSpeed = 20;
 		break;
 	case GROUND:
 		m_tFrame.iScene = 8;
@@ -624,11 +626,13 @@ void CPlayer::NoArmorNoWeaponScene()
 			m_tFrame.iEnd %= 8;
 		}
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
+		m_tFrame.dwSpeed = 20;
 		break;
+
 	case WALL:
 		m_tFrame.iScene = 11;
-		m_tFrame.iStart = 0;
+		if(m_ePrevStance != WALL_ATT)
+			m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 3;
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 50;
@@ -636,10 +640,10 @@ void CPlayer::NoArmorNoWeaponScene()
 
 	case WALL_ATT:
 		m_tFrame.iScene = 12;
-		m_tFrame.iStart = m_iPrevFrame;
+		m_tFrame.iStart = m_tFrame.iEnd;
 		m_tFrame.iEnd = 3;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
+		m_tFrame.dwSpeed = 20;
 		break;
 
 	case WALL_JUMP:
@@ -650,12 +654,20 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.dwSpeed = 50;
 		break;
 
+	case WALL_JUMP_ATTACK:
+		m_tFrame.iScene = 14;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 1;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 20;
+		break;
+
 	case DAMAGE_LOW:
 		m_tFrame.iScene = 15;
 		m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 3;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 80;
+		m_tFrame.dwSpeed = 100;
 		break;
 	}
 }
@@ -717,6 +729,7 @@ void CPlayer::Dash()
 			m_bDash = true;
 			m_iHitBoxCX = 45;
 			m_iHitBoxCY = 40;
+			SoundManager->PlaySound(L"DASH.wav", CSoundManager::EFFECT);
 		}
 	}
 	else if (m_bDash)
@@ -727,6 +740,7 @@ void CPlayer::Dash()
 		{
 			m_tFrame.iStart = 4;
 			m_fAccelX = 0;
+			SoundManager->StopSound(CSoundManager::EFFECT);
 		}
 
 		if (m_bJump && m_bWalk)
@@ -767,6 +781,7 @@ void CPlayer::Jump()
 				m_fVelocityX = m_fAccelX;
 				m_fVelocityY = m_fJumpSpeed - 3;
 				m_bWallKick = true;
+				SoundManager->PlaySound(L"DASH_STOP.wav", CSoundManager::EFFECT);
 			}
 		}
 		else if (KeyManager->KeyPressing('X') && !m_bWall)
@@ -780,16 +795,10 @@ void CPlayer::Jump()
 				m_iHitBoxCX = m_iOriginHitBoxCX;
 				m_iHitBoxCY = m_iOriginHitBoxCY;
 			}
-			//else if (m_bWall)
-			//{
-			//	m_fAccelX = 5.f;
-			//	if (!m_bIsLeft)
-			//		m_fAccelX *= -1.f;
-
-			//	m_fVelocityX = m_fAccelX;
-			//}
 
 			m_fVelocityY = m_fJumpSpeed;
+			SoundManager->PlaySound(L"JUMP.wav", CSoundManager::EFFECT);
+			SoundManager->PlaySound(L"JUMP_VOICE.wav", CSoundManager::PLAYER);
 		}
 	}
 	else
@@ -818,6 +827,7 @@ void CPlayer::Attack()
 		m_bAttack = true;
 		m_iPrevFrame = m_tFrame.iStart;
 		m_dwAttackStart = GetTickCount();
+		SoundManager->PlaySound(L"bullet.wav", CSoundManager::EFFECT);
 
 		CGameObject* pEffect = CAbstractFactory<CEffect_NB_Fire>::CreateObj(L"E_NB_FIRE_L", 4, 5, 0, 1);
 		pEffect->SetTarget(this);
@@ -831,8 +841,9 @@ void CPlayer::Attack()
 	{
 		if (!m_bCharge && m_dwAttackStart + 500 < GetTickCount())
 		{
-			if (KeyManager->KeyPressing('C') || KeyManager->KeyDown('V'))
+			if (KeyManager->KeyPressing('C') || KeyManager->KeyPressing('V'))
 			{
+				SoundManager->PlaySound(L"ChargeStart.wav", CSoundManager::EFFECT);
 				m_bCharge = true;
 				m_dwChargeStart = GetTickCount();
 				// create charge 1 effect 
@@ -845,12 +856,13 @@ void CPlayer::Attack()
 		{
 			if (!m_bBodyEffectBlue)
 			{
-				if (m_dwChargeStart + 500 < GetTickCount())
+				if (m_dwChargeStart + 300 < GetTickCount())
 				{
 					CGameObject* pEffect = CAbstractFactory<CEffect_Charge_Body>::CreateObj(L"E_CHARGE_BODY", 3, 4, 0, 1);
 					pEffect->SetSize(80, 80);
 					pEffect->SetTarget(this);
 					GameManager->AddObject(pEffect, OBJ_EFFECT);
+					m_bBodyEffectBlue = true;
 				}
 			}
 
@@ -858,6 +870,7 @@ void CPlayer::Attack()
 			{
 				if (m_dwChargeStart + m_dwChargeTime < GetTickCount())
 				{
+					SoundManager->PlaySound(L"CHARGING.wav", CSoundManager::EFFECT);
 					CGameObject* pEffect = CAbstractFactory<CEffect_Charge>::CreateObj(L"E_CHARGE_G", 9, 10, 0, 1);
 					pEffect->SetTarget(this);
 					GameManager->AddObject(pEffect, OBJ_EFFECT);
@@ -866,6 +879,10 @@ void CPlayer::Attack()
 					pEffect->SetTarget(this);
 					GameManager->AddObject(pEffect, OBJ_EFFECT);
 
+					pEffect = CAbstractFactory<CEffect_Charge_Body>::CreateObj(L"E_CHARGE_BODY", 3, 4, 0, 1);
+					pEffect->SetSize(80, 80);
+					pEffect->SetTarget(this);
+
 					m_bBodyEffectGreen = true;
 				}
 			}
@@ -873,13 +890,19 @@ void CPlayer::Attack()
 			//create charge 2 effect
 			if (KeyManager->KeyUp('C') || KeyManager->KeyUp('V'))
 			{
-				cout << "ÀÀ Â÷Áö Å° ¶Ã¾î\n";
+				cout << "»ç¿îµå ¸ØÃçÁà Á¦¹ß\n";
+				SoundManager->StopSound(CSoundManager::EFFECT);
+				SoundManager->Update();
+
 				if (m_dwChargeStart + m_dwChargeTime < GetTickCount())
 				{
 					// create full buster bullet & Effect
 					CGameObject* pBullet = CAbstractFactory<CBullet_FullBuster>::CreateObj(L"BULLET_BBR", 2, 3, 0, 1);
 					pBullet->SetTarget(this);
 					GameManager->AddObject(pBullet, OBJ_BULLET);
+					SoundManager->StopSound(CSoundManager::EFFECT);
+
+					SoundManager->PlaySound(L"BUSTER.wav", CSoundManager::EFFECT);
 				}
 				else
 				{
@@ -887,6 +910,9 @@ void CPlayer::Attack()
 					CGameObject* pBullet = CAbstractFactory<CBullet_SemiBuster>::CreateObj(L"BULLET_BSR", 6, 7, 0, 1);
 					pBullet->SetTarget(this);
 					GameManager->AddObject(pBullet, OBJ_BULLET);
+
+					SoundManager->PlaySound(L"bullet.wav", CSoundManager::EFFECT);
+
 				}
 
 				m_bAttack = true;
@@ -894,8 +920,8 @@ void CPlayer::Attack()
 				m_bBodyEffectBlue = false;
 				m_bBodyEffectGreen = false;
 				m_iPrevFrame = m_tFrame.iStart;
-
 				//remove charge effect
+				//SoundManager->Update();
 			}
 			m_iPrevFrame = m_tFrame.iStart;
 		}

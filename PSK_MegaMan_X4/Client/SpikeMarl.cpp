@@ -17,38 +17,53 @@ void CSpikeMarl::Init()
 {
 	m_tInfo.fCX = 60.f;
 	m_tInfo.fCY = 60.f;
-	m_iHitBoxCX = 50;
-	m_iHitBoxCY = 50;
+	m_iHitBoxCX = 40;
+	m_iHitBoxCY = 40;
 	m_LeftKey = L"M_SPIKE_L";
 	m_RightKey = L"M_SPIKE_R";
 	m_pFrameKey = m_LeftKey;
-	m_eCurStance = IDLE;
+	m_tFrame.iScene = 0;
+	m_tFrame.iStart = 0;
+	m_tFrame.iEnd = 2;
+	m_tFrame.dwTime = GetTickCount();
+	m_tFrame.dwSpeed = 250;
 	m_fVelocityX = 1.0f;
+	m_eCurStance = IDLE;
+	m_iCurHP = m_iMaxHP = 2;
 }
 
 void CSpikeMarl::LateInit()
 {
-
+	m_bIsActive = true;
 }
 
 OBJECT_STATE CSpikeMarl::Update()
 {
-	if (!m_bIsActive)
-		return WAIT;
+	//if (!m_bIsActive)
+	//	return WAIT;
+
+	CGameObject::LateInit();
+
+
+	if (m_bAttack)
+		return PLAY;
 
 	if (m_fTragetDist <= 0.f)
+	{
 		m_bIsLeft = true;
-	else
+		m_pFrameKey = m_LeftKey;
+	}
+	else if(m_fTragetDist > 0.f)
+	{
 		m_bIsLeft = false;
+		m_pFrameKey = m_RightKey;
+	}
+		
 
 	if (abs(m_fTragetDist) <= 150 && m_eCurStance != ATTACK)
 	{
 		m_eCurStance = ATTACK_BEGINE;
 		m_fVelocityX = 0.f;
-	}
-	else if (abs(m_fTragetDist) > 200)
-	{
-
 	}
 
 	return PLAY;
@@ -56,25 +71,18 @@ OBJECT_STATE CSpikeMarl::Update()
 
 void CSpikeMarl::LateUpdate()
 {
-	m_fTragetDist = m_pTarget->GetInfo().fX - m_tInfo.fX;
-
-	if (!m_bIsActive)
-	{
-		// 타겟과의 거리가 300 이하면 활성화
-		if (abs(m_fTragetDist) <= 300)
-		{
-			m_bIsActive = true;
-		}
-		return;
-	}
 
 	CGameObject::UpdateRect();
+
+	m_fTragetDist = m_pTarget->GetInfo().fX - m_tInfo.fX;
+	
 	FrameMove();
 	SceneChange();
 }
 
 void CSpikeMarl::Render(HDC hDC)
 {
+	DrawHitBox(hDC);
 	DrawObjectScroll(hDC, m_pFrameKey);
 }
 
@@ -92,10 +100,29 @@ void CSpikeMarl::FrameMove()
 
 	if (m_tFrame.iStart > m_tFrame.iEnd)
 	{
-		////switch(m_e)
-		//case IDLE:
-
-		//	break;
+		switch (m_eCurStance)
+		{
+		case IDLE:
+			m_tFrame.iStart = 0;
+			break;
+		case ATTACK_BEGINE:
+			//m_tFrame.iStart = m_tFrame.iEnd;
+			m_eCurStance = ATTACK;
+			break;
+		case ATTACK:
+			//m_tFrame.iStart = m_tFrame.iEnd;
+			m_eCurStance = ATTACK_AFTER;
+			break;
+		case ATTACK_AFTER:
+			//m_tFrame.iStart = m_tFrame.iEnd;
+			m_eCurStance = IDLE;
+			m_bAttack = false;
+			break;
+		case TURN:
+			m_tFrame.iStart = m_tFrame.iEnd;
+			m_eCurStance = IDLE;
+			break;
+		}
 	}
 }
 
@@ -108,18 +135,19 @@ void CSpikeMarl::SceneChange()
 		case IDLE:
 			m_tFrame.iScene = 0;
 			m_tFrame.iStart = 0;
-			m_tFrame.iEnd = 2;
+			m_tFrame.iEnd = 3;
 			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 150;
+			m_tFrame.dwSpeed = 250;
 			break;
 		case ATTACK_BEGINE:
 			m_tFrame.iScene = 1;
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 4;
 			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwSpeed = 150;
 			break;
 		case ATTACK:
+			m_bAttack = true;
 			m_tFrame.iScene = 2;
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 6;
@@ -131,15 +159,16 @@ void CSpikeMarl::SceneChange()
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 6;
 			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 80;
+			m_tFrame.dwSpeed = 150;
 			break;
 		case TURN:
 			m_tFrame.iScene = 4;
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 1;
 			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 100;
+			m_tFrame.dwSpeed = 150;
 			break;
 		}
+		m_ePrevStance = m_eCurStance;
 	}
 }
