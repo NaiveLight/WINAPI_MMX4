@@ -91,6 +91,7 @@ private:
 	bool m_bAttack;
 	bool m_bCharge;
 	bool m_bFire_Charge;
+	bool m_bWallKick;
 
 	//충돌 관련해서 변하는 상태
 	bool m_bGround;

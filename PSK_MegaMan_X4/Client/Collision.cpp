@@ -104,7 +104,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 				{
 					if (pPlayer->GetWall())
 					{
-						cout << "아무곳도 충돌 안했을 경우\n";
+						//cout << "아무곳도 충돌 안했을 경우\n";
 						pPlayer->SetAccelY(2.5f);
 						pPlayer->SetJump(true);
 						pPlayer->SetWall(false);
@@ -116,7 +116,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 				pPlayer->SetPos(pPlayer->GetInfo().fX, fMoveY - pPlayer->GetHitBoxCY() * 0.45f);
 				pPlayer->SetVelocityY(0.f);
 				pPlayer->SetAccelY(0.f);
-				cout << "라인 위 충돌\n";
+				//cout << "라인 위 충돌\n";
 				return true;
 			}
 		}
@@ -145,7 +145,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 
 						if (x1 > pPlayer->GetInfo().fX|| x2 < pPlayer->GetInfo().fX)
 						{
-							cout << "렉트 상단에서 떨어질때\n";
+							//cout << "렉트 상단에서 떨어질때\n";
 							pPlayer->SetAccelX(1.5f);
 							pPlayer->SetAccelY(2.5f);
 							pPlayer->SetWall(false);
@@ -196,7 +196,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 								//cout << "땅 + 벽 좌측 충돌\n";
 								fMoveX *= -1.f;
 							}
-							cout << "렉트 좌우 떨어질때\n";
+							//cout << "렉트 좌우 떨어질때\n";
 							pPlayer->SetAccelX(0.f);
 							pPlayer->SetAccelY(2.5f);
 							pPlayer->SetJump(true);
@@ -208,7 +208,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 						{
 							if (KeyManager->KeyPressing(VK_RIGHT))
 							{
-								cout << "벽 좌측 충돌\n";
+								//cout << "벽 좌측 충돌\n";
 								fMoveX *= -1.f;
 								pPlayer->SetJump(false);
 								pPlayer->SetWall(true);
@@ -228,7 +228,7 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 						{
 							if (KeyManager->KeyPressing(VK_LEFT))
 							{
-								cout << "벽 우측 충돌\n";
+								//cout << "벽 우측 충돌\n";
 								pPlayer->SetJump(false);
 								pPlayer->SetWall(true);
 								pPlayer->SetPos(pPlayer->GetInfo().fX + fMoveX, pPlayer->GetInfo().fY);

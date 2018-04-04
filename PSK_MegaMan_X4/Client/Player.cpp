@@ -262,7 +262,11 @@ void CPlayer::LateUpdate()
 
 	if (m_eCurStance != SPAWN)
 	{
-		if (m_bWall)
+		if (m_bDamaged)
+		{
+			m_eCurStance = DAMAGE_LOW;
+		}
+		else if (m_bWall)
 		{
 			if (m_bAttack && m_bJump)
 				m_eCurStance = WALL_JUMP_ATTACK;
@@ -272,6 +276,13 @@ void CPlayer::LateUpdate()
 				m_eCurStance = WALL_JUMP;
 			else
 				m_eCurStance = WALL;
+		}
+		else if (m_bWallKick)
+		{
+			if (m_bAttack)
+				m_eCurStance = WALL_JUMP_ATTACK;
+			else
+				m_eCurStance = WALL_JUMP;
 		}
 		else if (m_bWalk && m_bGround && !m_bDash && !m_bJump)
 		{
@@ -448,7 +459,7 @@ void CPlayer::FrameMove()
 	// 각 상황마다 다르게 처리 해주어야한다.
 	if (m_tFrame.iStart > m_tFrame.iEnd)
 	{
-		switch (m_tFrame.iScene)
+		switch (m_eCurStance)
 		{
 		//SPAWN은 끝나면 IDLE상태로 변환 되어야 한다.
 		case SPAWN:
@@ -494,7 +505,22 @@ void CPlayer::FrameMove()
 			m_tFrame.iStart = m_tFrame.iEnd;
 			m_eCurStance = DASH;
 			m_bAttack = false;
-			break;			
+			break;	
+		case WALL:
+			m_tFrame.iStart = m_tFrame.iEnd;
+			break;
+		case WALL_ATT:
+			m_tFrame.iStart = m_tFrame.iEnd;
+			m_eCurStance = WALL;
+			m_bAttack = false;
+			break;
+		case WALL_JUMP:
+			m_tFrame.iStart = m_tFrame.iEnd;
+			m_bWallKick = false;
+			break;
+		case DAMAGE_LOW:
+			m_tFrame.iStart = 0;
+			break;
 		}
 	}
 }
@@ -599,6 +625,37 @@ void CPlayer::NoArmorNoWeaponScene()
 		}
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 50;
+		break;
+	case WALL:
+		m_tFrame.iScene = 11;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 3;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
+		break;
+
+	case WALL_ATT:
+		m_tFrame.iScene = 12;
+		m_tFrame.iStart = m_iPrevFrame;
+		m_tFrame.iEnd = 3;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
+		break;
+
+	case WALL_JUMP:
+		m_tFrame.iScene = 13;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 1;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 50;
+		break;
+
+	case DAMAGE_LOW:
+		m_tFrame.iScene = 15;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 3;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 80;
 		break;
 	}
 }
@@ -709,6 +766,7 @@ void CPlayer::Jump()
 
 				m_fVelocityX = m_fAccelX;
 				m_fVelocityY = m_fJumpSpeed - 3;
+				m_bWallKick = true;
 			}
 		}
 		else if (KeyManager->KeyPressing('X') && !m_bWall)
