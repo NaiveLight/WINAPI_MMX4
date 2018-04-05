@@ -16,5 +16,8 @@ public:
 	virtual void Release() override;
 
 	virtual void UpdateRect();
+	virtual void FrameMove();
+
+	void Dead();
 };
 

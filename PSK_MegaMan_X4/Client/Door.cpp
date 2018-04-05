@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Door.h"
-
+#include "Effect_Explosion.h"
 
 CDoor::CDoor()
 {
@@ -18,10 +18,12 @@ void CDoor::Init()
 	m_iHitBoxCX = 30;
 	m_iHitBoxCY = 72;
 
-	m_tFrame.dwSpeed = 50;
+	m_tFrame.dwSpeed = 10;
 	m_tFrame.dwTime = GetTickCount();
 	m_iCurHP = m_iMaxHP = 5;
 	m_bIsDamaged = false;
+	m_bIsActive = true;
+	m_bIsGround = false;
 }
 
 void CDoor::LateInit()
@@ -31,6 +33,19 @@ void CDoor::LateInit()
 OBJECT_STATE CDoor::Update()
 {
 	CGameObject::LateInit();
+
+	if (!m_bIsActive)
+	{
+		return DESTROY;
+	}
+
+	if (m_bIsDead)
+	{
+		//dead play
+		Dead();
+		return PLAY;
+	}
+
 	return PLAY;
 }
 
@@ -44,12 +59,7 @@ void CDoor::LateUpdate()
 
 void CDoor::Render(HDC hDC)
 {
-	float fScrollX = GameManager->GetScrollX();
-	float fScrollY = GameManager->GetScrollY();
-
-
 	DrawObjectScroll(hDC, m_pFrameKey);
-	Rectangle(hDC, m_tHitBoxRect.left - fScrollX, m_tHitBoxRect.top - fScrollY, m_tHitBoxRect.right - fScrollX, m_tHitBoxRect.bottom - fScrollY);
 }
 
 void CDoor::Release()
@@ -67,4 +77,43 @@ void CDoor::UpdateRect()
 	m_tHitBoxRect.top = LONG(m_tInfo.fY - m_iHitBoxCY / 2) + 20;
 	m_tHitBoxRect.right = LONG(m_tInfo.fX + m_iHitBoxCX / 2) + 35;
 	m_tHitBoxRect.bottom = LONG(m_tInfo.fY + m_iHitBoxCY / 2) + 10;
+}
+
+void CDoor::FrameMove()
+{
+	if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount())
+	{
+		++m_tFrame.iStart;
+		m_tFrame.dwTime = GetTickCount();
+	}
+
+	if (m_tFrame.iStart > m_tFrame.iEnd)
+	{
+		m_tFrame.iStart = 0;
+		m_bIsDamaged = false;
+	}
+}
+
+void CDoor::Dead()
+{
+
+	for (int i = 0; i < 5; i++)
+	{
+		float fx = (float)(rand()%41);
+		float fy = (float)(rand()%41);
+
+		int random = rand() % 2;
+		if (random)
+		{
+			fx *= -1.f;
+			fy *= -1.f;
+		}
+
+		GameManager->AddObject(
+			CAbstractFactory<CEffect_Explosion>::CreateObj(m_tInfo.fX + fx, m_tInfo.fY + fy, L"E_EXPLOSION", 17, 18, 0, 1),
+			OBJ_EFFECT);
+	}
+
+	m_bIsActive = false;
+
 }

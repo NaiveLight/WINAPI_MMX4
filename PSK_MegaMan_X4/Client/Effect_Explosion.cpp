@@ -48,13 +48,16 @@ void CEffect_Explosion::FrameMove()
 {
 	if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount())
 	{
+		//if (m_tFrame.iStart == 0)
+			//SoundManager->PlaySound(L"MMX49.wav", CSoundManager::EFFECT);
+
 		++m_tFrame.iStart;
 		m_tFrame.dwTime = GetTickCount();
 	}
 
 	if (m_tFrame.iStart > m_tFrame.iEnd)
 	{
-		m_tFrame.iStart = 0;
-		//m_bIsActive = false;
+		m_tFrame.iStart = m_tFrame.iEnd;
+		m_bIsActive = false;
 	}
 }

@@ -6,9 +6,9 @@ CItemCarrier::CItemCarrier()
 {
 }
 
-
 CItemCarrier::~CItemCarrier()
 {
+	Release();
 }
 
 void CItemCarrier::Init()

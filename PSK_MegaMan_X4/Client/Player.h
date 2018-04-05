@@ -46,13 +46,14 @@ public :
 	const float GetJumpSpeed() { return m_fJumpSpeed; }
 	const bool GetIsCharge() { return m_bCharge; }
 	const STANCE GetStance() { return m_eCurStance; }
+	const DWORD GetDamagedStart(){ return m_dwDamagedStart; }
+	//const DWORD GetDamagedStart() { return m_dwDamagedStart; }
 
 	void SetStance(STANCE eStance) { m_ePrevStance = m_eCurStance = eStance; }
 	void SetAccelX(float fX) { m_fAccelX = fX; }
 	void SetAccelY(float fY) { m_fAccelY = fY; }
 	void SetJump(bool bJump) { m_bJump = bJump; }
-
-public:
+	void SetWallEffecCreate(bool bCreate) { m_bWallEffectCreate = bCreate; }
 	void SetWall(bool bwall) { m_bWall = bwall; }
 
 private:
@@ -68,11 +69,15 @@ private:
 	void UltiNoWeaponScene();
 	void UltiRFScene();
 
+public:
+	virtual void ApplyDamage(int iDamage);
+
 private:
 	void Walk();
 	void Dash();
 	void Jump();
 	void Attack();
+	void Damaged();
 
 private:
 	TCHAR* m_pLeftFrameKey;
@@ -127,6 +132,13 @@ private:
 	DWORD m_dwChargeTime;
 	bool m_bBodyEffectBlue = false;
 	bool m_bBodyEffectGreen = false;
+
+	DWORD m_dwWallEffectStart;
+	DWORD m_dwWallEffectTime = 200;
+	bool m_bWallEffectCreate = false;
+
+	DWORD m_dwDamagedStart;
+	bool m_bInvincible = false;
 
 	int m_iPrevFrame = 0;
 	int m_iLife = 3;

@@ -11,8 +11,8 @@
 // Windows 헤더 파일:
 #include <windows.h>
 
-#include <iostream>
-#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+//#include <iostream>
+////#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")1
 
 #include "fmod.h"
 #pragma comment(lib, "fmodex_vc.lib")

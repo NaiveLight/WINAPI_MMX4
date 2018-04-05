@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Ground.h"
 #include "Bullet.h"
+#include "Bullet_FullBuster.h"
 
 CCollision::CCollision()
 {
@@ -53,7 +54,7 @@ bool CCollision::PlayerToWall(CPlayer * pPlayer, OBJLIST & srcList)
 					bool isWallLeft = false;
 					if (pPlayer->GetHitBoxRect().left < pSrc->GetHitBoxRect().left)
 					{
-						//cout << "º® ÁÂÃø Ãæµ¹\n";
+
 						fMoveX *= -1.f;
 						isWallLeft = true;
 					}
@@ -254,5 +255,91 @@ bool CCollision::PlayerToGround(CPlayer * pPlayer, OBJLIST & srcList)
 
 void CCollision::BulletToObject(OBJLIST & bulletList, OBJLIST & srcList)
 {
+	RECT rc = {};
 
+	for (auto& pBullet : bulletList)
+	{
+		for (auto& pObj : srcList)
+		{
+			bool bBuster = dynamic_cast<CBullet*>(pBullet)->GetIsBuster();
+			if (!bBuster)
+			{
+				if (IntersectRect(&rc, &pBullet->GetHitBoxRect(), &pObj->GetHitBoxRect()))
+				{
+					//ÃÑ¾Ë Ãæµ¹½Ã
+					dynamic_cast<CActor*>(pObj)->ApplyDamage(dynamic_cast<CBullet*>(pBullet)->GetAttack());
+					dynamic_cast<CActor*>(pObj)->SetIsDamaged(true);
+					pBullet->SetActive(false);
+					SoundManager->PlaySound(L"BulletHit.wav", CSoundManager::EFFECT);
+					break;
+				}
+			}
+			else
+			{
+				if (IntersectRect(&rc, &pBullet->GetHitBoxRect(), &pObj->GetHitBoxRect()))
+				{
+					//ÃÑ¾Ë Ãæµ¹½Ã
+					dynamic_cast<CActor*>(pObj)->ApplyDamage(dynamic_cast<CBullet*>(pBullet)->GetAttack());
+					dynamic_cast<CActor*>(pObj)->SetIsDamaged(true);
+					//pBullet->SetActive(false);
+					SoundManager->PlaySound(L"BulletHit.wav", CSoundManager::EFFECT);
+				}
+			}
+		}
+	}
+}
+
+void CCollision::BulletToGround(OBJLIST & bulletList, OBJLIST & srcList)
+{
+	RECT rc = {};
+
+	for (auto& pBullet : bulletList)
+	{
+		for (auto& pObj : srcList)
+		{
+			bool bGround = pObj->GetIsGround();
+			bool bBuster = dynamic_cast<CBullet*>(pBullet)->GetIsBuster();
+
+			if (!bGround)
+			{
+				if (!bBuster)
+				{
+					if (IntersectRect(&rc, &pBullet->GetHitBoxRect(), &pObj->GetHitBoxRect()))
+					{
+						//ÃÑ¾Ë Ãæµ¹½Ã
+						dynamic_cast<CActor*>(pObj)->ApplyDamage(dynamic_cast<CBullet*>(pBullet)->GetAttack());
+						dynamic_cast<CActor*>(pObj)->SetIsDamaged(true);
+						pBullet->SetActive(false);
+						SoundManager->PlaySound(L"BulletHit.wav", CSoundManager::EFFECT);
+					}
+				}
+				else
+				{
+					if (IntersectRect(&rc, &pBullet->GetHitBoxRect(), &pObj->GetHitBoxRect()))
+					{
+						//ÃÑ¾Ë Ãæµ¹½Ã
+						dynamic_cast<CActor*>(pObj)->ApplyDamage(dynamic_cast<CBullet*>(pBullet)->GetAttack());
+						dynamic_cast<CActor*>(pObj)->SetIsDamaged(true);
+						pBullet->SetActive(false);
+						SoundManager->PlaySound(L"BulletHit.wav", CSoundManager::EFFECT);
+					}
+				}
+			}
+		}
+	}
+}
+
+bool CCollision::PlayerToMonster(CPlayer * pPlayer, OBJLIST & srcList)
+{
+	RECT rc = {};
+	for (auto& pObj : srcList)
+	{
+		if (IntersectRect(&rc, &pPlayer->GetHitBoxRect(), &pObj->GetHitBoxRect()))
+		{
+			int iMonsterAttack = dynamic_cast<CActor*>(pObj)->GetAttack();
+			pPlayer->ApplyDamage(iMonsterAttack);
+			return true;
+		}
+	}
+	return false;
 }

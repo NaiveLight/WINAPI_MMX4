@@ -21,6 +21,8 @@ protected:
 	float m_fSpeedX;			//x 축 최대 속도
 	float m_fSpeedY;
 
+	bool m_bIsGround;
+
 public:
 	CGameObject();
 	virtual ~CGameObject();
@@ -56,6 +58,7 @@ public:
 	const int& GetHitBoxCX()		{ return m_iHitBoxCX; }
 	const int& GetHitBoxCY()		{ return m_iHitBoxCY; }
 	const float& GetSpeed()			{ return m_fSpeedX; }
+	const bool& GetIsGround() { return m_bIsGround; }
 
 public:
 	//Setter

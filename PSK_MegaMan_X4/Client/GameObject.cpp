@@ -72,7 +72,7 @@ void CGameObject::DrawObject(HDC hDC, const TCHAR * pFrameKey)
 		m_tFrame.iStart * iSizeX, m_tFrame.iScene * iSizeY, iSizeX, iSizeY, RGB(255, 0, 255));
 }
 
-
+ 
 void CGameObject::DrawObjectScroll(HDC hDC, const TCHAR * pFrameKey)
 {
 	int iScrollX = (int) GameManager->GetScrollX();

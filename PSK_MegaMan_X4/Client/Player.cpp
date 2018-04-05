@@ -7,7 +7,9 @@
 #include "Effect_NB_Fire.h"
 #include "Effect_Charge.h"
 #include "Effect_Charge_Body.h"
-
+#include "Effect_Dash.h"
+#include "Effect_Wall.h"
+#include "Effect_WallKick.h"
 
 CPlayer::CPlayer()
 	:m_pLeftFrameKey(nullptr), m_pRightFrameKey(nullptr),
@@ -63,7 +65,7 @@ void CPlayer::Init()
 	m_fJumpAccel = 0.25f;
 	m_fDashSpeed = 3.5f;
 	m_fDashAccel = 0.25f;
-	m_dwDashTime = 1000;
+	m_dwDashTime = 500;
 	m_dwChargeTime = 1200;
 
 	m_iCurHP = m_iMaxHP = 15;
@@ -95,170 +97,13 @@ OBJECT_STATE CPlayer::Update()
 
 	if (m_eCurStance == DAMAGE_HIGH || m_eCurStance == DAMAGE_LOW)
 		return PLAY;
-	
-	//if (m_fVelocityX == 0 && m_fVelocityY == 0 && !m_bWalk && !m_bDash && !m_bJump)
-	//{
-	//	if (m_bAttack)
-	//		m_eCurStance = ATTACK_NORMAL;
-	//	else
-	//		m_eCurStance = IDLE;
-	//}
-
-	//if (KeyManager->KeyDown('Z') && !m_bJump)
-	//{
-	//	//대시
-	//	m_bDash = true;
-	//	//대시 사운드 이펙트
-
-	//}
-	//else if (KeyManager->KeyDown('X'))
-	//{
-	//	//점프
-	//	if (m_bGround && !m_bJump)
-	//	{
-	//		m_bGround = false;
-	//		m_bJump = true;
-	//	}
-	//	//점프 사운드 이펙트
-	//}
-
-	//if (m_bDash)
-	//{
-	//	m_fVelocityX = m_fDashSpeed;
-
-	//	if (!m_bJump && !m_bAttack)
-	//		m_eCurStance = DASH;
-	//	else if (!m_bJump && m_bAttack)
-	//		m_eCurStance = DASH_ATT;
-	//}
-
-	//if (KeyManager->KeyPressing(VK_LEFT))
-	//{
-	//	if (!m_bIsLeft && m_bDash)
-	//	{
-	//		m_bWalk = true;
-	//		m_bIsLeft = true;
-	//		m_pFrameKey = m_pLeftFrameKey;
-	//		m_fVelocityX = m_fSpeedX;
-	//	}
-	//}
-	//else if (KeyManager->KeyPressing(VK_RIGHT))
-	//{
-	//	if (m_bIsLeft && m_bDash)
-	//	{
-	//		m_bWalk = true;
-	//		m_bIsLeft = false;
-	//		m_pFrameKey = m_pRightFrameKey;
-	//		m_fVelocityX = m_fSpeedX;
-	//	}
-	//}
-	//else if(!m_bDash)
-	//{
-	//	m_bWalk = false;
-	//	m_fVelocityX = 0.f;
-	//}
-
-	//if (m_bIsLeft)
-	//	m_fVelocityX *= -1.f;
-
-
 
 	Walk();
 	Dash();
 	Jump();
 	Attack();
 
-	//m_tInfo.fX += m_fVelocityX;
-	//m_tInfo.fY += m_fVelocityY;
-
-
-
-	//switch (m_eCurStance)
-	//{
-	//case SPAWN:
-	//	cout << "SPAWN\n";
-	//	break;
-	//case IDLE:
-	//	cout << "IDLE\n";
-	//	break;
-	//case ATTACK_NORMAL:
-	//	cout << "ATTACK_NORMAL\n";
-	//	break;
-	//case WALK:
-	//	cout << "WALK\n";
-	//	break;
-	//case WALK_ATT:
-	//	cout << "WALK_ATT\n";
-	//	break;
-	//case JUMP:
-	//	cout << "JUMP\n";
-	//	break;
-	//case JUMP_ATT:
-	//	cout << "JUMP_ATT\n";
-	//	break;
-	//case GROUND:
-	//	cout << "GROUND\n";
-	//	break;
-	//case DASH:
-	//	cout << "DASH\n";
-	//	break;
-	//case DASH_ATT:
-	//	cout << "DASH_ATT\n";
-	//	break;
-	//case WALL:
-	//	cout << "WALL\n";
-	//	break;
-	//case WALL_ATT:
-	//	cout << "WALL_ATT\n";
-	//	break;
-	//case WALL_JUMP:
-	//	cout << "WALL_JUMP\n";
-	//	break;
-	//case WALL_JUMP_ATTACK:
-	//	cout << "IDLE\n";
-	//	break;
-	//}
-
-	if (m_tInfo.fX < 15)
-		m_tInfo.fX = 15;
-
-	return PLAY;
-}
-
-void CPlayer::LateUpdate()
-{
-	if (m_eCurStance == DAMAGE_HIGH || m_eCurStance == DAMAGE_LOW)
-	{
-		//Damaged();
-	}
-
-	UpdateRect();
-
-	m_bGround = CCollision::PlayerToGround(this, GameManager->GetObjList(OBJ_GROUND));
-	//m_bWall = CCollision::PlayerToWall(this, GameManager->GetObjList(OBJ_GROUND));
-
-	if (m_bGround)
-		m_bWall = false;
-	//if (m_bWall)
-	//	cout << "응 벽이야 \n";
-
-
-	//system("cls");
-
-	//if (m_bGround)
-	//	cout << "Ground \n";
-	//if (m_bWalk)
-	//	cout << "Walk\n";
-	//if (m_bDash)
-	//	cout << "DASH\n";
-	//if (m_bJump)
-	//	cout << "Jump\n";
-	//if (m_bWall)
-	//	cout << "Wall\n";
-
-
-	//if (m_bGround)
-	//	cout << "응 땅이야\n";
+	// y스크롤 총 30 먹여줘야함 172 302
 
 	if (m_eCurStance != SPAWN)
 	{
@@ -314,26 +159,50 @@ void CPlayer::LateUpdate()
 		}
 	}
 
+	if (m_tInfo.fX < 15)
+		m_tInfo.fX = 15;
+
+	return PLAY;
+}
+
+void CPlayer::LateUpdate()
+{
+	if (m_eCurStance == DAMAGE_HIGH || m_eCurStance == DAMAGE_LOW)
+	{
+		Damaged();
+	}
+
+	FrameMove();
+	UpdateRect();
+
+
+	m_bGround = CCollision::PlayerToGround(this, GameManager->GetObjList(OBJ_GROUND));
+	CCollision::PlayerToMonster(this, GameManager->GetObjList(OBJ_MONSTER));
+
+	if (m_bGround)
+		m_bWall = false;
+
+	if (m_eCurStance == DAMAGE_LOW)
+		m_dwDamagedStart = GetTickCount() + 2000;
+
+	if (m_dwDamagedStart< GetTickCount())
+		m_bInvincible = false;
 
 	SceneChange();
-	FrameMove();
 	ScrollMove();
-
-	//system("cls");
-	//cout << ((m_eCurStance == WALK) ? ("WALK") : ("WALKATT" ))<< endl;
-	//cout << m_tFrame.iStart << endl;
-	//cout << m_tFrame.iEnd << endl;
-	////attack 후 다시 원래 모션으로 돌리기
-	//switch (m_eCurStance)
-	//{
-	//case WALK_ATT:
-	//}
 }
 
 void CPlayer::Render(HDC hDC)
 {
-	DrawHitBox(hDC);
-	DrawObjectScroll(hDC, m_pFrameKey);
+	if (m_bInvincible)
+	{
+		if(g_iFrame % 2 == 0)
+			DrawObjectScroll(hDC, m_pFrameKey);
+	}
+	else
+	{
+		DrawObjectScroll(hDC, m_pFrameKey);
+	}
 }
 
 void CPlayer::Release()
@@ -394,24 +263,20 @@ void CPlayer::ScrollMove()
 	float fScrollX = GameManager->GetScrollX();
 	float fScrollY = GameManager->GetScrollY();
 
-	if (BUFCX * 0.65f + fScrollX < m_tInfo.fX && m_fVelocityX > 0)
+	if (BUFCX * 0.6f + fScrollX < m_tInfo.fX && m_fVelocityX > 0)
 		GameManager->SetScrollX(m_fVelocityX);
-	if (BUFCX * 0.35f + fScrollX > m_tInfo.fX && m_fVelocityX < 0)
+	if (BUFCX * 0.4f + fScrollX > m_tInfo.fX && m_fVelocityX < 0)
 		GameManager->SetScrollX(m_fVelocityX);
+
+	//if(BUFCY * 0.6f + fScrollX < m_tInfo.fX && m_fVelocityX > 0)
 
 	if (4230 >= m_tInfo.fX && m_tInfo.fX >= 3800)
 	{
 		if (m_fVelocityX > 0)
 			GameManager->SetScrollY(0.5f);
 		else if (m_fVelocityX < 0)
-			GameManager->SetScrollY(-0.5f);
+			GameManager->SetScrollY(-0.3f);
 	}
-
-	//system("cls");
-	//cout << "X: " << m_tInfo.fX << endl;
-	//cout << "Y: " << m_tInfo.fY << endl;
-
-	//cout << "SCROLL Y: " << fScrollY;
 }
 
 void CPlayer::FrameMove()
@@ -437,7 +302,7 @@ void CPlayer::FrameMove()
 		case DASH:
 			if (m_bDash && m_tFrame.iStart == 3)
 			{
-				m_tFrame.dwSpeed = 80;
+				m_tFrame.dwSpeed = 50;
 				return;
 			}
 			break;
@@ -448,6 +313,11 @@ void CPlayer::FrameMove()
 				m_bAttack = false;
 				return;
 			}
+			break;
+
+		case WALL:
+			if (m_tFrame.iStart == 0)
+				//SoundManager->PlaySound(L"SPIKE_ATTACK.wav");
 			break;
 		}
 
@@ -508,6 +378,14 @@ void CPlayer::FrameMove()
 			break;	
 		case WALL:
 			m_tFrame.iStart = m_tFrame.iEnd;
+			if (!m_bWallEffectCreate)
+			{
+				CGameObject* pEffect = CAbstractFactory<CEffect_Wall>::CreateObj(L"E_WALL_R", 7, 8, 0, 1);
+				pEffect->SetTarget(this);
+				pEffect->SetIsLeft(m_bIsLeft);
+				GameManager->AddObject(pEffect, OBJ_EFFECT);
+				//SoundManager->PlaySound(L"DASH.wav", CSoundManager::EFFECT);
+			}
 			break;
 		case WALL_ATT:
 			m_tFrame.iStart = m_tFrame.iEnd;
@@ -527,6 +405,11 @@ void CPlayer::FrameMove()
 			break;
 		case DAMAGE_LOW:
 			m_tFrame.iStart = 0;
+			if (m_dwDamagedStart + 2000 < GetTickCount())
+			{
+				m_bDamaged = false;
+				m_eCurStance = IDLE;
+			}
 			break;
 		}
 	}
@@ -635,7 +518,7 @@ void CPlayer::NoArmorNoWeaponScene()
 			m_tFrame.iStart = 0;
 		m_tFrame.iEnd = 3;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 50;
+		m_tFrame.dwSpeed = 30;
 		break;
 
 	case WALL_ATT:
@@ -643,7 +526,7 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.iStart = m_tFrame.iEnd;
 		m_tFrame.iEnd = 3;
 		m_tFrame.dwTime = GetTickCount();
-		m_tFrame.dwSpeed = 20;
+		m_tFrame.dwSpeed = 50;
 		break;
 
 	case WALL_JUMP:
@@ -692,6 +575,26 @@ void CPlayer::UltiRFScene()
 {
 }
 
+void CPlayer::ApplyDamage(int iDamage)
+{
+	if (!m_bInvincible)
+	{
+		CActor::ApplyDamage(iDamage);
+		SoundManager->StopSound(CSoundManager::PLAYER);
+		SoundManager->PlaySound(TEXT("Damage.wav"), CSoundManager::PLAYER);
+
+		if (m_iCurHP <= 0)
+		{
+			m_bIsDead = true;
+		}
+		else
+		{
+			m_eCurStance = DAMAGE_LOW;
+			m_bInvincible = true;
+		}
+	}
+}
+
 void CPlayer::Walk()
 {
 	//좌우 키 입력
@@ -729,18 +632,27 @@ void CPlayer::Dash()
 			m_bDash = true;
 			m_iHitBoxCX = 45;
 			m_iHitBoxCY = 40;
+
+			CGameObject* pEffect = CAbstractFactory<CEffect_Dash>::CreateObj(L"E_DASH", 6, 7, 0, 1);
+			pEffect->SetTarget(this);
+			pEffect->SetIsLeft(m_bIsLeft);
+			GameManager->AddObject(pEffect, OBJ_EFFECT);
 			SoundManager->PlaySound(L"DASH.wav", CSoundManager::EFFECT);
 		}
 	}
-	else if (m_bDash)
+	else if (m_bDash && !m_bWall)
 	{
 		m_fAccelX = m_fDashSpeed;
 
-		if (KeyManager->KeyUp('Z'))
+		if (KeyManager->KeyUp('Z') || m_dwDashStrart + m_dwDashTime < GetTickCount())
 		{
 			m_tFrame.iStart = 4;
 			m_fAccelX = 0;
 			SoundManager->StopSound(CSoundManager::EFFECT);
+
+			if(m_bGround)
+				SoundManager->PlaySound(L"DASH_STOP.wav", CSoundManager::EFFECT);
+			m_dwDashStrart = GetTickCount();
 		}
 
 		if (m_bJump && m_bWalk)
@@ -751,8 +663,7 @@ void CPlayer::Dash()
 		}
 		else if (m_bJump ||
 			KeyManager->KeyDown(VK_LEFT) ||
-			KeyManager->KeyDown(VK_RIGHT) ||
-			m_dwDashStrart + m_dwDashTime < GetTickCount())
+			KeyManager->KeyDown(VK_RIGHT))
 		{
 			m_iHitBoxCX = m_iOriginHitBoxCX;
 			m_iHitBoxCY = m_iOriginHitBoxCY;
@@ -774,14 +685,20 @@ void CPlayer::Jump()
 		{
 			if (m_bWall)
 			{
-				m_fAccelX = 8.f;
+				m_fAccelX = 10.f;
 				if (!m_bIsLeft)
 					m_fAccelX *= -1.f;
 
 				m_fVelocityX = m_fAccelX;
 				m_fVelocityY = m_fJumpSpeed - 3;
 				m_bWallKick = true;
-				SoundManager->PlaySound(L"DASH_STOP.wav", CSoundManager::EFFECT);
+
+				CGameObject* pEffect = CAbstractFactory<CEffect_WallKick>::CreateObj(L"E_WALLKICK_R", 3, 4, 0, 1);
+				pEffect->SetTarget(this);
+				pEffect->SetIsLeft(m_bIsLeft);
+				GameManager->AddObject(pEffect, OBJ_EFFECT);
+				SoundManager->PlaySound(L"WALL_JUMP_VOICE.wav", CSoundManager::PLAYER);
+				
 			}
 		}
 		else if (KeyManager->KeyPressing('X') && !m_bWall)
@@ -809,10 +726,21 @@ void CPlayer::Jump()
 			m_fVelocityY += 2.5f;
 
 		if (m_bGround || m_bWall)
+		{
 			m_bJump = false;
+			m_bDash = false;
+		}
+			
 
 		if (KeyManager->KeyUp('X') && m_fVelocityY < 0)
 			m_fVelocityY *= -1;
+	}
+
+	if (m_bDamaged)
+	{
+		m_fVelocityX = 0.f;
+		m_fVelocityY = m_fJumpSpeed;
+		m_fAccelY = 2.5f;
 	}
 
 	m_tInfo.fX += m_fVelocityX;
@@ -836,6 +764,7 @@ void CPlayer::Attack()
 		CGameObject* pBullet = CAbstractFactory<CBullet_Normal>::CreateObj(L"BULLET_NBR", 4, 5, 0, 1);
 		pBullet->SetTarget(this);
 		GameManager->AddObject(pBullet, OBJ_BULLET);
+		KeyManager->Update();
 	}
 	else
 	{
@@ -890,7 +819,6 @@ void CPlayer::Attack()
 			//create charge 2 effect
 			if (KeyManager->KeyUp('C') || KeyManager->KeyUp('V'))
 			{
-				cout << "사운드 멈춰줘 제발\n";
 				SoundManager->StopSound(CSoundManager::EFFECT);
 				SoundManager->Update();
 
@@ -911,7 +839,7 @@ void CPlayer::Attack()
 					pBullet->SetTarget(this);
 					GameManager->AddObject(pBullet, OBJ_BULLET);
 
-					SoundManager->PlaySound(L"bullet.wav", CSoundManager::EFFECT);
+					SoundManager->PlaySound(L"SEMIBUSTER.wav", CSoundManager::EFFECT);
 
 				}
 
@@ -928,4 +856,18 @@ void CPlayer::Attack()
 	}
 
 
+}
+
+void CPlayer::Damaged()
+{
+	m_fVelocityX = m_bIsLeft ? 1.f : -1.f;
+	m_fVelocityY -= 2.f;
+
+	m_tInfo.fX += m_fVelocityX;
+	m_tInfo.fY -= m_fVelocityY;
+
+	if (m_tFrame.iStart == m_tFrame.iEnd)
+	{
+		m_eCurStance = IDLE;
+	}
 }

@@ -16,6 +16,9 @@ private:
 	float m_fMinScrollY;
 	float m_fMaxScrollX;
 	float m_fMaxScrollY;
+
+	float m_fPrevScrollX;
+	float m_fPrevScrollY;
 	
 	// 카메라 흔들기
 	float m_fShakePower;
@@ -24,6 +27,8 @@ private:
 	bool m_bIsShaking;
 	bool m_bIsPaused;
 	bool m_bDebugMode;
+
+	bool m_bHitboxDraw = false;
 
 public:
 	CGameManager();
@@ -51,8 +56,12 @@ public:
 	//Setter
 	void SetScrollX(float fX);
 	void SetScrollY(float fY); 
+	void SetCurScrollX(float fX) { m_fScrollX = fX; }
+	void SetCurScrollY(float fY) { m_fScrollY = fY; }
 	void SetMaxScrollX(float fX) { m_fMaxScrollX = fX; }
 	void SetMaxScrollY(float fY) { m_fMaxScrollY = fY; }
+	void SetMinScrollX(float fX) { m_fMinScrollX = fX; }
+	void SetMinScrollY(float fY) { m_fMinScrollY = fY; }
 	void SetPause(bool bIsPaused) { m_bIsPaused = bIsPaused; }
 
 public:
@@ -65,5 +74,7 @@ public:
 
 public:
 	void SetCameraShaking(bool bIsShaking);
+	void CameraShakingStart(float fPower);
+	void CameraShakingEnd();
 };
 

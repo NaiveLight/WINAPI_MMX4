@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Bullet_FullBuster.h"
 #include "Player.h"
+#include "Effect_Buster_Collision.h"
 
 CBullet_FullBuster::CBullet_FullBuster()
 {
@@ -13,11 +14,12 @@ CBullet_FullBuster::~CBullet_FullBuster()
 
 void CBullet_FullBuster::Init()
 {
+	m_bIsBuster = true;
 	m_bIsActive = true;
-	m_tInfo.fCX = 100.f;
-	m_tInfo.fCY = 70.f;
-	m_iHitBoxCX = 80;
-	m_iHitBoxCY = 50;
+	m_tInfo.fCX = 80.f;
+	m_tInfo.fCY = 50.f;
+	m_iHitBoxCX = 40;
+	m_iHitBoxCY = 30;
 	m_tFrame.dwTime = GetTickCount();
 	m_tFrame.dwSpeed = 80;
 	m_LeftKey = L"BULLET_BLL";
@@ -97,12 +99,17 @@ OBJECT_STATE CBullet_FullBuster::Update()
 	CGameObject::LateInit();
 	m_tInfo.fX += m_fSpeedX;
 
-	if (abs(m_pTarget->GetInfo().fX - m_tInfo.fX) > 300)
+	if (abs(m_pTarget->GetInfo().fX - m_tInfo.fX) > 200)
 		m_bIsActive = false;
 
 	if (!m_bIsActive)
 	{
 		// effect2 Create
+		
+		CGameObject* pEffect = CAbstractFactory<CEffect_Buster_Collision>::CreateObj(m_tInfo.fX, m_tInfo.fY, L"E_BB_COLLISION_L", 3, 4, 0, 1);
+		pEffect->SetIsLeft(m_bIsLeft);
+		GameManager->AddObject( pEffect, OBJ_EFFECT);
+
 		return DESTROY;
 	}
 	return PLAY;

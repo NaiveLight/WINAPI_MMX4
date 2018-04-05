@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Bullet_SemiBuster.h"
 #include "Player.h"
+#include "Effect_Bullet_Collision.h"
 
 CBullet_SemiBuster::CBullet_SemiBuster()
 {
@@ -98,12 +99,15 @@ OBJECT_STATE CBullet_SemiBuster::Update()
 	CGameObject::LateInit();
 	m_tInfo.fX += m_fSpeedX;
 
-	if (abs(m_pTarget->GetInfo().fX - m_tInfo.fX) > 300)
+	if (abs(m_pTarget->GetInfo().fX - m_tInfo.fX) > 200)
 		m_bIsActive = false;
 
 	if (!m_bIsActive)
 	{
 		// effect2 Create
+		CGameObject* pEffect = CAbstractFactory<CEffect_Bullet_Collision>::CreateObj(m_tInfo.fX, m_tInfo.fY, L"E_BB_COLLISION_L", 3, 4, 0, 1);
+		pEffect->SetIsLeft(m_bIsLeft);
+		GameManager->AddObject(pEffect, OBJ_EFFECT);
 		return DESTROY;
 	}
 	return PLAY;

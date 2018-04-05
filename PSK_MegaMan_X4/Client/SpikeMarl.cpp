@@ -1,12 +1,11 @@
 #include "stdafx.h"
 #include "SpikeMarl.h"
-
+#include "Effect_Explosion.h"
 
 CSpikeMarl::CSpikeMarl()
-	:m_eCurStance(END), m_ePrevStance(END), m_fTragetDist(0.f)
+	:m_eCurStance(END), m_ePrevStance(END), m_fTargetDist(0.f)
 {
 }
-
 
 CSpikeMarl::~CSpikeMarl()
 {
@@ -29,7 +28,8 @@ void CSpikeMarl::Init()
 	m_tFrame.dwSpeed = 250;
 	m_fVelocityX = 1.0f;
 	m_eCurStance = IDLE;
-	m_iCurHP = m_iMaxHP = 2;
+	m_iCurHP = m_iMaxHP = 3;
+	m_iAttack = 2;
 }
 
 void CSpikeMarl::LateInit()
@@ -39,32 +39,49 @@ void CSpikeMarl::LateInit()
 
 OBJECT_STATE CSpikeMarl::Update()
 {
-	//if (!m_bIsActive)
-	//	return WAIT;
-
 	CGameObject::LateInit();
 
+	if (!m_bIsActive)
+		return DESTROY;
 
-	if (m_bAttack)
+	if (m_bIsDead)
+	{
+		Dead();
+		return PLAY;
+	}
+
+	if (m_eCurStance == ATTACK_BEGINE || m_eCurStance == ATTACK_AFTER)
 		return PLAY;
 
-	if (m_fTragetDist <= 0.f)
+	if (m_bAttack)
+	{
+		m_fSpeedX= m_bIsLeft ? -20.f : 20.f;
+		return PLAY;
+	}
+
+	if (m_fTargetDist <= 0.f)
 	{
 		m_bIsLeft = true;
 		m_pFrameKey = m_LeftKey;
 	}
-	else if(m_fTragetDist > 0.f)
+	else if(m_fTargetDist > 0.f)
 	{
 		m_bIsLeft = false;
 		m_pFrameKey = m_RightKey;
 	}
 		
-
-	if (abs(m_fTragetDist) <= 150 && m_eCurStance != ATTACK)
+	if (100 <= abs(m_fTargetDist) && abs(m_fTargetDist) < 150)
+	{
+		m_eCurStance = IDLE;
+		m_fVelocityX = m_bIsLeft ? -0.5f : 0.5f;
+	}
+	else if (abs(m_fTargetDist) < 100 && m_eCurStance != ATTACK)
 	{
 		m_eCurStance = ATTACK_BEGINE;
 		m_fVelocityX = 0.f;
 	}
+
+	m_tInfo.fX += m_fVelocityX;
 
 	return PLAY;
 }
@@ -74,7 +91,7 @@ void CSpikeMarl::LateUpdate()
 
 	CGameObject::UpdateRect();
 
-	m_fTragetDist = m_pTarget->GetInfo().fX - m_tInfo.fX;
+	m_fTargetDist = m_pTarget->GetInfo().fX - m_tInfo.fX;
 	
 	FrameMove();
 	SceneChange();
@@ -82,7 +99,7 @@ void CSpikeMarl::LateUpdate()
 
 void CSpikeMarl::Render(HDC hDC)
 {
-	DrawHitBox(hDC);
+	//DrawHitBox(hDC);
 	DrawObjectScroll(hDC, m_pFrameKey);
 }
 
@@ -94,8 +111,25 @@ void CSpikeMarl::FrameMove()
 {
 	if (m_tFrame.dwTime + m_tFrame.dwSpeed < GetTickCount())
 	{
+		if (m_eCurStance == IDLE)
+		{
+			if (m_tFrame.iStart == 0)
+				m_tFrame.dwSpeed = 500;
+			else
+				m_tFrame.dwSpeed = 250;
+		}
+
 		++m_tFrame.iStart;
 		m_tFrame.dwTime = GetTickCount();
+
+		if (m_eCurStance == ATTACK)
+		{
+			m_fVelocityX = 0.5f;
+			if (!m_bIsLeft)
+				m_fVelocityX *= -1.f;
+
+			m_tInfo.fX += m_fVelocityX + m_fSpeedX;
+		}
 	}
 
 	if (m_tFrame.iStart > m_tFrame.iEnd)
@@ -144,7 +178,7 @@ void CSpikeMarl::SceneChange()
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 4;
 			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 150;
+			m_tFrame.dwSpeed = 250;
 			break;
 		case ATTACK:
 			m_bAttack = true;
@@ -152,14 +186,15 @@ void CSpikeMarl::SceneChange()
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 6;
 			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 80;
+			m_tFrame.dwSpeed = 30;
+			SoundManager->PlaySound(L"SPIKE_ATTACK.wav", CSoundManager::MONSTER);
 			break;
 		case ATTACK_AFTER:
 			m_tFrame.iScene = 3;
 			m_tFrame.iStart = 0;
 			m_tFrame.iEnd = 6;
 			m_tFrame.dwTime = GetTickCount();
-			m_tFrame.dwSpeed = 150;
+			m_tFrame.dwSpeed = 250;
 			break;
 		case TURN:
 			m_tFrame.iScene = 4;
@@ -171,4 +206,13 @@ void CSpikeMarl::SceneChange()
 		}
 		m_ePrevStance = m_eCurStance;
 	}
+}
+
+void CSpikeMarl::Dead()
+{
+	// 익스플로젼 이펙트 생성 및 Active false
+	GameManager->AddObject(
+		CAbstractFactory<CEffect_Explosion>::CreateObj(m_tInfo.fX, m_tInfo.fY, L"E_EXPLOSION", 17, 18, 0, 1),
+		OBJ_EFFECT);
+	m_bIsActive = false;
 }

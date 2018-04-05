@@ -21,13 +21,14 @@ public:
 
 	virtual void FrameMove();
 	void SceneChange();
+	void Dead();
 
 private:
 	TCHAR* m_LeftKey;
 	TCHAR* m_RightKey;
 	STANCE m_eCurStance;
 	STANCE m_ePrevStance;
-	float m_fTragetDist;
+	float m_fTargetDist;
 	bool m_bAttack;
 };
 

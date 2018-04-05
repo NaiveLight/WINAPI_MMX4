@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+
+class CPlayer;
 class CStage1_1 :
 	public CScene
 {
@@ -14,5 +16,11 @@ public:
 	virtual void LateUpdate() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
+
+private:
+	CGameObject* m_pPlayer;
+	bool m_bBossSpwan;
+	bool m_bShaking;
+	float m_fMinX = 0;
 };
 

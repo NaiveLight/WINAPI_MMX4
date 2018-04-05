@@ -44,17 +44,22 @@ OBJECT_STATE CEregion::Update()
 	if (!m_bIsActive)
 		return DESTROY;
 
+	if (m_bIsDead)
+	{
+		m_bIsActive = false;
+		return PLAY;
+	}
 	//if (m_bAttack)
 	//	return PLAY;
 
-	//m_eCurStance = ATTACK_A;
+	m_eCurStance = ATTACK_A;
 
-	if (m_fTragetDist <= 0.f)
+	if (m_fTargetDist <= 0.f)
 	{
 		m_bIsLeft = true;
 		m_pFrameKey = m_LeftKey;
 	}
-	else if (m_fTragetDist > 0.f)
+	else if (m_fTargetDist > 0.f)
 	{
 		m_bIsLeft = false;
 		m_pFrameKey = m_RightKey;
@@ -67,7 +72,7 @@ void CEregion::LateUpdate()
 {
 	UpdateRect();
 
-	m_fTragetDist = m_pTarget->GetInfo().fX - m_tInfo.fX;
+	m_fTargetDist = m_pTarget->GetInfo().fX - m_tInfo.fX;
 
 	FrameMove();
 	SceneChange();

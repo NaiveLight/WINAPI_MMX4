@@ -124,7 +124,7 @@ void CEffect_NB_Fire::FrameMove()
 
 	if (m_tFrame.iStart > m_tFrame.iEnd)
 	{
-		m_tFrame.iStart = 0;
+		m_tFrame.iStart = m_tFrame.iEnd;
 		m_bIsActive = false;
 	}
 }

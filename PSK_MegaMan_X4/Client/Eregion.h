@@ -29,7 +29,7 @@ private:
 	TCHAR* m_RightKey;
 	STANCE m_eCurStance;
 	STANCE m_ePrevStance;
-	float m_fTragetDist;
+	float m_fTargetDist;
 	bool m_bAttack;
 	bool m_bAttack2;
 };

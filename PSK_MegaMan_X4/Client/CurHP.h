@@ -14,5 +14,12 @@ public:
 	virtual void LateUpdate() override;
 	virtual void Render(HDC hDC) override;
 	virtual void Release() override;
+
+	virtual void UpdateRect() override;
+
+private:
+	int m_iMaxHp;
+	int m_iSrcHp;
+	int m_iDestHp;
 };
 

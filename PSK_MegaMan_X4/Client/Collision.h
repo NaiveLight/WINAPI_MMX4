@@ -13,5 +13,7 @@ public:
 	static bool PlayerToWall(CPlayer* pPlayer, OBJLIST& srcList);
 	static bool PlayerToGround(CPlayer* pPlayer, OBJLIST& srcList);
 	static void BulletToObject(OBJLIST& bulletList, OBJLIST& srcList);
+	static void BulletToGround(OBJLIST& bulletList, OBJLIST& srcList);
+	static bool PlayerToMonster(CPlayer* pPlayer, OBJLIST& srcList);
 };
 

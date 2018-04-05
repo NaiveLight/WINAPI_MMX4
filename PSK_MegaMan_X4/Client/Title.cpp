@@ -39,7 +39,8 @@ void CTitle::LateUpdate()
 
 	if (KeyManager->KeyDown(VK_RETURN))
 	{
-		SoundManager->StopAll();
+		SoundManager->StopSound(CSoundManager::UI);
+		SoundManager->PlaySound(L"TITLE_ENTER.wav", CSoundManager::UI);
 		SceneManager->ChangeScene(CSceneManager::MENU);
 	}
 }

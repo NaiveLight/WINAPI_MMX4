@@ -48,6 +48,29 @@ void CGameManager::Update()
 				++iter_begin;
 		}
 	}
+
+	if (m_dwShakeTime)
+	{
+		m_fShakePower *= -1.f;
+		m_fScrollY = m_fShakePower;
+		if (m_dwShakeTime < GetTickCount())
+			CameraShakingEnd();
+	}
+
+	if (m_fScrollX < 0)
+		m_fScrollX = 0;
+
+	if (m_fScrollY < 0)
+		m_fScrollY = 0;
+
+	if (m_fScrollX > m_fMaxScrollX)
+		m_fScrollX = m_fMaxScrollX;
+
+	if (m_fScrollY > m_fMaxScrollY)
+		m_fScrollY = m_fMaxScrollY;
+
+	if (KeyManager->KeyDown('Q'))
+		m_bHitboxDraw = !m_bHitboxDraw;
 }
 
 void CGameManager::LateUpdate()
@@ -71,6 +94,10 @@ void CGameManager::LateUpdate()
 				break;
 		}
 	}
+
+	CCollision::BulletToObject(m_ObjectList[OBJ_BULLET], m_ObjectList[OBJ_MONSTER]);
+	CCollision::BulletToObject(m_ObjectList[OBJ_BULLET], m_ObjectList[OBJ_BOSS]);
+	CCollision::BulletToGround(m_ObjectList[OBJ_BULLET], m_ObjectList[OBJ_GROUND]);
 }
 
 void CGameManager::Render(HDC hDC)
@@ -81,7 +108,13 @@ void CGameManager::Render(HDC hDC)
 		auto iter_end = m_ObjectList[i].end();
 
 		for (; iter_begin != iter_end; ++iter_begin)
+		{
+			if (m_bHitboxDraw)
+				(*iter_begin)->DrawHitBox(hDC);
+
 			(*iter_begin)->Render(hDC);
+		}
+			
 	}
 }
 
@@ -147,4 +180,24 @@ void CGameManager::ReleaseObj(OBJECT_ID eID)
 
 void CGameManager::SetCameraShaking(bool bIsShaking)
 {
+}
+
+void CGameManager::CameraShakingStart(float fPower)
+{
+	if (!m_bIsShaking)
+	{
+		//m_fPrevScrollX = m_fScrollX;
+		m_fPrevScrollY = m_fScrollY;
+		m_bIsShaking = true;
+		m_fShakePower = fPower;
+		m_dwShakeTime = GetTickCount() + 10000;
+	}
+}
+
+void CGameManager::CameraShakingEnd()
+{
+	m_bIsShaking = false;
+	m_fShakePower = 0.f; 
+	//m_fScrollX = m_fPrevScrollX;
+	m_fScrollY = m_fPrevScrollY;
 }

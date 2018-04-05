@@ -197,9 +197,6 @@
     <Filter Include="04.Effect\01.Bullet\01.BusterSmall">
       <UniqueIdentifier>{89a9beb4-cdb9-40d8-bf5a-aab660d7c72d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Effect\01.Bullet\02.BusterLarge">
-      <UniqueIdentifier>{8341697c-83ca-4326-9558-8cfe8ef4ea60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06.UI\02.HUD\02.CurHP">
       <UniqueIdentifier>{664371e9-e926-45cf-a4a3-5e3fbd4947b5}</UniqueIdentifier>
     </Filter>
@@ -211,6 +208,12 @@
     </Filter>
     <Filter Include="03.Monster\01.Boss\00.Eregion">
       <UniqueIdentifier>{a6190ae2-6648-4f6f-82c9-aa21b8b8e2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Effect\01.Bullet\02.Collision">
+      <UniqueIdentifier>{8341697c-83ca-4326-9558-8cfe8ef4ea60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.Monster\00.Normal\01.KnotBeret1\00.Generade">
+      <UniqueIdentifier>{614751d3-5287-40af-8f92-3ea84628791f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -389,6 +392,28 @@
     <ClInclude Include="Effect.h">
       <Filter>04.Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Effect_Dash.h">
+      <Filter>04.Effect\00.Player\01.Dash</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Wall.h">
+      <Filter>04.Effect\00.Player\03.Wall</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_WallKick.h">
+      <Filter>04.Effect\00.Player\04.WallKick</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Bullet_Collision.h">
+      <Filter>04.Effect\01.Bullet\02.Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Buster_Collision.h">
+      <Filter>04.Effect\01.Bullet\02.Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="BossDoor.h">
+      <Filter>01.GameObject\01.Actor\02.BossDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="DamagedHP.h">
+      <Filter>06.UI\02.HUD\03.DamagedHP</Filter>
+    </ClInclude>
+    <ClInclude Include="Generade.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -536,6 +561,28 @@
     <ClCompile Include="Effect.cpp">
       <Filter>04.Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Effect_Dash.cpp">
+      <Filter>04.Effect\00.Player\01.Dash</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Wall.cpp">
+      <Filter>04.Effect\00.Player\03.Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_WallKick.cpp">
+      <Filter>04.Effect\00.Player\04.WallKick</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Bullet_Collision.cpp">
+      <Filter>04.Effect\01.Bullet\02.Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Buster_Collision.cpp">
+      <Filter>04.Effect\01.Bullet\02.Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="BossDoor.cpp">
+      <Filter>01.GameObject\01.Actor\02.BossDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="DamagedHP.cpp">
+      <Filter>06.UI\02.HUD\03.DamagedHP</Filter>
+    </ClCompile>
+    <ClCompile Include="Generade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">

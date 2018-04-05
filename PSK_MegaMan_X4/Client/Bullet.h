@@ -17,7 +17,7 @@ public:
 
 public:
 	const int  GetAttack() { return m_iAttack; }
-	const bool GetIsNormal() { return m_bIsNormal; }
+	const bool GetIsBuster() { return m_bIsBuster; }
 
 protected:
 	int m_iAttack;

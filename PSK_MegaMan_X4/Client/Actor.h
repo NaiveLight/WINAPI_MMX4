@@ -38,9 +38,18 @@ public:
 	void SetMaxHP(int iHp) { m_iMaxHP = iHp; }
 	void SetCurHP(int iHp) { m_iCurHP = iHp; }
 	void SetAttack(int iAtt) { m_iAttack = iAtt; }
+	void SetIsDamaged(bool bD) { m_bIsDamaged = bD; }
 
 public:
-	virtual void ApplyDamage(int iDamage) { m_iCurHP -= iDamage; }
+	virtual void ApplyDamage(int iDamage) 
+	{ 
+		m_iCurHP -= iDamage; 
+		if (m_iCurHP <= 0)
+		{
+			m_iCurHP = 0;
+			m_bIsDead = true;
+		}
+	}
 	
 
 protected:
@@ -55,5 +64,6 @@ protected:
 	float m_fVelocityY;
 
 	bool m_bIsDamaged;
+	bool m_bIsDead;
 };
 

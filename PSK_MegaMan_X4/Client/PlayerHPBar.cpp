@@ -24,9 +24,9 @@ void CPlayerHPBar::LateInit()
 	UpdateRect();
 	// 체력바 & 무기 & 라이프 세팅
 
-	//CGameObject* pCurHP = CAbstractFactory<CCurHP>::CreateObj(m_tInfo.fX, m_tInfo.fY);
-	//pCurHP->SetTarget(GameManager->GetPlayer());
-	//GameManager->AddObject(pCurHP, OBJ_UI);
+	CGameObject* pCurHP = CAbstractFactory<CCurHP>::CreateObj(m_tInfo.fX - 11, m_tInfo.fY + 7, L"PLAYER_CUR_HP", 1, 2, 0, 1);
+	pCurHP->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pCurHP, OBJ_UI);
 }
 
 OBJECT_STATE CPlayerHPBar::Update()

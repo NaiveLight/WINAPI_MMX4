@@ -14,6 +14,7 @@ CGround::~CGround()
 void CGround::Init()
 {
 	m_bIsActive = true;
+	m_bIsGround = true;
 }
 
 void CGround::LateInit()
@@ -42,8 +43,8 @@ void CGround::Render(HDC hDC)
 	}
 	else
 	{
-		MoveToEx(hDC, m_ptLeftTop.x - iScrollX, m_ptLeftTop.y - iScrollY, nullptr);
-		LineTo(hDC, m_ptRightBottom.x - iScrollX, m_ptRightBottom.y - iScrollY);
+		//MoveToEx(hDC, m_ptLeftTop.x - iScrollX, m_ptLeftTop.y - iScrollY, nullptr);
+		//LineTo(hDC, m_ptRightBottom.x - iScrollX, m_ptRightBottom.y - iScrollY);
 	}
 }
 

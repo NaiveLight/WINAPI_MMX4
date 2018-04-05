@@ -80,25 +80,34 @@ void CStage1_1::Init()
 	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_LARGE_LEFT.bmp", L"E_BL_FIRE_L");
 	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_LARGE_RIGHT.bmp", L"E_BL_FIRE_R");
 
+	// √—æÀ √Êµπ ¿Ã∆Â∆Æ
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_NORMAL_BULLET_COLLISION_LEFT.bmp", L"E_NB_COLLISION_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_NORMAL_BULLET_COLLISION_RIGHT.bmp", L"E_NB_COLLISION_R");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_BULLET_COLLISON_LEFT.bmp", L"E_BB_COLLISION_L");
+	BmpManager->AddBitMap(L"../MyResource/BULLET/EFFECT_BUSTER_BULLET_COLLISON_RIGHT.bmp", L"E_BB_COLLISION_R");
+
 	// ∏ÛΩ∫≈Õ
 	BmpManager->AddBitMap(L"../MyResource/Monster/Monster_Spike_Left.bmp", L"M_SPIKE_L");
 	BmpManager->AddBitMap(L"../MyResource/Monster/Monster_Spike_Right.bmp", L"M_SPIKE_R");
 	BmpManager->AddBitMap(L"../MyResource/Monster/KnotBeret_LEFT.bmp", L"M_KNOT_BERET_A_L");
 	BmpManager->AddBitMap(L"../MyResource/Monster/KnotBeret_RIGHT.bmp", L"M_KNOT_BERET_A_R");
 
+	BmpManager->AddBitMap(L"../MyResource/Monster/Generade.bmp", L"M_GENERADE");
+
 	//∫∏Ω∫
 	BmpManager->AddBitMap(L"../MyResource/Monster/BOSS_Erigon_LEFT.bmp", L"B_EREGION_L");
 	BmpManager->AddBitMap(L"../MyResource/Monster/BOSS_Erigon_RIGHT.bmp", L"B_EREGION_R");
 
-	//∆¯πﬂ ¿Ã∆Â∆Æ
+	//¿Ã∆Â∆Æ
 	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_EXPLOSION.bmp", L"E_EXPLOSION");
+	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_DASH_LEFT.bmp", L"E_DASH_L");
+	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_DASH_RIGHT.bmp", L"E_DASH_R");
+	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_WALL_LEFT.bmp", L"E_WALL_L");
+	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_WALL_RIGHT.bmp", L"E_WALL_R");
+	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_WALLKICK_LEFT.bmp", L"E_WALLKICK_L");
+	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_WALLKICK_RIGHT.bmp", L"E_WALLKICK_R");
 
-	// Max X : 5064 / Y : 104
-	// Boss ¿¸ X : 4756
-	// Boss µÓ¿Â : 1250
 
-	// SavePoint = 1180 / 3250
-	
 
 	// πÆ
 	//1530 , 2050, 2560, 3070
@@ -107,13 +116,19 @@ void CStage1_1::Init()
 
 	GameManager->SetMaxScrollX(5064.f);
 	GameManager->SetMaxScrollY(104.f);
+	GameManager->SetMinScrollX(0.f);
+	GameManager->SetMinScrollY(0.f);
 }
 
 void CStage1_1::LateInit()
 {
 	SoundManager->PlayBGM(L"06_Opening Stage X.mp3");
-	CGameObject* pPlayer = CAbstractFactory<CPlayer>::CreateObj();
-	GameManager->AddObject(pPlayer, OBJ_PLAYER);
+
+	if (m_pPlayer == nullptr)
+	{
+		m_pPlayer = CAbstractFactory<CPlayer>::CreateObj();
+		GameManager->AddObject(m_pPlayer, OBJ_PLAYER);
+	}
 	
 	CGameObject* m_Obj = CAbstractFactory<CMapObj>::CreateObj(77,  141 , L"ST1_OBJ_1");
 	m_Obj->SetSize(150.f, 200.f);
@@ -167,27 +182,25 @@ void CStage1_1::LateInit()
 	//1530 , 2050, 2560, 3070
 	CGameObject* pHalfDoor = CAbstractFactory<CDoor>::CreateObj(1665, 131, L"ST1_HALF_DOOR",3, 4, 0, 1);
 	pHalfDoor->SetIsLeft(true);
+	dynamic_cast<CActor*>(pHalfDoor)->SetCurHP(6);
 	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
 	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2181, 130, L"ST1_HALF_DOOR", 3, 4, 0, 1);
 	pHalfDoor->SetIsLeft(true);
+	dynamic_cast<CActor*>(pHalfDoor)->SetCurHP(6);
 	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
 	pHalfDoor = CAbstractFactory<CDoor>::CreateObj(2692, 129, L"ST1_HALF_DOOR", 3, 4, 0, 1);
 	pHalfDoor->SetIsLeft(true);
+	dynamic_cast<CActor*>(pHalfDoor)->SetCurHP(6);
 	GameManager->AddObject(pHalfDoor, OBJ_GROUND);
 
 	CGameObject* pFullDoor = CAbstractFactory<CDoor>::CreateObj(3215, 110, L"ST1_FULL_DOOR", 3, 4, 0, 1);
-	pFullDoor->SetHitBox(40, 150);
+	pFullDoor->SetHitBox(40, 200);
 	pFullDoor->SetIsLeft(true);
+	dynamic_cast<CActor*>(pFullDoor)->SetCurHP(20);
 	GameManager->AddObject(pFullDoor, OBJ_GROUND);
 
-	//GameManager->SetScrollX(3700.f);
-	//GameManager->SetScrollX(104.f);
-
-	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 0, 190 , 3800, BUFCY}), OBJ_GROUND);
-	//GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 200,  50, 250, 120}), OBJ_GROUND);
-	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 50,  150, 100, 200 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 4900, 100, 5050, 145 }), OBJ_GROUND);
 	GameManager->AddObject(CAbstractFactory<CGround>::CreateRectGround(RECT{ 5042, 145, 5080, 257 }), OBJ_GROUND);
 
@@ -197,14 +210,36 @@ void CStage1_1::LateInit()
 
 	//∏ÛΩ∫≈Õ
 	//Ω∫∆ƒ¿Ã≈©
-	CGameObject* pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(150.f, 175.f, L"M_SPIKE_R", 3, 7, 0, 5);
+	CGameObject* pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(380.f, 175.f, L"M_SPIKE_R", 3, 7, 0, 5);
+	pMonster->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pMonster, OBJ_MONSTER);
+
+	pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(485.f, 175.f, L"M_SPIKE_R", 3, 7, 0, 5);
+	pMonster->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pMonster, OBJ_MONSTER);
+
+	pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(560.f, 175.f, L"M_SPIKE_R", 3, 7, 0, 5);
 	pMonster->SetTarget(GameManager->GetPlayer());
 	GameManager->AddObject(pMonster, OBJ_MONSTER);
 
 	//≥Ú∫£∑ø
-	//CGameObject* pMonster = CAbstractFactory<CKnotBeretA>::CreateObj(150.f, 165.f, L"M_KNOT_BERET_R", 6, 7, 0, 5);
-	//pMonster->SetTarget(GameManager->GetPlayer());
-	//GameManager->AddObject(pMonster, OBJ_MONSTER);
+	pMonster = CAbstractFactory<CKnotBeretA>::CreateObj(815.f, 165.f, L"M_KNOT_BERET_R", 6, 7, 0, 5);
+	pMonster->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pMonster, OBJ_MONSTER);
+
+	pMonster = CAbstractFactory<CKnotBeretA>::CreateObj(1000.f, 165.f, L"M_KNOT_BERET_R", 6, 7, 0, 5);
+	pMonster->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pMonster, OBJ_MONSTER);
+
+	pMonster = CAbstractFactory<CKnotBeretA>::CreateObj(1115.f, 165.f, L"M_KNOT_BERET_R", 6, 7, 0, 5);
+	pMonster->SetTarget(GameManager->GetPlayer());
+	GameManager->AddObject(pMonster, OBJ_MONSTER);
+
+	//æ∆¿Ã≈€ƒ≥∏ÆæÓ
+	//3650
+
+	//∆Æ∑¶ 
+	//5040
 
 	//CGameObject* pEffect = CAbstractFactory<CEffect_Explosion>::CreateObj(200.f, 150.f, L"E_EXPLOSION", 17, 18, 0, 1);
 	//GameManager->AddObject(pEffect, OBJ_EFFECT);
@@ -215,40 +250,68 @@ void CStage1_1::LateInit()
 	//pEffect = CAbstractFactory<CEffect_Explosion>::CreateObj(180.f, 140.f, L"E_EXPLOSION", 17, 18, 0, 1);
 	//GameManager->AddObject(pEffect, OBJ_EFFECT);
 
-	CGameObject* pBoss = CAbstractFactory<CEregion>::CreateObj(300, BUFCY / 4, L"B_EREGION_R", 5, 7, 0, 3);
-	pBoss->SetTarget(GameManager->GetPlayer());
-	GameManager->AddObject(pBoss, OBJ_BOSS);
+//	CGameObject* pBoss = CAbstractFactory<CEregion>::CreateObj(300, BUFCY / 4, L"B_EREGION_R", 5, 7, 0, 3);
+//	pBoss->SetTarget(GameManager->GetPlayer());
+//	GameManager->AddObject(pBoss, OBJ_BOSS);
 }
 
 void CStage1_1::Update()
 {
 	CScene::LateInit();
+
+	// Max X : 5064 / Y : 104
+	// Boss ¿¸ X : 4756
+	// Boss µÓ¿Â : 1250
+
+	// minScrollX = 1350 - BUFCX *0.5f
+	// minScrollX = 3250 - BUFCX *0.5f
+	// 4480 -- BUFCX *0.5f >> ∆¯πﬂ ¿Ã∆Â∆Æ + ƒ´∏ﬁ∂Û Ω¶¿Ã≈∑
+	// SavePoint = 1180 / 3250
+
+	//if (1350 <= m_pPlayer->GetInfo().fX && m_pPlayer->GetInfo().fX < 3250)
+	//{
+	//	GameManager->SetMinScrollX(1350 - BUFCX * 0.6f);
+	//	m_fMinX = 1350;
+	//}
+	//else if (3250 <= m_pPlayer->GetInfo().fX && m_pPlayer->GetInfo().fX< 4480)
+	//{
+	//	GameManager->SetMinScrollX(3250 - BUFCX * 0.6f);
+	//	m_fMinX = 3250;
+	//}
+	//else if (4480 <= m_pPlayer->GetInfo().fX && m_pPlayer->GetInfo().fX< 5500)
+	//{
+	//	GameManager->SetMinScrollX(4480 - BUFCX * 0.6f);
+	//	m_fMinX = 4480;
+	//}
+
+	//GameManager->CameraShakingStart(5.f);
+
+	if (KeyManager->KeyDown(VK_F1))
+	{
+		CGameObject* pMonster = CAbstractFactory<CKnotBeretA>::CreateObj(m_pPlayer->GetInfo().fX + 100.f, m_pPlayer->GetInfo().fY - 7.f, L"M_KNOT_BERET_R", 6, 7, 0, 5);
+		pMonster->SetTarget(GameManager->GetPlayer());
+		GameManager->AddObject(pMonster, OBJ_MONSTER);
+	}
+
 	GameManager->Update();
+
+	if (m_pPlayer->GetInfo().fX <= m_fMinX)
+		m_pPlayer->SetPos(m_fMinX, m_pPlayer->GetInfo().fY);
+
+	// minScrollX = 1350 - BUFCX *0.5f
+	// minScrollX = 3250 - BUFCX *0.5f
+	// 4480 - " >> ∆¯πﬂ ¿Ã∆Â∆Æ + ƒ´∏ﬁ∂Û Ω¶¿Ã≈∑
+	// SavePoint = 1180 / 3250
+
+	
 }
 
 void CStage1_1::LateUpdate()
 {
-	//if (KeyManager->KeyPressing(VK_UP))
-	//{
-	//	GameManager->SetScrollY(-5.f);
-	//}
-
-	//if (KeyManager->KeyPressing(VK_DOWN))
-	//{
-	//	GameManager->SetScrollY(5.f);
-	//}
-
-	//if (KeyManager->KeyPressing(VK_LEFT))
-	//{
-	//	GameManager->SetScrollX(-10.f);
-	//}
-
-	//if (KeyManager->KeyPressing(VK_RIGHT))
-	//{
-	//	GameManager->SetScrollX(10.f);
-	//}
-
 	GameManager->LateUpdate();
+
+	//cout << "fScrollX" << GameManager->GetScrollX() << endl;
+	//cout << "fScrollY" << GameManager->GetScrollY() << endl;
 }
 
 void CStage1_1::Render(HDC hDC)
