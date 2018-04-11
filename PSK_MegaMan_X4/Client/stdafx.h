@@ -12,7 +12,7 @@
 #include <windows.h>
 
 //#include <iostream>
-////#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")1
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
 
 #include "fmod.h"
 #pragma comment(lib, "fmodex_vc.lib")

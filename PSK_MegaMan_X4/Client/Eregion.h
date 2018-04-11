@@ -29,8 +29,10 @@ private:
 	TCHAR* m_RightKey;
 	STANCE m_eCurStance;
 	STANCE m_ePrevStance;
-	float m_fTargetDist;
+	float m_fTargetDistX;
+	float m_fTargetDistY;
 	bool m_bAttack;
 	bool m_bAttack2;
+	int m_iDeadEffectCnt = 500;
 };
 

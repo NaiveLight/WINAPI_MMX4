@@ -98,7 +98,7 @@ OBJECT_STATE CBullet_Normal::Update()
 	CGameObject::LateInit();
 	m_tInfo.fX += m_fSpeedX;
 
-	if (abs(m_pTarget->GetInfo().fX - m_tInfo.fX) > 200)
+	if (abs(m_pTarget->GetInfo().fX - m_tInfo.fX) > 300)
 		m_bIsActive = false;
 
 	if (!m_bIsActive)

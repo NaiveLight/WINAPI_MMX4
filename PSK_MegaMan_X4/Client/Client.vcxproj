@@ -147,6 +147,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="BmpManager.h" />
     <ClInclude Include="BossDoor.h" />
+    <ClInclude Include="BossHPBar.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Bullet_FullBuster.h" />
     <ClInclude Include="Bullet_Normal.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BmpManager.cpp" />
     <ClCompile Include="BossDoor.cpp" />
+    <ClCompile Include="BossHPBar.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Bullet_FullBuster.cpp" />
     <ClCompile Include="Bullet_Normal.cpp" />

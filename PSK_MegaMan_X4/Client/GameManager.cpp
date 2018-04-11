@@ -52,7 +52,7 @@ void CGameManager::Update()
 	if (m_dwShakeTime)
 	{
 		m_fShakePower *= -1.f;
-		m_fScrollY = m_fShakePower;
+		m_fScrollY += m_fShakePower;
 		if (m_dwShakeTime < GetTickCount())
 			CameraShakingEnd();
 	}
@@ -191,6 +191,18 @@ void CGameManager::CameraShakingStart(float fPower)
 		m_bIsShaking = true;
 		m_fShakePower = fPower;
 		m_dwShakeTime = GetTickCount() + 10000;
+	}
+}
+
+void CGameManager::CameraShakingStart(float fPower, DWORD dwShakeEndTime)
+{
+	if (!m_bIsShaking)
+	{
+		//m_fPrevScrollX = m_fScrollX;
+		m_fPrevScrollY = m_fScrollY;
+		m_bIsShaking = true;
+		m_fShakePower = fPower;
+		m_dwShakeTime = GetTickCount() + dwShakeEndTime;
 	}
 }
 

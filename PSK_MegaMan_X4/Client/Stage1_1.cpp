@@ -97,6 +97,7 @@ void CStage1_1::Init()
 	//보스
 	BmpManager->AddBitMap(L"../MyResource/Monster/BOSS_Erigon_LEFT.bmp", L"B_EREGION_L");
 	BmpManager->AddBitMap(L"../MyResource/Monster/BOSS_Erigon_RIGHT.bmp", L"B_EREGION_R");
+	BmpManager->AddBitMap(L"../MyResource/UI/HUD_BOSS_HPAR.bmp", L"BOSS_HP_BAR");
 
 	//이펙트
 	BmpManager->AddBitMap(L"../MyResource/EFFECT/EFFECT_EXPLOSION.bmp", L"E_EXPLOSION");
@@ -122,6 +123,7 @@ void CStage1_1::Init()
 
 void CStage1_1::LateInit()
 {
+	SoundManager->Update();
 	SoundManager->PlayBGM(L"06_Opening Stage X.mp3");
 
 	if (m_pPlayer == nullptr)
@@ -210,7 +212,7 @@ void CStage1_1::LateInit()
 
 	//몬스터
 	//스파이크
-	CGameObject* pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(380.f, 175.f, L"M_SPIKE_R", 3, 7, 0, 5);
+	CGameObject* pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(400.f, 175.f, L"M_SPIKE_R", 3, 7, 0, 5);
 	pMonster->SetTarget(GameManager->GetPlayer());
 	GameManager->AddObject(pMonster, OBJ_MONSTER);
 
@@ -250,9 +252,9 @@ void CStage1_1::LateInit()
 	//pEffect = CAbstractFactory<CEffect_Explosion>::CreateObj(180.f, 140.f, L"E_EXPLOSION", 17, 18, 0, 1);
 	//GameManager->AddObject(pEffect, OBJ_EFFECT);
 
-//	CGameObject* pBoss = CAbstractFactory<CEregion>::CreateObj(300, BUFCY / 4, L"B_EREGION_R", 5, 7, 0, 3);
-//	pBoss->SetTarget(GameManager->GetPlayer());
-//	GameManager->AddObject(pBoss, OBJ_BOSS);
+	//CGameObject* pBoss = CAbstractFactory<CEregion>::CreateObj(300, 100, L"B_EREGION_R", 5, 7, 0, 3);
+	//pBoss->SetTarget(GameManager->GetPlayer());
+	//GameManager->AddObject(pBoss, OBJ_BOSS);
 }
 
 void CStage1_1::Update()
@@ -284,13 +286,35 @@ void CStage1_1::Update()
 	//	m_fMinX = 4480;
 	//}
 
-	//GameManager->CameraShakingStart(5.f);
-
 	if (KeyManager->KeyDown(VK_F1))
 	{
 		CGameObject* pMonster = CAbstractFactory<CKnotBeretA>::CreateObj(m_pPlayer->GetInfo().fX + 100.f, m_pPlayer->GetInfo().fY - 7.f, L"M_KNOT_BERET_R", 6, 7, 0, 5);
 		pMonster->SetTarget(GameManager->GetPlayer());
 		GameManager->AddObject(pMonster, OBJ_MONSTER);
+	}
+
+	if (KeyManager->KeyDown(VK_F2))
+	{
+		CGameObject* pMonster = CAbstractFactory<CSpikeMarl>::CreateObj(m_pPlayer->GetInfo().fX + 100.f, m_pPlayer->GetInfo().fY + 3.f, L"M_SPIKE_R", 3, 7, 0, 5);
+		pMonster->SetTarget(GameManager->GetPlayer());
+		GameManager->AddObject(pMonster, OBJ_MONSTER);
+	}
+
+	if (KeyManager->KeyDown(VK_F3))
+	{
+		CGameObject* pBoss = CAbstractFactory<CEregion>::CreateObj(m_pPlayer->GetInfo().fX - 200.f, m_pPlayer->GetInfo().fY - 72.f, L"B_EREGION_R", 5, 7, 0, 3);
+		pBoss->SetTarget(GameManager->GetPlayer());
+		GameManager->AddObject(pBoss, OBJ_BOSS);
+	}
+
+	if (KeyManager->KeyDown(VK_F5))
+	{
+		GameManager->CameraShakingStart(2.f);
+	}
+
+	if (KeyManager->KeyDown(VK_F7))
+	{
+		dynamic_cast<CActor*>(m_pPlayer)->SetCurHP(15);
 	}
 
 	GameManager->Update();

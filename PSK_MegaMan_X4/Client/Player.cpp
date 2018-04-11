@@ -155,7 +155,12 @@ OBJECT_STATE CPlayer::Update()
 			if (m_bAttack && !m_bCharge)
 				m_eCurStance = ATTACK_NORMAL;
 			else if (!m_bAttack)
-				m_eCurStance = IDLE;
+			{
+				if ((m_iCurHP / (float)m_iMaxHP) > 0.5f)
+					m_eCurStance = IDLE;
+				else
+					m_eCurStance = IDLE_HP_LESS;
+			}
 		}
 	}
 
@@ -178,6 +183,7 @@ void CPlayer::LateUpdate()
 
 	m_bGround = CCollision::PlayerToGround(this, GameManager->GetObjList(OBJ_GROUND));
 	CCollision::PlayerToMonster(this, GameManager->GetObjList(OBJ_MONSTER));
+	CCollision::PlayerToMonster(this, GameManager->GetObjList(OBJ_BOSS));
 
 	if (m_bGround)
 		m_bWall = false;
@@ -335,7 +341,7 @@ void CPlayer::FrameMove()
 		case SPAWN:
 			m_eCurStance = IDLE;
 			break;
-		case IDLE:
+		case IDLE: case IDLE_HP_LESS:
 			m_tFrame.iStart = 0;
 			break;
 		// IDLE에서 ATTACK했을시 다시 IDLE로 돌아가야함
@@ -551,6 +557,14 @@ void CPlayer::NoArmorNoWeaponScene()
 		m_tFrame.iEnd = 3;
 		m_tFrame.dwTime = GetTickCount();
 		m_tFrame.dwSpeed = 100;
+		break;
+
+	case IDLE_HP_LESS:
+		m_tFrame.iScene = 17;
+		m_tFrame.iStart = 0;
+		m_tFrame.iEnd = 5;
+		m_tFrame.dwTime = GetTickCount();
+		m_tFrame.dwSpeed = 200;
 		break;
 	}
 }

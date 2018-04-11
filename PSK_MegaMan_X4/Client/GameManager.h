@@ -75,6 +75,7 @@ public:
 public:
 	void SetCameraShaking(bool bIsShaking);
 	void CameraShakingStart(float fPower);
+	void CameraShakingStart(float fPower, DWORD dwShakeEndTime);
 	void CameraShakingEnd();
 };
 

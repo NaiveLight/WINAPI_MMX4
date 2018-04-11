@@ -29,7 +29,8 @@ void CKnotBeretA::Init()
 	m_tFrame.dwSpeed = 250;
 	m_fVelocityX = 10.0f;
 	m_eCurStance = IDLE;
-	m_iCurHP = m_iMaxHP = 2;
+	m_iCurHP = m_iMaxHP = 3;
+	m_iAttack = 1;
 }
 
 void CKnotBeretA::LateInit()
@@ -47,6 +48,7 @@ OBJECT_STATE CKnotBeretA::Update()
 	if (m_bIsDead)
 	{
 		Dead();
+		SoundManager->PlaySound(L"Exlposion.wav", CSoundManager::MONSTER);
 		return PLAY;
 	}
 

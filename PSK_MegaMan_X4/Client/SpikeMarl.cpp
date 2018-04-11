@@ -47,6 +47,7 @@ OBJECT_STATE CSpikeMarl::Update()
 	if (m_bIsDead)
 	{
 		Dead();
+		SoundManager->PlaySound(L"Exlposion.wav", CSoundManager::MONSTER);
 		return PLAY;
 	}
 

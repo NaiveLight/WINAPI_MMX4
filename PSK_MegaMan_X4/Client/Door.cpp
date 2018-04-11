@@ -96,6 +96,7 @@ void CDoor::FrameMove()
 
 void CDoor::Dead()
 {
+	SoundManager->PlaySound(L"Exlposion.wav", CSoundManager::MONSTER);
 
 	for (int i = 0; i < 5; i++)
 	{

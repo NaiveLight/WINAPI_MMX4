@@ -23,6 +23,7 @@ void CGenerade::Init()
 	m_tFrame.iEnd = 0;
 	m_fVelocityY = -3.f;
 	m_bIsActive = true;
+	m_iAttack = 2;
 }
 
 void CGenerade::LateInit()
@@ -36,6 +37,7 @@ OBJECT_STATE CGenerade::Update()
 
 	if (!m_bIsActive)
 	{
+		SoundManager->PlaySound(L"Exlposion.wav", CSoundManager::MONSTER);
 		GameManager->AddObject(
 			CAbstractFactory<CEffect_Explosion>::CreateObj(m_tInfo.fX, m_tInfo.fY, L"E_EXPLOSION", 17, 18, 0, 1),
 			OBJ_EFFECT);

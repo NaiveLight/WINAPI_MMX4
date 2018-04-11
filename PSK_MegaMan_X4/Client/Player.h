@@ -140,6 +140,8 @@ private:
 	DWORD m_dwDamagedStart;
 	bool m_bInvincible = false;
 
+	bool m_bHpLess = false;
+
 	int m_iPrevFrame = 0;
 	int m_iLife = 3;
 };

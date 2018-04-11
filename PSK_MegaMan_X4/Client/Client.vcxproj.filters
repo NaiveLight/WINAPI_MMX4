@@ -68,9 +68,6 @@
     <Filter Include="05.Scene\02.PlayerSelect">
       <UniqueIdentifier>{87f911ef-962e-43e0-87b3-90e1ef8ba1c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05.Scene\03.Lobby">
-      <UniqueIdentifier>{5719baa1-b38f-46cc-bb10-fab51d8e6e8b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="06.UI\00.Text">
       <UniqueIdentifier>{62c30054-9382-484f-9974-c2b547c2a965}</UniqueIdentifier>
     </Filter>
@@ -214,6 +211,9 @@
     </Filter>
     <Filter Include="03.Monster\00.Normal\01.KnotBeret1\00.Generade">
       <UniqueIdentifier>{614751d3-5287-40af-8f92-3ea84628791f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Scene\03.Lobby">
+      <UniqueIdentifier>{5719baa1-b38f-46cc-bb10-fab51d8e6e8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -413,7 +413,12 @@
     <ClInclude Include="DamagedHP.h">
       <Filter>06.UI\02.HUD\03.DamagedHP</Filter>
     </ClInclude>
-    <ClInclude Include="Generade.h" />
+    <ClInclude Include="BossHPBar.h">
+      <Filter>06.UI\02.HUD\01.BossHPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Generade.h">
+      <Filter>03.Monster\00.Normal\01.KnotBeret1\00.Generade</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -582,7 +587,12 @@
     <ClCompile Include="DamagedHP.cpp">
       <Filter>06.UI\02.HUD\03.DamagedHP</Filter>
     </ClCompile>
-    <ClCompile Include="Generade.cpp" />
+    <ClCompile Include="BossHPBar.cpp">
+      <Filter>06.UI\02.HUD\01.BossHPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Generade.cpp">
+      <Filter>03.Monster\00.Normal\01.KnotBeret1\00.Generade</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
