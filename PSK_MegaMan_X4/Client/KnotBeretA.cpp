@@ -111,7 +111,6 @@ void CKnotBeretA::LateUpdate()
 
 void CKnotBeretA::Render(HDC hDC)
 {
-	//DrawHitBox(hDC);
 	DrawObjectScroll(hDC, m_pFrameKey);
 }
 

@@ -49,7 +49,7 @@ void CGameManager::Update()
 		}
 	}
 
-	if (m_dwShakeTime)
+	if (m_bIsShaking)
 	{
 		m_fShakePower *= -1.f;
 		m_fScrollY += m_fShakePower;
@@ -198,7 +198,6 @@ void CGameManager::CameraShakingStart(float fPower, DWORD dwShakeEndTime)
 {
 	if (!m_bIsShaking)
 	{
-		//m_fPrevScrollX = m_fScrollX;
 		m_fPrevScrollY = m_fScrollY;
 		m_bIsShaking = true;
 		m_fShakePower = fPower;
@@ -209,7 +208,6 @@ void CGameManager::CameraShakingStart(float fPower, DWORD dwShakeEndTime)
 void CGameManager::CameraShakingEnd()
 {
 	m_bIsShaking = false;
-	m_fShakePower = 0.f; 
-	//m_fScrollX = m_fPrevScrollX;
+	m_fShakePower = 0.f;
 	m_fScrollY = m_fPrevScrollY;
 }

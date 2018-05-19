@@ -191,7 +191,7 @@ void CPlayer::LateUpdate()
 	if (m_eCurStance == DAMAGE_LOW)
 		m_dwDamagedStart = GetTickCount() + 2000;
 
-	if (m_dwDamagedStart< GetTickCount())
+	if (m_dwDamagedStart < GetTickCount())
 		m_bInvincible = false;
 
 	SceneChange();
